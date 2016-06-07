@@ -13,6 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String VARCHAR40_TYPE = " VARCHAR(40)";
     private static final String VARCHAR100_TYPE = " VARCHAR(100)";
     private static final String VARCHAR255_TYPE = " VARCHAR(255)";
+    private static final String TEXT_TYPE = " TEXT";
     private static final String DATE_TYPE = " DATETIME";
     private static final String COMMA_SEP = ",";
     private static final String SQL_CREATE_ENTRIES =
