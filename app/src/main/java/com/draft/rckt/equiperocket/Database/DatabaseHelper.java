@@ -44,9 +44,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " );";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + DatabaseContract.UserEntry.TABLE_NAME + ";"
-            +"DROP TABLE IF EXISTS " + DatabaseContract.ReceitaEntry.TABLE_NAME + ";"
-            +"DROP TABLE IF EXISTS " + DatabaseContract.GastoEntry.TABLE_NAME + ";";
+            "DROP TABLE IF EXISTS " + DatabaseContract.ReceitaEntry.TABLE_NAME + ";"
+                    +"DROP TABLE IF EXISTS " + DatabaseContract.GastoEntry.TABLE_NAME + ";"
+                    +"DROP TABLE IF EXISTS " + DatabaseContract.UserEntry.TABLE_NAME + ";";
 
 
     // If you change the database schema, you must increment the database version.

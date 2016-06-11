@@ -19,6 +19,9 @@ public class ReceitaController extends AppCompatActivity {
 
         mDbHelper = new DatabaseHelper(this.getApplicationContext());
         db = mDbHelper.getReadableDatabase(); // ganha acesso a database
+
+        //TODO:  implementar leitura das receitas
+
         db.close(); // libera database
 
         setContentView(R.layout.activity_receita_controller);
