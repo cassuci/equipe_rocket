@@ -28,7 +28,6 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receita_detail_controller);
-
     }
 
     @Override
@@ -38,7 +37,6 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
 
         // tratamento botao deletar
         removeReceita(get_receita_id());
-
 
         // tratamento botao modificacao
         Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);

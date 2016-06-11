@@ -22,7 +22,8 @@
         <activity android:name=".Gasto.GastoDetailController" />
         <activity android:name=".Grafico.GraficoController" />
         <activity android:name=".Relatorio.RelatorioController" />
-        <activity android:name=".Receita.ReceitaModifyController"></activity>
+        <activity android:name=".Receita.ReceitaModifyController" />
+        <activity android:name=".Gasto.GastoModifyController"></activity>
     </application>
 
 </manifest>
