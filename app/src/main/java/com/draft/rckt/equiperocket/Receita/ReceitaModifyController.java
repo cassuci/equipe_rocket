@@ -1,12 +1,10 @@
 package com.draft.rckt.equiperocket.Receita;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
@@ -41,7 +39,7 @@ public class ReceitaModifyController extends AppCompatActivity {
             //TODO: mostrar pop-up de erro
         }
 
-        db.close();
+        //TODO: inserir informacoes da receita na UI
 
         setContentView(R.layout.activity_receita_modify_controller);
     }

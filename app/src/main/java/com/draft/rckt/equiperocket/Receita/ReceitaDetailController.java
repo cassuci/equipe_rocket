@@ -27,6 +27,14 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDbHelper = new DatabaseHelper(this.getApplicationContext());
+        db = mDbHelper.getReadableDatabase(); // ganha acesso a database
+
+        //TODO:  implementar leitura dos detalhes da receita
+
+        db.close(); // libera database
+
         setContentView(R.layout.activity_receita_detail_controller);
     }
 
@@ -36,17 +44,17 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
         // Template botao if (v.getId() == R.id.#IDBOTAO){
 
         // tratamento botao deletar
-        removeReceita(get_receita_id());
+        //removeReceita(get_receita_id());
 
         // tratamento botao modificacao
-        Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
+        /*Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
         intent.putExtra("receita_id", get_receita_id());
         intent.putExtra("receita_title", get_receita_title());
         intent.putExtra("receita_descr", get_receita_descr());
         intent.putExtra("receita_value", get_receita_value());
         intent.putExtra("receita_type", get_receita_type());
         intent.putExtra("receita_date", get_receita_date());
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     /**
@@ -55,7 +63,7 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
      * @return true se um registro foi removido, false caso contrario
      *
      */
-    protected boolean removeReceita(int receita_id){
+    protected boolean removeReceita(int receita_id) {
 
         int n_rows; // numero de registros alterados na database
 
@@ -64,7 +72,7 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
         // condicao de where da query
         String where_clause = "WHERE " + DatabaseContract.ReceitaEntry.COLUMN_NAME_ENTRY_ID +
                 " = " + Integer.toString(receita_id);
-        n_rows = db.delete(DatabaseContract.ReceitaEntry.TABLE_NAME, where_clause,null);
+        n_rows = db.delete(DatabaseContract.ReceitaEntry.TABLE_NAME, where_clause, null);
         db.close(); // libera database
 
         // se alterou alguma linha retorna true
@@ -74,7 +82,6 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
             return false;
 
     }
-
 
     public int get_receita_id() {
         return receita_id;

@@ -39,7 +39,7 @@ public class GastoModifyController extends AppCompatActivity {
             //TODO: mostrar pop-up de erro
         }
 
-        db.close();
+        //TODO: inserir informacoes da receita na UI
 
         setContentView(R.layout.activity_gasto_modify_controller);
     }

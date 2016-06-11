@@ -26,26 +26,34 @@ public class GastoDetailController extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDbHelper = new DatabaseHelper(this.getApplicationContext());
+        db = mDbHelper.getReadableDatabase(); // ganha acesso a database
+
+        //TODO:  implementar leitura dos detalhes do gasto
+
+        db.close(); // libera database
+
         setContentView(R.layout.activity_gasto_detail_controller);
     }
 
     @Override
     public void onClick(View v) {
 
-        // Template botao if (v.getId() == R.id.#IDBOTAO){
+        // Template if (v.getId() == R.id.#IDBOTAO)
 
         // tratamento botao deletar
-        removeGasto(get_gasto_id());
+        //removeGasto(get_gasto_id());
 
         // tratamento botao modificacao
-        Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
+        /*Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
         intent.putExtra("gasto_id", get_gasto_id());
         intent.putExtra("gasto_title", get_gasto_title());
         intent.putExtra("gasto_descr", get_gasto_descr());
         intent.putExtra("gasto_value", get_gasto_value());
         intent.putExtra("gasto_type", get_gasto_type());
         intent.putExtra("gasto_date", get_gasto_date());
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     /**
@@ -63,6 +71,7 @@ public class GastoDetailController extends AppCompatActivity implements View.OnC
         // condicao de where da query
         String where_clause = "WHERE " + DatabaseContract.GastoEntry.COLUMN_NAME_ENTRY_ID +
                 " = " + Integer.toString(gasto_id);
+        // execucao da query
         n_rows = db.delete(DatabaseContract.GastoEntry.TABLE_NAME, where_clause,null);
         db.close(); // libera database
 
