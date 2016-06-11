@@ -17,7 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Gasto.GastoController"></activity>
+        <activity android:name=".Gasto.GastoController" />
+        <activity android:name=".Receita.ReceitaDetailController" />
+        <activity android:name=".Gasto.GastoDetailController"></activity>
     </application>
 
 </manifest>
