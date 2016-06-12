@@ -140,7 +140,7 @@ public class GraficoViewController extends AppCompatActivity {
 
     private String create_where_clause(int registro_type) {
 
-        String where = "WHERE ";
+        String where = null;
 
         String receita_type = get_receita_type();
         String gasto_type = get_gasto_type();
@@ -153,13 +153,13 @@ public class GraficoViewController extends AppCompatActivity {
                 where.concat(ReceitaEntry.COLUMN_NAME_TYPE + " = " + receita_type);
 
             if (data_inicio != null)
-                if (where.compareTo("WHERE ") != 0)
+                if (where != null)
                     where.concat(" AND" + ReceitaEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
                 else
                     where.concat(ReceitaEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
 
             if (data_fim != null)
-                if (where.compareTo("WHERE ") != 0)
+                if (where != null)
                     where.concat(" AND" + ReceitaEntry.COLUMN_NAME_DATE + " <= " + data_fim);
                 else
                     where.concat(ReceitaEntry.COLUMN_NAME_DATE + " <= " + data_fim);
@@ -169,20 +169,18 @@ public class GraficoViewController extends AppCompatActivity {
                 where.concat(GastoEntry.COLUMN_NAME_TYPE + " = " + receita_type);
 
             if (data_inicio != null)
-                if (where.compareTo("WHERE ") != 0)
+                if (where != null)
                     where.concat(" AND" + GastoEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
                 else
                     where.concat(GastoEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
 
             if (data_fim != null)
-                if (where.compareTo("WHERE ") != 0)
+                if (where != null)
                     where.concat(" AND" + GastoEntry.COLUMN_NAME_DATE + " <= " + data_fim);
                 else
                     where.concat(GastoEntry.COLUMN_NAME_DATE + " <= " + data_fim);
         }
 
-
-        where.concat(";");
         return where;
     }
 

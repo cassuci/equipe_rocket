@@ -70,7 +70,7 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
         db = mDbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = "WHERE " + DatabaseContract.ReceitaEntry.COLUMN_NAME_ENTRY_ID +
+        String where_clause = DatabaseContract.ReceitaEntry.COLUMN_NAME_ENTRY_ID +
                 " = " + Integer.toString(receita_id);
         n_rows = db.delete(DatabaseContract.ReceitaEntry.TABLE_NAME, where_clause, null);
         db.close(); // libera database

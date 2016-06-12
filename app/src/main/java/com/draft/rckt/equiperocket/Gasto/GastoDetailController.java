@@ -102,7 +102,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateDi
         db = mDbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = "WHERE " + DatabaseContract.GastoEntry.COLUMN_NAME_ENTRY_ID +
+        String where_clause = DatabaseContract.GastoEntry.COLUMN_NAME_ENTRY_ID +
                 " = " + Integer.toString(gasto_id);
         n_rows = db.delete(DatabaseContract.GastoEntry.TABLE_NAME, where_clause, null);
         db.close(); // libera database
