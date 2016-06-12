@@ -39,11 +39,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1290556d-aa59-4b40-80fa-cb2c6a8c82c0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/CreateDialog.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/CreateGastoDialog.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoDetailController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoDetailController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaModifyController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaModifyController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
     </list>
     <ignored path="EquipeRocket.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -106,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReceitaDetailController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ReceitaDetailController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="56" selection-end-column="32" />
+            <state vertical-scroll-proportion="0.3251366">
+              <caret line="41" column="65" selection-start-line="41" selection-start-column="65" selection-end-line="41" selection-end-column="65" />
               <folding />
             </state>
           </provider>
@@ -120,7 +119,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoDetailController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="105" column="28" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
+              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -130,18 +129,22 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/CreateGastoDialog.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+              <caret line="63" column="46" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CreateReceitaDialog.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CreateReceitaDialog.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.23224044">
-              <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="50" column="65" selection-start-line="50" selection-start-column="65" selection-end-line="50" selection-end-column="65" />
+              <folding>
+                <element signature="e#1647#1685#0" expanded="true" />
+                <element signature="e#1755#1770#0" expanded="true" />
+                <element signature="e#2056#2071#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1835,7 +1838,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_gasto_controller.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/app_bar_gasto_controller.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/nav_header_gasto_controller.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_gasto_detail_controller.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_gasto_detail_controller.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/activity_detail_gasto_controller_menu.xml" />
@@ -1843,10 +1845,12 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoModifyController.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Grafico/GraficoViewController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaModifyController.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoDetailController.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java" />
       </list>
     </option>
   </component>
@@ -2399,7 +2403,13 @@
       <option name="project" value="LOCAL" />
       <updated>1465747439796</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Refactor no CreateDialog">
+      <created>1465747800365</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1465747800365</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2413,7 +2423,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2435,7 +2445,7 @@
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24810319" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24810319" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -2475,7 +2485,8 @@
     <MESSAGE value="Inicializado tratamento de modificacao de gasto" />
     <MESSAGE value="Arrumados where statements" />
     <MESSAGE value="Gasto Detail implementa onClick" />
-    <option name="LAST_COMMIT_MESSAGE" value="Gasto Detail implementa onClick" />
+    <MESSAGE value="Refactor no CreateDialog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor no CreateDialog" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2681,14 +2692,6 @@
       </provider>
       <provider editor-type-id="android-designer">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5516224">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/drawables.xml">
@@ -2924,10 +2927,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.1698112">
+          <caret line="13" column="95" selection-start-line="13" selection-start-column="95" selection-end-line="13" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="56" selection-end-column="32" />
+          <caret line="50" column="65" selection-start-line="50" selection-start-column="65" selection-end-line="50" selection-end-column="65" />
+          <folding>
+            <element signature="e#1647#1685#0" expanded="true" />
+            <element signature="e#1755#1770#0" expanded="true" />
+            <element signature="e#2056#2071#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/CreateGastoDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="63" column="46" selection-start-line="63" selection-start-column="46" selection-end-line="63" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -2935,23 +2958,15 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/GastoDetailController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="105" column="28" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Gasto/CreateGastoDialog.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/ReceitaDetailController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/draft/rckt/equiperocket/Receita/CreateReceitaDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23224044">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.3251366">
+          <caret line="41" column="65" selection-start-line="41" selection-start-column="65" selection-end-line="41" selection-end-column="65" />
           <folding />
         </state>
       </provider>
