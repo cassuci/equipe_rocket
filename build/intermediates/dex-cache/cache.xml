@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Public\Documents\ngit\equipe_rocket\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2e6dfa6f4f8bad5d912e48bfa0e34f1fdc2aadfe">
+        <dex dex="C:\Users\Public\Documents\ngit\equipe_rocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_b15e76a16710458d877db73e35b79af9b56d1065\classes.dex" />
+    </item>
+
+</items>

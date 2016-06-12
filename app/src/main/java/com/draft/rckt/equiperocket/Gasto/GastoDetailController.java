@@ -1,19 +1,22 @@
 package com.draft.rckt.equiperocket.Gasto;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+import java.sql.Date;
 
 import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
-import java.sql.Date;
-
-public class GastoDetailController extends AppCompatActivity implements View.OnClickListener{
-
+public class GastoDetailController extends AppCompatActivity implements CreateDialog.NoticeDialogListener {
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
     private int gasto_id;
@@ -26,44 +29,74 @@ public class GastoDetailController extends AppCompatActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mDbHelper = new DatabaseHelper(this.getApplicationContext());
-        db = mDbHelper.getReadableDatabase(); // ganha acesso a database
-
-        //TODO:  implementar leitura dos detalhes do gasto
-
-        db.close(); // libera database
-
         setContentView(R.layout.activity_gasto_detail_controller);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_detail_gasto_controller_menu, menu);
+        return true;
     }
 
     @Override
-    public void onClick(View v) {
-
-        // Template if (v.getId() == R.id.#IDBOTAO)
-
-        // tratamento botao deletar
-        //removeGasto(get_gasto_id());
-
-        // tratamento botao modificacao
-        /*Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
-        intent.putExtra("gasto_id", get_gasto_id());
-        intent.putExtra("gasto_title", get_gasto_title());
-        intent.putExtra("gasto_descr", get_gasto_descr());
-        intent.putExtra("gasto_value", get_gasto_value());
-        intent.putExtra("gasto_type", get_gasto_type());
-        intent.putExtra("gasto_date", get_gasto_date());
-        startActivity(intent);*/
+    public void onBackPressed() {
+        Intent intent = new Intent(GastoDetailController.this, GastoController.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
+        startActivity(intent);
+        finish();
     }
 
-    /**
-     * Remove registro da tabela de gastos
-     * @param gasto_id identificador unico do gasto
-     * @return true se um registro foi removido, false caso contrario
-     *
-     */
-    protected boolean removeGasto(int gasto_id){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.delete:
+                showNoticeDialog();
+                return true;
+            case R.id.edit:
+                Intent intent_edit = new Intent();
+                /**TODO
+                 * Editar funcao intent.setClass(GastoDetailController.this, NOMECLASSEEDITARGASTO)
+                 * intent_edit.setClass(GastoDetailController.this,EditarGasto.class);**/
+                startActivity(intent_edit);
+                finish();
+                return true;
 
+        }
+        return true;
+    }
+
+    public void showNoticeDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new CreateDialog();
+        dialog.show(getFragmentManager(), "NoticeDialogFragment");
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        dialog.dismiss();
+
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        boolean isDeleteSucessful =  removeGasto(get_gasto_id());
+        dialog.dismiss();
+        if(isDeleteSucessful)
+            Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean removeGasto(int gasto_id){
         int n_rows; // numero de registros alterados na database
 
         db = mDbHelper.getWritableDatabase(); // ganha acesso a database
@@ -71,8 +104,7 @@ public class GastoDetailController extends AppCompatActivity implements View.OnC
         // condicao de where da query
         String where_clause = "WHERE " + DatabaseContract.GastoEntry.COLUMN_NAME_ENTRY_ID +
                 " = " + Integer.toString(gasto_id);
-        // execucao da query
-        n_rows = db.delete(DatabaseContract.GastoEntry.TABLE_NAME, where_clause,null);
+        n_rows = db.delete(DatabaseContract.GastoEntry.TABLE_NAME, where_clause, null);
         db.close(); // libera database
 
         // se alterou alguma linha retorna true
@@ -80,14 +112,11 @@ public class GastoDetailController extends AppCompatActivity implements View.OnC
             return true;
         else
             return false;
-
     }
-
 
     public int get_gasto_id() {
         return gasto_id;
     }
-
     public String get_gasto_title() {
         return gasto_title;
     }
@@ -107,5 +136,4 @@ public class GastoDetailController extends AppCompatActivity implements View.OnC
     public Date get_gasto_date() {
         return gasto_date;
     }
-
 }

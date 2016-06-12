@@ -17,14 +17,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Gasto.GastoController" />
         <activity android:name=".Receita.ReceitaDetailController" />
-        <activity android:name=".Gasto.GastoDetailController" />
         <activity android:name=".Grafico.GraficoController" />
         <activity android:name=".Relatorio.RelatorioController" />
         <activity android:name=".Receita.ReceitaModifyController" />
         <activity android:name=".Gasto.GastoModifyController" />
-        <activity android:name=".Grafico.GraficoViewController"></activity>
+        <activity android:name=".Grafico.GraficoViewController" />
+        <activity
+            android:name=".Gasto.GastoController"
+            android:label="@string/title_activity_gasto_controller"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity
+            android:name=".Gasto.GastoDetailController"
+            android:label="@string/title_activity_gasto_detail_controller"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

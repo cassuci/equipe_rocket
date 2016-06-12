@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">EquipeRocket</string>
+    <string name="title_activity_gasto_controller">GastoController</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="dialog_message_delete_gasto">Você tem certeza que deseja deletar o gasto atual?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_activity_gasto_detail_controller">GastoDetailController</string>
 </resources>

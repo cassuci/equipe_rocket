@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/gerenciador_gastos"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Gerenciador de Gastos" />
+        <item
+            android:id="@+id/gerenciador_receitas"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Gerenciador de Receitas" />
+        <item
+            android:id="@+id/relatorio"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Relatório" />
+        <item
+            android:id="@+id/grafico"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Gráfico" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
