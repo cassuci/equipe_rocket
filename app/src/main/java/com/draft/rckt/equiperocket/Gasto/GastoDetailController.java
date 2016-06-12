@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.sql.Date;
@@ -16,9 +17,10 @@ import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
-public class GastoDetailController extends AppCompatActivity implements CreateDialog.NoticeDialogListener {
+public class GastoDetailController extends AppCompatActivity implements CreateDialog.NoticeDialogListener, View.OnClickListener {
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
+
     private int gasto_id;
     private String gasto_title;
     private String gasto_descr;
@@ -96,6 +98,17 @@ public class GastoDetailController extends AppCompatActivity implements CreateDi
             Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onClick(View v) {
+        //TODO: implementar tratamentos dos botoes (modificar, remover) disponiveis na tela de detalhe
+
+    }
+
+    /**
+     * Remove uma entrada da tabela de gastos
+     * @param gasto_id identificador unico da entrada a ser deletada
+     * @return true se houve sucesso na remocao, false caso contrario
+     */
     public boolean removeGasto(int gasto_id){
         int n_rows; // numero de registros alterados na database
 
@@ -117,6 +130,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateDi
     public int get_gasto_id() {
         return gasto_id;
     }
+
     public String get_gasto_title() {
         return gasto_title;
     }
@@ -136,4 +150,6 @@ public class GastoDetailController extends AppCompatActivity implements CreateDi
     public Date get_gasto_date() {
         return gasto_date;
     }
+
+
 }
