@@ -17,7 +17,7 @@ import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
-public class GastoDetailController extends AppCompatActivity implements CreateGastoDialog.NoticeDialogListener, View.OnClickListener {
+public class GastoDetailController extends AppCompatActivity implements CreateGastoDialog.NoticeDialogListener{
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
 
@@ -31,6 +31,9 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mDbHelper = new DatabaseHelper(getApplicationContext());
+
         setContentView(R.layout.activity_gasto_detail_controller);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -63,16 +66,18 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
                 showNoticeDialog();
                 return true;
             case R.id.edit:
-                Intent intent_edit = new Intent();
-                /**TODO
-                 * Editar funcao intent.setClass(GastoDetailController.this, NOMECLASSEEDITARGASTO)
-                 * intent_edit.setClass(GastoDetailController.this,EditarGasto.class);**/
-                startActivity(intent_edit);
-                finish();
+                // tratamento botao modificacao
+                Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
+                intent.putExtra("gasto_id", get_gasto_id());
+                intent.putExtra("gasto_title", get_gasto_title());
+                intent.putExtra("gasto_descr", get_gasto_descr());
+                intent.putExtra("gasto_value", get_gasto_value());
+                intent.putExtra("gasto_type", get_gasto_type());
+                intent.putExtra("gasto_date", get_gasto_date());
+                startActivity(intent);
                 return true;
-
         }
-        return true;
+        return false;
     }
 
     public void showNoticeDialog() {
@@ -96,27 +101,6 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
             Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        // Template botao if (v.getId() == R.id.#IDBOTAO){
-
-        //TODO: implementar tratamento botao deletar
-
-
-
-        // tratamento botao modificacao
-        /*Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
-        intent.putExtra("gasto_id", get_gasto_id());
-        intent.putExtra("gasto_title", get_gasto_title());
-        intent.putExtra("gasto_descr", get_get_descr());
-        intent.putExtra("gasto_value", get_gest_value());
-        intent.putExtra("gasto_type", get_get_type());
-        intent.putExtra("gasto_date", get_get_date());
-        startActivity(intent);*/
-
     }
 
     /**

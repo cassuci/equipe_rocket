@@ -21,7 +21,7 @@ import com.draft.rckt.equiperocket.R;
 
 import java.sql.Date;
 
-public class ReceitaDetailController extends AppCompatActivity implements View.OnClickListener, CreateReceitaDialog.NoticeDialogListener {
+public class ReceitaDetailController extends AppCompatActivity implements CreateReceitaDialog.NoticeDialogListener {
 
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
@@ -108,25 +108,6 @@ public class ReceitaDetailController extends AppCompatActivity implements View.O
             Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onClick(View v) {
-
-        // Template botao if (v.getId() == R.id.#IDBOTAO){
-
-        // tratamento botao deletar
-        //removeReceita(get_receita_id());
-
-        // tratamento botao modificacao
-        /*Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
-        intent.putExtra("receita_id", get_receita_id());
-        intent.putExtra("receita_title", get_receita_title());
-        intent.putExtra("receita_descr", get_receita_descr());
-        intent.putExtra("receita_value", get_receita_value());
-        intent.putExtra("receita_type", get_receita_type());
-        intent.putExtra("receita_date", get_receita_date());
-        startActivity(intent);*/
     }
 
     /**
