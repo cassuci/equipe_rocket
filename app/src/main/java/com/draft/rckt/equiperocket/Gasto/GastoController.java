@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.R;
+import com.draft.rckt.equiperocket.Receita.ReceitaController;
+import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 
 public class GastoController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +49,7 @@ public class GastoController extends AppCompatActivity
                  *
                  *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
                  */
+                intent.setClass(GastoController.this,GastoDetailController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -108,20 +111,20 @@ public class GastoController extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Intent intent = new Intent();
 
         if (id == R.id.gerenciador_gastos) {
-            // Handle the camera action
+            //do nothing
         } else if (id == R.id.gerenciador_receitas) {
-
+            intent.setClass(this, ReceitaController.class);
+            startActivity(intent);
         } else if (id == R.id.relatorio) {
-
+            intent.setClass(this, RelatorioController.class);
+            startActivity(intent);
         } else if (id == R.id.grafico) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
+            intent.setClass(this, RelatorioController.class);
+            startActivity(intent);
+    }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
