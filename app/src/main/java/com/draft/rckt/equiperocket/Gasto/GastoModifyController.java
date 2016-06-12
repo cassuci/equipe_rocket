@@ -1,25 +1,39 @@
 package com.draft.rckt.equiperocket.Gasto;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
+import com.draft.rckt.equiperocket.Database.DatabaseContract;
+import com.draft.rckt.equiperocket.Database.DatabaseContract.GastoEntry;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.sql.Date;
 
-public class GastoModifyController extends AppCompatActivity {
+public class GastoModifyController extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
+
     private int gasto_id;
     private String gasto_title;
     private String gasto_descr;
     private float gasto_value;
     private String gasto_type;
     private Date gasto_date;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +42,86 @@ public class GastoModifyController extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
 
-        if (b != null){
+        if (b != null) {
             set_gasto_id((int) b.get("gasto_id"));
             set_gasto_title((String) b.get("gasto_title"));
             set_gasto_descr((String) b.get("gasto_descr"));
             set_gasto_value((float) b.get("gasto_value"));
             set_gasto_type((String) b.get("gasto_type"));
             set_gasto_date((Long) b.get("gasto_date"));
-        }else{
+        } else {
             //TODO: mostrar pop-up de erro
         }
 
         //TODO: inserir informacoes da receita na UI
 
         setContentView(R.layout.activity_gasto_modify_controller);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        // if (v.getId() == R.id.#IDBOTAOCONFIRMA)
+        // tratamento confirmacao de modificacao
+        //TODO: extrair informações da UI e editar insercoes no Bundle
+        Bundle b = new Bundle();
+        b.putString("gasto_title", null);
+        b.putString("gasto_descr", null);
+        b.putFloat("gasto_value", (float) 0.0);
+        b.putString("gasto_type", null);
+        modify_confirmed(b);
+
+
+        //TODO: finalizar este tratamento
+        // if (v.getId() == R.id.#IDBOTAOCANCELA)
+        // tratamento botao cancela
+        // mata activity
+        //finish();
+
+
+    }
+
+    /**
+     * Executa acoes de modificacao do registro no banco de dados
+     * @param bundle conjunto de informacoes a serem atualizadas no banco de dados
+     */
+    private void modify_confirmed(Bundle bundle) {
+        String gasto_title = null;
+        String gasto_descr = null;
+        float gasto_value;
+        String gasto_type = null;
+
+        // separa informacoes a serem atualizadas
+        gasto_title = bundle.getString("gasto_title");
+        gasto_descr = bundle.getString("gasto_descr");
+        gasto_value = bundle.getFloat("gasto_value");
+        gasto_type = bundle.getString("gasto_type");
+
+        // cria grupo de valores a serem atualizados
+        ContentValues values = null;
+        values.put(GastoEntry.COLUMN_NAME_TITLE, gasto_title);
+        values.put(GastoEntry.COLUMN_NAME_CONTENT, gasto_descr);
+        values.put(GastoEntry.COLUMN_NAME_VALUE, gasto_value);
+        values.put(GastoEntry.COLUMN_NAME_TYPE, gasto_type);
+
+        // where statement para identificar registro a ser atualizado
+        String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID
+                + " = " + Integer.toString(get_gasto_id());
+
+        mDbHelper = new DatabaseHelper(getApplicationContext());
+        db = mDbHelper.getWritableDatabase();
+        int result = db.update(GastoEntry.TABLE_NAME, values, where_clause, null);
+        db.close();
+
+        if (result > 0){
+            // informar modificacao realizada com sucesso
+        }else{
+            //TODO: informar falha na modificacao
+        }
+
     }
 
     public void set_gasto_id(int gasto_id) {
@@ -92,4 +172,44 @@ public class GastoModifyController extends AppCompatActivity {
         return gasto_date;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "GastoModifyController Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.draft.rckt.equiperocket.Gasto/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "GastoModifyController Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://com.draft.rckt.equiperocket.Gasto/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
 }

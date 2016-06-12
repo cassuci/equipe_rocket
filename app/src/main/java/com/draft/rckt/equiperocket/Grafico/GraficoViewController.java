@@ -23,6 +23,8 @@ public class GraficoViewController extends AppCompatActivity {
     private static final int GRAFICO_BARRAS = 0;
     private static final int GRAFICO_LINHAS = 1;
     private static final int GRAFICO_PONTOS = 2;
+
+
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
 
