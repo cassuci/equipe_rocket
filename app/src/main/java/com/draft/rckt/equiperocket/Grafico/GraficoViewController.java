@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseContract.GastoEntry;
 import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
