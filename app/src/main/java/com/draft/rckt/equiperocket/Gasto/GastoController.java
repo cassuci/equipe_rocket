@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
+import com.draft.rckt.equiperocket.Grafico.GraficoController;
 
 public class GastoController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -122,7 +123,7 @@ public class GastoController extends AppCompatActivity
             intent.setClass(this, RelatorioController.class);
             startActivity(intent);
         } else if (id == R.id.grafico) {
-            intent.setClass(this, RelatorioController.class);
+            intent.setClass(this, GraficoController.class);
             startActivity(intent);
     }
 
