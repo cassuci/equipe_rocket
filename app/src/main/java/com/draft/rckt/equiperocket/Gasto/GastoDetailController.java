@@ -17,7 +17,7 @@ import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
-public class GastoDetailController extends AppCompatActivity implements CreateDialog.NoticeDialogListener, View.OnClickListener {
+public class GastoDetailController extends AppCompatActivity implements CreateGastoDialog.NoticeDialogListener, View.OnClickListener {
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
 
@@ -77,7 +77,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateDi
 
     public void showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
-        DialogFragment dialog = new CreateDialog();
+        DialogFragment dialog = new CreateGastoDialog();
         dialog.show(getFragmentManager(), "NoticeDialogFragment");
 
     }
@@ -100,7 +100,22 @@ public class GastoDetailController extends AppCompatActivity implements CreateDi
 
     @Override
     public void onClick(View v) {
-        //TODO: implementar tratamentos dos botoes (modificar, remover) disponiveis na tela de detalhe
+
+        // Template botao if (v.getId() == R.id.#IDBOTAO){
+
+        //TODO: implementar tratamento botao deletar
+
+
+
+        // tratamento botao modificacao
+        /*Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
+        intent.putExtra("gasto_id", get_gasto_id());
+        intent.putExtra("gasto_title", get_gasto_title());
+        intent.putExtra("gasto_descr", get_get_descr());
+        intent.putExtra("gasto_value", get_gest_value());
+        intent.putExtra("gasto_type", get_get_type());
+        intent.putExtra("gasto_date", get_get_date());
+        startActivity(intent);*/
 
     }
 

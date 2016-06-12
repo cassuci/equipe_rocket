@@ -9,7 +9,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.draft.rckt.equiperocket.R;
 
-public class CreateDialog extends DialogFragment {
+public class CreateGastoDialog extends DialogFragment {
     /**TODO
      * Deixar classe reutilizavel para receita
      * MUDAR: builder.setMessage(R.string.dialog_message_delete_gasto)
@@ -50,14 +50,14 @@ public class CreateDialog extends DialogFragment {
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked OK button
-                mListener.onDialogPositiveClick(CreateDialog.this);
+                mListener.onDialogPositiveClick(CreateGastoDialog.this);
 
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User cancelled the dialog
-                mListener.onDialogNegativeClick(CreateDialog.this);
+                mListener.onDialogNegativeClick(CreateGastoDialog.this);
             }
         });
 

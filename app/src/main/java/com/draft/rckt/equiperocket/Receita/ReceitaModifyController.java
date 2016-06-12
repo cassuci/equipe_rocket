@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
 import java.sql.Date;
 
-public class ReceitaModifyController extends AppCompatActivity {
+public class ReceitaModifyController extends AppCompatActivity implements View.OnClickListener {
 
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
@@ -42,6 +43,11 @@ public class ReceitaModifyController extends AppCompatActivity {
         //TODO: inserir informacoes da receita na UI
 
         setContentView(R.layout.activity_receita_modify_controller);
+    }
+
+    @Override
+    public void onClick(View v) {
+        //TODO: realizar tratamento dos botoes disponiveis (modificar, cancelar)
     }
 
     public void set_receita_id(int receita_id) {
@@ -91,4 +97,6 @@ public class ReceitaModifyController extends AppCompatActivity {
     public Date get_receita_date() {
         return receita_date;
     }
+
+
 }
