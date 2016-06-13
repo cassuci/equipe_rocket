@@ -53,10 +53,8 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0b93f94-4f35-46b5-92c1-36bac1f536b8" name="Default" comment="Login title bar">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="d0b93f94-4f35-46b5-92c1-36bac1f536b8" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
     </list>
     <ignored path="EquipeRocket.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -2386,7 +2384,13 @@
       <option name="project" value="LOCAL" />
       <updated>1465860212495</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Login title bar">
+      <created>1465860920273</created>
+      <option name="number" value="00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1465860920274</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TodoView">
@@ -2446,10 +2450,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Arrumado toolbar duplicado. AppTheme.NoActionBar" />
-    <MESSAGE value="Login title bar" />
     <MESSAGE value="RelatorioController" />
     <MESSAGE value="Relatorio" />
-    <option name="LAST_COMMIT_MESSAGE" value="Relatorio" />
+    <MESSAGE value="Login title bar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login title bar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
