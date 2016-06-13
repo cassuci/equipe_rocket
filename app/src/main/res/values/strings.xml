@@ -14,4 +14,12 @@
     <string name="dialog_message_delete_receita">Você tem certeza que deseja deletar a receita atual?</string>
 
     <string name="title_activity_relatorio_controller">RelatorioController</string>
+    <string name="choose_data">Escolha o tipo de relatório desejado.</string>
+    <string name="checkbox_gastos">Gastos</string>
+    <string name="checkbox_receitas">Receitas</string>
+    <string name="choose_dates">Escolha as datas de início e fim.</string>
+    <string name="button_start_date">Data inicial</string>
+    <string name="button_end_date">Data final</string>
+    <string name="button_gerar_relatorio">Gerar Relatório</string>
+
 </resources>

@@ -1,9 +1,10 @@
 package com.draft.rckt.equiperocket.Relatorio;
 
+
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,14 +14,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import java.util.Calendar;
 
 public class RelatorioController extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener, DialogInterface.OnCancelListener {
+
+    private Button buttonStartDate, buttonEndDate, buttonGerarRelatorio;
+    private TextView textStart, textEnd;
+    private int dateSelected = -1, gastosSelected = 0, receitasSelected = 0;
+    private final int START_DATE = 0;
+    private final int END_DATE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +52,27 @@ public class RelatorioController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        buttonStartDate = (Button) findViewById(R.id.button_start_date);
+        buttonEndDate = (Button) findViewById(R.id.button_end_date);
+        buttonGerarRelatorio = (Button) findViewById(R.id.button_gerar_relatorio);
+        textStart = (TextView) findViewById(R.id.startDateDisplay);
+        textEnd = (TextView) findViewById(R.id.endDateDisplay);
+
+        buttonStartDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDate(v);
+            }
+        });
+
+        buttonEndDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endDate(v);
+            }
+        });
+
     }
 
     @Override
@@ -94,5 +130,110 @@ public class RelatorioController extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private int startYear, startMonth, startDay, endYear, endMonth, endDay;
+
+    public void startDate(View view)
+    {
+        dateSelected = START_DATE;
+        initDateData();
+        Calendar cDefault = Calendar.getInstance();
+        cDefault.set(startYear, startMonth, startDay);
+
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                this,
+                cDefault.get(Calendar.YEAR),
+                cDefault.get(Calendar.MONTH),   // 0 a 11  !!!!
+                cDefault.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.setOnCancelListener(this);
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
+    }
+
+    public void endDate(View view)
+    {
+        dateSelected = END_DATE;
+        initDateData();
+        Calendar cDefault = Calendar.getInstance();
+        cDefault.set(endYear, endMonth, endDay);
+
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                this,
+                cDefault.get(Calendar.YEAR),
+                cDefault.get(Calendar.MONTH),   // 0 a 11  !!!!
+                cDefault.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.setOnCancelListener(this);
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");    }
+
+    private void initDateData()
+    {
+            Calendar c = Calendar.getInstance();
+            startYear = endYear = c.get(Calendar.YEAR);
+            startMonth = endMonth = c.get(Calendar.MONTH);
+            startDay = endDay = c.get(Calendar.DAY_OF_MONTH);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
+        if(dateSelected == START_DATE)
+        {
+            textStart.setText(date);
+            startYear = year;
+            startMonth = monthOfYear + 1;
+            startDay = dayOfMonth;
+        }
+        if(dateSelected == END_DATE)
+        {
+            textEnd.setText(date);
+            endYear = year;
+            endMonth = monthOfYear + 1;
+            endDay = dayOfMonth;
+        }
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        startYear = startMonth = startDay = endYear = endMonth = endDay = 0;
+        textStart.setText("");
+        textEnd.setText("");
+        dateSelected = -1;
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_gastos:
+                if (checked)
+                    gastosSelected = 1;
+                else
+                    gastosSelected = 0;
+                break;
+            case R.id.checkbox_receitas:
+                if (checked)
+                    receitasSelected = 1;
+                else
+                    receitasSelected = 0;
+                break;
+        }
+
+        textStart.setText("gastos = " + gastosSelected);
+        textEnd.setText("receitas = " + receitasSelected);
+    }
+
+    public void gerarRelatorio(View view)
+    {
+        if (gastosSelected == 0 && receitasSelected == 0)
+        {
+            Context context = getApplicationContext();
+            Toast.makeText(context, "Escolha o tipo de relatório.", Toast.LENGTH_LONG).show();
+        }
     }
 }
