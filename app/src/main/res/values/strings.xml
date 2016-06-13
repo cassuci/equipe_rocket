@@ -12,4 +12,6 @@
     <string name="cancel">Cancel</string>
     <string name="title_activity_gasto_detail_controller">GastoDetailController</string>
     <string name="dialog_message_delete_receita">Você tem certeza que deseja deletar a receita atual?</string>
+
+    <string name="title_activity_relatorio_controller">RelatorioController</string>
 </resources>
