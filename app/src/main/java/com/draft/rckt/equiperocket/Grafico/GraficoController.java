@@ -31,8 +31,6 @@ public class GraficoController extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_grafico_title);
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
