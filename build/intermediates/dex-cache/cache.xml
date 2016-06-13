@@ -1,3 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4477ea44f5ec5ad064022a22691732d7638ff197">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-8.1.0_918fdbe0c01e1dda7791cdec98a72497f92cb762\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a961cae2dfe6824a6beb3f62b1ba0dbb57ea87b7">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_bed85782ebcf71ccef26b80bfad40119acea5af8\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.4.0\support-annotations-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ffbe55fdb2bb456b1485831706a9eac3300bb6b8">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.4.0_b07abae792834377205959d52cef770469b76538\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="de4db3785756bfb0915a9f59a9b3f2fea7407be4">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-23.4.0_d7e872790ec53ae1c1bcb691bb33a0135a21f5ef\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.1\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="37bf8de5b4f9e7e93006db783b9b3168e32e38e9">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.jjoe64-graphview-4.0.1_f65a539fcf5c269bccab33df76c7fef7d8892697\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="67bd36ee9340ec7c254108936ad16b24bed160cc">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.4.0_0d5a4bfc8bc49ef613cee684335cea16f7404f51\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="c2c594cace5d83a3227b2b6e658ecbfd586d3ed9">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-23.4.0_de9a5363293aed7e4a3f59f97128c60a86c18f0c\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="548f06de403a9409f00554b3ee12a9fdea0e236c">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.4.0_19cffa8fa829a21aa4d2d4bc4910a1725530d48a\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.4.0\jars\libs\internal_impl-23.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ea3c07504d2c8f4b13aa17c45c1b68ed9c1c3674">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.4.0_9ed7250336da1f0faa5b357d5319efea3f90e000\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-8.1.0_6845dd3f9407f30aa1fae24e31fdb6bd2ab14c30\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="b5326b3ca777aef5ee47f28b210891ae178b4251">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3222e2778c20a9f47d012e627661ae8879646a29\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-23.4.0_fb5028d62ba6eae25043dbc636bfb4070a2ee189\classes.dex" />
+    </item>
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-23.4.0_1bb875feccc596cb1763b5479a5047c01ca90818\classes.dex" />
+    </item>
+
+</items>
