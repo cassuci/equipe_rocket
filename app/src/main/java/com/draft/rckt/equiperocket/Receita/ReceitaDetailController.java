@@ -33,15 +33,26 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     private String receita_type;
     private Date receita_date;
 
+    private Toolbar toolbar;
+    private TextView textToolbar;
+    private Receita receita;
+    private TextView textView_titulo;
+    private TextView textView_data;
+    private TextView textView_valor;
+    private TextView textView_desc;
+    private TextView textView_tipo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mDbHelper = new DatabaseHelper(getApplicationContext());
 
-        // TODO: extrair detalhes da receita para mostrar na tela
+        // TODO: verificar as funcionalidades dos botões
 
-        setContentView(R.layout.activity_gasto_detail_controller);
+        setContentView(R.layout.activity_receita_detail_controller);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -49,6 +60,53 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        //TOOLBAR
+//        toolbar = (Toolbar) findViewById(R.id.tb_detalhes_id);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
+//        textToolbar = (TextView) findViewById(R.id.textToolbar_id);
+//        textToolbar.setText("Detalhes da receita");
+
+        //TEXTVIEW
+        textView_titulo = (TextView) findViewById(R.id.textView_titulo_id);
+        textView_data = (TextView) findViewById(R.id.textView_data_id);
+        textView_valor = (TextView) findViewById(R.id.textView_valor_id);
+        textView_tipo = (TextView) findViewById(R.id.textView_tipo_id);
+        textView_desc = (TextView) findViewById(R.id.textView_desc_id);
+
+        //Pegando dados da receita selecionada
+        getReceita();
+
+        //Preenchendo TextView
+        fillTextView();
+
+    }
+
+
+    public void getReceita(){
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle.containsKey("receita"))
+        {
+            receita = (Receita) bundle.getSerializable("receita");
+
+        }
+
+
+    }
+
+
+    private void fillTextView()
+    {
+        //TODO: Arrumar Data e descrição
+        textView_titulo.setText(receita.titulo);
+        textView_data.setText("A/A/A");
+        textView_valor.setText(String.valueOf(receita.valor));
+        textView_tipo.setText(receita.tipo);
+        textView_desc.setText("njlabjasbo abg ud uogau ga iudgudsgids iudsgbuisdbg sdbg bdsgdks bdkldgksbkdslb");
     }
 
 
@@ -74,6 +132,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
                 return true;
             case R.id.edit:
                 Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
+                //TODO: Muito feio isso aqui, arrumar tbm. Dica: Passar um objeto Receita, só isso
                 intent.putExtra("receita_id", get_receita_id());
                 intent.putExtra("receita_title", get_receita_title());
                 intent.putExtra("receita_descr", get_receita_descr());

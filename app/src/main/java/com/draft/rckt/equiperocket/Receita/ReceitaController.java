@@ -84,11 +84,12 @@ public class ReceitaController extends AppCompatActivity {
 
     public void showReceita(int pos) {
 
-//        Intent it = new Intent(this, DetalhesReceita.class);
-//        Receita receita = array.get(pos);
-//        it.putExtra("receita", receita);
-//
-//        startActivity(it);
+        Intent it = new Intent(this, ReceitaDetailController.class);
+        Receita receita = array.get(pos);
+        it.putExtra("receita", receita);
+
+        startActivity(it);
+        finish();
 
     }
 }
