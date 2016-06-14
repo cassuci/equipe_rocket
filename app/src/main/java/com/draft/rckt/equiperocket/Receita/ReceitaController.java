@@ -72,6 +72,7 @@ public class ReceitaController extends AppCompatActivity {
             array.add(rec);
         }
 
+        //teste
         // array = db.getAllItens("receita");
 
     }
