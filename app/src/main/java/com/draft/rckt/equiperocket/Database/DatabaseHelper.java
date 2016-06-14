@@ -24,8 +24,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " );"
                     + "CREATE TABLE " + DatabaseContract.ReceitaEntry.TABLE_NAME + " (" +
                     DatabaseContract.ReceitaEntry.COLUMN_NAME_ENTRY_ID + " INTEGER PRIMARY KEY," +
-                    DatabaseContract.ReceitaEntry.COLUMN_NAME_USER_ID + " VARCHAR(40) FOREIGN KEY REFERENCES "+
-                    DatabaseContract.UserEntry.TABLE_NAME+ "("+ DatabaseContract.UserEntry.COLUMN_NAME_USER_ID +")"+ " ON DELETE CASCADE"+COMMA_SEP +
+                    DatabaseContract.ReceitaEntry.COLUMN_NAME_USER_ID + " VARCHAR(40), FOREIGN KEY ( " +
+                    DatabaseContract.ReceitaEntry.COLUMN_NAME_USER_ID + ") REFERENCES " +
+                    DatabaseContract.UserEntry.TABLE_NAME+ "("+ DatabaseContract.UserEntry.COLUMN_NAME_USER_ID +") ON DELETE CASCADE"+COMMA_SEP +
                     DatabaseContract.ReceitaEntry.COLUMN_NAME_TITLE + VARCHAR40_TYPE + COMMA_SEP +
                     DatabaseContract.ReceitaEntry.COLUMN_NAME_CONTENT + VARCHAR255_TYPE+ COMMA_SEP +
                     DatabaseContract.ReceitaEntry.COLUMN_NAME_VALUE + REAL_TYPE+ " NOT NULL" +COMMA_SEP +
@@ -44,13 +45,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     " );";
 
     private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + DatabaseContract.ReceitaEntry.TABLE_NAME + ";"
-                    +"DROP TABLE IF EXISTS " + DatabaseContract.GastoEntry.TABLE_NAME + ";"
-                    +"DROP TABLE IF EXISTS " + DatabaseContract.UserEntry.TABLE_NAME + ";";
+            "DROP TABLE IF EXISTS " + DatabaseContract.UserEntry.TABLE_NAME + ";"
+            + "DROP TABLE IF EXISTS " + DatabaseContract.ReceitaEntry.TABLE_NAME + ";"
+            +"DROP TABLE IF EXISTS " + DatabaseContract.GastoEntry.TABLE_NAME + ";";
 
 
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "Database.db";
 
     public DatabaseHelper(Context context) {

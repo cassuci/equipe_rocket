@@ -100,22 +100,23 @@ public class ReceitaController extends AppCompatActivity
 
         DatabaseController db = new DatabaseController(this);
 
-        // TESTEEEEEEEEE
-        int i;
-        for (i = 1; i < 15; i++)
-        {
-            Receita rec = new Receita();
-            rec.user_id = "user_id " + i;
-            rec.receita_id = 1;
-            rec.titulo = "Receit " + i;
-            rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
-            rec.tipo = "qualquer uma";
-            rec.valor = (float) 4000.90 + i;
-            array.add(rec);
-           // db.addItemReceita(rec);
-        }
+        //TODO voltar . Ass Ivan
+//        // TESTEEEEEEEEE
+////        int i;
+////        for (i = 1; i < 15; i++)
+////        {
+//            Receita rec = new Receita();
+//            rec.user_id = "98";
+//            rec.receita_id = i;
+//            rec.titulo = "Receit " + i;
+//            rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
+//            rec.tipo = "qualquer uma";
+//            rec.valor = (float) 4000.90 + i;
+//            //array.add(rec);
+//            db.addItemReceita(rec);
+//        }
 
-       // array = db.getAllReceitaOrderByDate();
+      //  array = db.getAllReceitaOrderByDate();
 
     }
 

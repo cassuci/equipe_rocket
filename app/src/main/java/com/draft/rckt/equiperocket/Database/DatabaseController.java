@@ -20,9 +20,32 @@ public class DatabaseController {
     private static DatabaseHelper dbHelper = null;
 
     public DatabaseController(Context context) {
-        if (dbHelper == null)
+        if (dbHelper == null) {
             dbHelper = new DatabaseHelper(context);
+
+            //TODO temporario
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("username", "100");
+            contentValues.put("senha", "senhaTeste");
+            contentValues.put("nome", "NomeTeste");
+
+            db.insert("Users", null, contentValues);
+
+            ContentValues cont = new ContentValues();
+            cont.put("receita_id", 55);
+            cont.put("user_id", "100");
+            cont.put("valor", 98.0);
+            cont.put("data", "default");
+            db.insert("Receitas", null, cont);
+
+            db.close();
+
+        }
     }
+
+
 
     public void addItemReceita(Receita rec) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -35,7 +58,7 @@ public class DatabaseController {
         contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.desc);
         contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.valor);
         contentValues.put(ReceitaEntry.COLUMN_NAME_TYPE, rec.tipo);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.data.getTime());
+        //contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.data.getTime());
 
         db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
         db.close();
@@ -46,7 +69,7 @@ public class DatabaseController {
 
         //TODO: depois arrumar o id para o id do usuário
         String query_get = "select * FROM " + ReceitaEntry.TABLE_NAME +
-                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = 1 " +
+                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '99' " +
                 " ORDER BY " + ReceitaEntry.COLUMN_NAME_DATE + " DESC;";
 
         // ganha acesso a database
