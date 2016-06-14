@@ -76,8 +76,11 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
                 intent.putExtra("gasto_date", get_gasto_date());
                 startActivity(intent);
                 return true;
+            default:
+                finish();
+                return true;
         }
-        return false;
+        //return false;
     }
 
     public void showNoticeDialog() {
@@ -95,12 +98,14 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        boolean isDeleteSucessful =  removeGasto(get_gasto_id());
+        boolean isDeleteSucessful = true;
+                //removeGasto(get_gasto_id());
         dialog.dismiss();
         if(isDeleteSucessful)
             Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     /**
