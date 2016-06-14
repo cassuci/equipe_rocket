@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Gasto.GastoController;
-import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
@@ -92,7 +91,7 @@ public class ReceitaController extends AppCompatActivity
 
         preencherListViewTeste();
 
-        listView.setAdapter(new CustomListAdapter(this, array));
+        listView.setAdapter(new CustomListAdapterReceita(this, array));
 
     }
 
