@@ -21,5 +21,8 @@
     <string name="button_start_date">Data inicial</string>
     <string name="button_end_date">Data final</string>
     <string name="button_gerar_relatorio">Gerar Relatório</string>
+    <string name="switch_grafico_receita">Incluir Receitas</string>
+    <string name="switch_grafico_gasto">Incluir Gastos</string>
+    <string name="text_grafico_dateSelection">Período a ser exibido</string>
 
 </resources>

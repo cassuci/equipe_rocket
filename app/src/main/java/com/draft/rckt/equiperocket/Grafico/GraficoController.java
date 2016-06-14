@@ -20,6 +20,8 @@ import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 
+
+//TODO: TERMINAR INTERFACE
 public class GraficoController extends AppCompatActivity
         implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
