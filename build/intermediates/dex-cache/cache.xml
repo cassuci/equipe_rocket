@@ -1,3 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="795455dac1bb9395006a8cf9d4672c50aea8fcbb">
+        <dex dex="C:\Users\Gabriel\Desktop\EquipeRocket\EquipeRocket\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_3222e2778c20a9f47d012e627661ae8879646a29\classes.dex" />
+    </item>
+
+</items>
