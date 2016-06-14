@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.CustomListAdapter;
+import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 
@@ -34,6 +35,7 @@ public class GastoController extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gasto_controller);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -89,6 +91,9 @@ public class GastoController extends AppCompatActivity
         listView.setAdapter(new CustomListAdapter1(this, array));
 
     }
+
+
+
     private void preencherListViewTeste() {
         array = new ArrayList<Gasto>();
 
@@ -170,8 +175,8 @@ public class GastoController extends AppCompatActivity
 
         if (id == R.id.gerenciador_gastos) {
             //do nothing
-        } else if (id == R.id.gerenciador_gastos) {
-            intent.setClass(this, GastoController.class);
+        } else if (id == R.id.gerenciador_receitas) {
+            intent.setClass(this, ReceitaController.class);
             startActivity(intent);
         } else if (id == R.id.relatorio) {
             intent.setClass(this, RelatorioController.class);

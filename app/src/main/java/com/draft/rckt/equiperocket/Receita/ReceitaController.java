@@ -1,28 +1,37 @@
 package com.draft.rckt.equiperocket.Receita;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseController;
-import com.draft.rckt.equiperocket.Database.DatabaseHelper;
-import com.draft.rckt.equiperocket.Receita.Receita;
-
+import com.draft.rckt.equiperocket.Gasto.CustomListAdapter1;
+import com.draft.rckt.equiperocket.Gasto.GastoController;
+import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
 import com.draft.rckt.equiperocket.R;
+import com.draft.rckt.equiperocket.Receita.CustomListAdapter;
+import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
+import com.draft.rckt.equiperocket.Grafico.GraficoController;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ReceitaController extends AppCompatActivity {
+public class ReceitaController extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
 
     private Toolbar toolbar;
     private TextView textToolbar;
@@ -34,16 +43,48 @@ public class ReceitaController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receita_controller);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_receita_id);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        //TODO arrumar toolbar para padronizar
-        toolbar = (Toolbar) findViewById(R.id.tb_gerenciador_id);
-        //setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title_receita_id);
 
-        textToolbar = (TextView) findViewById(R.id.textToolbar_id);
-        textToolbar.setText("Gerenciamento de receita");
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_receita_id);
+       /* fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                /**TODO
+                 * Inserir classe de Inserção de Receita aqui
+                 *
+                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
+                 */
+                intent.setClass(ReceitaController.this, GastoDetailController.class);
+                startActivity(intent);
+                Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
 
-        listView = (ListView) findViewById(R.id.listView_id);
+
+            }
+        });
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_receita_id);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_receita_id);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        listView = (ListView) findViewById(R.id.listView_receita_id);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -82,12 +123,6 @@ public class ReceitaController extends AppCompatActivity {
 
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        finish();
-        return true;
-    }
-
-
     public void showReceita(int pos) {
 
         Intent it = new Intent(this, ReceitaDetailController.class);
@@ -97,5 +132,69 @@ public class ReceitaController extends AppCompatActivity {
         startActivity(it);
         finish();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_receita_id);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+    /*Atualizar a pagina atual depois de mudancas
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }*/
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.gasto_controller, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings_id) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Intent intent = new Intent();
+
+        if (id == R.id.gerenciador_receitas) {
+            //do nothing
+        } else if (id == R.id.gerenciador_gastos) {
+            intent.setClass(this, GastoController.class);
+            startActivity(intent);
+        } else if (id == R.id.relatorio) {
+            intent.setClass(this, RelatorioController.class);
+            startActivity(intent);
+        } else if (id == R.id.grafico) {
+            intent.setClass(this, GraficoController.class);
+            startActivity(intent);
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_receita_id);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
