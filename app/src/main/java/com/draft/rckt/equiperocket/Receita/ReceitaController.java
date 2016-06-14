@@ -18,16 +18,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
-import com.draft.rckt.equiperocket.Gasto.CustomListAdapter1;
 import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
 import com.draft.rckt.equiperocket.R;
-import com.draft.rckt.equiperocket.Receita.CustomListAdapter;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ReceitaController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,7 +63,7 @@ public class ReceitaController extends AppCompatActivity
                  *
                  *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
                  */
-                intent.setClass(ReceitaController.this, GastoDetailController.class);
+                intent.setClass(ReceitaController.this, ReceitaDetailController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();

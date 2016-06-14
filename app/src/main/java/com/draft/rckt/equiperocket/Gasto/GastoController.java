@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.R;
-import com.draft.rckt.equiperocket.Receita.CustomListAdapter;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
@@ -85,15 +84,20 @@ public class GastoController extends AppCompatActivity
                 showGasto(position);
             }
         });
-
+        /**TODO
+         * ListView preencher totalmente a tela
+         * Tentar mudar no xml content_gasto_controller
+         */
         preencherListViewTeste();
 
-        listView.setAdapter(new CustomListAdapter1(this, array));
+        listView.setAdapter(new CustomListAdapterGasto(this, array));
 
     }
 
 
-
+    /**TODO
+     * Preencher lista com dados do banco
+     */
     private void preencherListViewTeste() {
         array = new ArrayList<Gasto>();
 
@@ -136,8 +140,10 @@ public class GastoController extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    /*Atualizar a pagina atual depois de mudancas
-    @Override
+    /*TODO
+        Recarregar pagina atual apos mudancas ou utilizar onRestart()?
+    **/
+    /*@Override
     protected void onRestart() {
         super.onRestart();
         finish();

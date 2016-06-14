@@ -15,12 +15,12 @@ import java.util.ArrayList;
  * Created by ivanlucas on 12/06/16.
  */
 
-public class CustomListAdapter1 extends BaseAdapter {
+public class CustomListAdapterGasto extends BaseAdapter {
 
     private ArrayList<Gasto> arrayGasto;
     private LayoutInflater layoutInflater;
 
-    public CustomListAdapter1(Context aContext, ArrayList<Gasto> arrayGasto) {
+    public CustomListAdapterGasto(Context aContext, ArrayList<Gasto> arrayGasto) {
         this.arrayGasto = arrayGasto;
         layoutInflater = LayoutInflater.from(aContext);
     }
