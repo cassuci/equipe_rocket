@@ -19,12 +19,7 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
 
-    private int gasto_id;
-    private String gasto_title;
-    private String gasto_descr;
-    private float gasto_value;
-    private String gasto_type;
-    private Date gasto_date;
+    private Gasto gasto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +29,7 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
         Bundle b = intent.getExtras();
 
         if (b != null) {
-            set_gasto_id((int) b.get("gasto_id"));
-            set_gasto_title((String) b.get("gasto_title"));
-            set_gasto_descr((String) b.get("gasto_descr"));
-            set_gasto_value((float) b.get("gasto_value"));
-            set_gasto_type((String) b.get("gasto_type"));
-            set_gasto_date((Long) b.get("gasto_date"));
+            setGasto();
         } else {
             //TODO: mostrar pop-up de erro
         }
@@ -49,18 +39,18 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_gasto_modify_controller);
     }
 
+    private void setGasto() {
+        this.gasto = (Gasto) getIntent().getExtras().getSerializable("gasto");
+    }
+
     @Override
     public void onClick(View v) {
 
         // if (v.getId() == R.id.#IDBOTAOCONFIRMA)
         // tratamento confirmacao de modificacao
         //TODO: extrair informações da UI e editar insercoes no Bundle
-        Bundle b = new Bundle();
-        b.putString("gasto_title", null);
-        b.putString("gasto_descr", null);
-        b.putFloat("gasto_value", (float) 0.0);
-        b.putString("gasto_type", null);
-        modify_confirmed(b);
+        Gasto gasto_modificado = new Gasto(); //TODO: usar construtor completo do gasto
+        modify_confirmed(gasto_modificado);
 
 
         //TODO: finalizar este tratamento
@@ -74,22 +64,23 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
 
     /**
      * Executa acoes de modificacao do registro no banco de dados
-     * @param bundle conjunto de informacoes a serem atualizadas no banco de dados
+     * @param gasto_modificado objeto contendo as informacoes atualizadas do gasto
      */
-    private void modify_confirmed(Bundle bundle) {
+    private void modify_confirmed(Gasto gasto_modificado) {
         String gasto_title = null;
         String gasto_descr = null;
         float gasto_value;
         String gasto_type = null;
 
         // separa informacoes a serem atualizadas
-        gasto_title = bundle.getString("gasto_title");
-        gasto_descr = bundle.getString("gasto_descr");
-        gasto_value = bundle.getFloat("gasto_value");
-        gasto_type = bundle.getString("gasto_type");
+        gasto_title = gasto_modificado.getTitulo();
+        gasto_descr = gasto_modificado.getDescr();
+        gasto_value = gasto_modificado.getValor();
+        gasto_type = gasto_modificado.getTipo();
 
+        // TODO: editar o acesso ao BD para utilizar DatabaseController
         // cria grupo de valores a serem atualizados
-        ContentValues values = null;
+        ContentValues values = new ContentValues();
         values.put(GastoEntry.COLUMN_NAME_TITLE, gasto_title);
         values.put(GastoEntry.COLUMN_NAME_CONTENT, gasto_descr);
         values.put(GastoEntry.COLUMN_NAME_VALUE, gasto_value);
@@ -97,7 +88,7 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
 
         // where statement para identificar registro a ser atualizado
         String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID
-                + " = " + Integer.toString(get_gasto_id());
+                + " = " + Integer.toString(getGasto().getGasto_id());
 
         mDbHelper = new DatabaseHelper(getApplicationContext());
         db = mDbHelper.getWritableDatabase();
@@ -112,51 +103,7 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
 
     }
 
-    public void set_gasto_id(int gasto_id) {
-        this.gasto_id = gasto_id;
-    }
-
-    public void set_gasto_title(String gasto_title) {
-        this.gasto_title = gasto_title;
-    }
-
-    public void set_gasto_descr(String gasto_descr) {
-        this.gasto_descr = gasto_descr;
-    }
-
-    public void set_gasto_value(float gasto_value) {
-        this.gasto_value = gasto_value;
-    }
-
-    public void set_gasto_type(String gasto_type) {
-        this.gasto_type = gasto_type;
-    }
-
-    public void set_gasto_date(Long gasto_date) {
-        this.gasto_date.setTime(gasto_date);
-    }
-
-    public int get_gasto_id() {
-        return gasto_id;
-    }
-
-    public String get_gasto_title() {
-        return gasto_title;
-    }
-
-    public String get_gasto_descr() {
-        return gasto_descr;
-    }
-
-    public float get_gasto_value() {
-        return gasto_value;
-    }
-
-    public String get_gasto_type() {
-        return gasto_type;
-    }
-
-    public Date get_gasto_date() {
-        return gasto_date;
+    public Gasto getGasto() {
+        return this.gasto;
     }
 }

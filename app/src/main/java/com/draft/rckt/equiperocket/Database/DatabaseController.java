@@ -25,7 +25,6 @@ public class DatabaseController {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-
         contentValues.put("receita_id", receita_id);
         contentValues.put("user_id", user_id);
         contentValues.put("titulo", titulo);
@@ -49,12 +48,14 @@ public class DatabaseController {
 
         int i = 0;
 
+        //TODO: arrumar construtor de receita
         if (cursor != null && cursor.moveToFirst())
         {
             array = new ArrayList<Receita>();
             do {
+                //TODO: generalizar indice das colunas com cusor.getColumnIndex(NOME_COLUNA)
                 Receita receita = new Receita();
-                receita.receita_id = cursor.getString(0);
+                receita.receita_id = Integer.parseInt(cursor.getString(0));
                 receita.user_id = cursor.getString(1);
                 receita.titulo = cursor.getString(2);
                 receita.desc = cursor.getString(3);
