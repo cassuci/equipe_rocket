@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -207,18 +208,18 @@ public class RelatorioController extends AppCompatActivity
 
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
+        boolean enabled = ((Switch) view).isEnabled();
 
         // Check which checkbox was clicked
         switch(view.getId()) {
-            case R.id.checkbox_gastos:
-                if (checked)
+            case R.id.switch_relatorio_gasto_enabled:
+                if (enabled)
                     gastosSelected = 1;
                 else
                     gastosSelected = 0;
                 break;
-            case R.id.checkbox_receitas:
-                if (checked)
+            case R.id.switch_relatorio_receita_enabled:
+                if (enabled)
                     receitasSelected = 1;
                 else
                     receitasSelected = 0;

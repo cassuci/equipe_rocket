@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
@@ -20,10 +21,19 @@ import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 
 //TODO: TERMINAR INTERFACE
 public class GraficoController extends AppCompatActivity
         implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+
+    ExpandableListAdapter listAdapter;
+    ExpandableListView expListView;
+    List<String> listDataHeader;
+    HashMap<String, List<String>> listDataChild;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +53,36 @@ public class GraficoController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // get the listview
+        expListView = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);
+
+        // preparing list data
+        prepareListData();
+
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
     }
+
+    private void prepareListData() {
+        listDataHeader = new ArrayList<String>();
+        listDataChild = new HashMap<String, List<String>>();
+
+        // Adding child data
+        listDataHeader.add("Filtro de busca");
+
+        // Adding child data
+        List<String> filtros = new ArrayList<String>();
+        filtros.add("Rendimentos");
+        filtros.add("Salário");
+        filtros.add("Bônus");
+        filtros.add("Outros");
+
+        listDataChild.put(listDataHeader.get(0), filtros); // Header, Child data
+    }
+
 
     @Override
     public void onClick(View v) {
