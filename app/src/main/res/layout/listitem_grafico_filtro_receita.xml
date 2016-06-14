@@ -4,11 +4,11 @@
     android:layout_height="55dp"
     android:orientation="vertical" >
 
-    <TextView
+    <CheckBox
         android:id="@+id/listItem_grafico_filtro_receita_item"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="17dip"
+        android:textSize="17sp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />

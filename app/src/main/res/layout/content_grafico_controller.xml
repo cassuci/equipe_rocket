@@ -28,6 +28,7 @@
     <ExpandableListView
         android:id="@+id/expandableList_grafico_receita_filtro"
         android:divider="@color/mdtp_dark_gray"
+        android:layout_marginTop="5dp"
         android:indicatorLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

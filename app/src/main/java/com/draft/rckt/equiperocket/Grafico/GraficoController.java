@@ -71,7 +71,7 @@ public class GraficoController extends AppCompatActivity
         listDataChild = new HashMap<String, List<String>>();
 
         // Adding child data
-        listDataHeader.add("Filtro de busca");
+        listDataHeader.add("Filtro de busca (opcional)");
 
         // Adding child data
         List<String> filtros = new ArrayList<String>();

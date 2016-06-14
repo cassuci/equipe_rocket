@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.R;
@@ -53,7 +54,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.listitem_grafico_filtro_receita, null);
         }
 
-        TextView txtListChild = (TextView) convertView
+        CheckBox txtListChild = (CheckBox) convertView
                 .findViewById(R.id.listItem_grafico_filtro_receita_item);
 
         txtListChild.setText(childText);
@@ -93,7 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.listGroup_grafico_filtro_receita_header);
-        lblListHeader.setTypeface(null, Typeface.BOLD);
+//        lblListHeader.setTypeface(null, Typeface);
         lblListHeader.setText(headerTitle);
 
         return convertView;
