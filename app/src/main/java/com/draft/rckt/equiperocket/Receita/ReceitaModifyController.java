@@ -15,12 +15,8 @@ public class ReceitaModifyController extends AppCompatActivity implements View.O
 
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
-    private int receita_id;
-    private String receita_title;
-    private String receita_descr;
-    private float receita_value;
-    private String receita_type;
-    private Date receita_date;
+
+    private Receita receita;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +26,7 @@ public class ReceitaModifyController extends AppCompatActivity implements View.O
         Bundle b = intent.getExtras();
 
         if (b != null){
-            set_receita_id((int) b.get("receita_id"));
-            set_receita_title((String) b.get("receita_title"));
-            set_receita_descr((String) b.get("receita_descr"));
-            set_receita_value((float) b.get("receita_value"));
-            set_receita_type((String) b.get("receita_type"));
-            set_receita_date((Long) b.get("receita_date"));
+            setReceita();
         }else{
             //TODO: mostrar pop-up de erro
         }
@@ -45,57 +36,13 @@ public class ReceitaModifyController extends AppCompatActivity implements View.O
         setContentView(R.layout.activity_receita_modify_controller);
     }
 
+    private void setReceita() {
+        this.receita = (Receita) getIntent().getExtras().getSerializable("receita");
+    }
+
     @Override
     public void onClick(View v) {
         //TODO: realizar tratamento dos botoes disponiveis (modificar, cancelar)
-    }
-
-    public void set_receita_id(int receita_id) {
-        this.receita_id = receita_id;
-    }
-
-    public void set_receita_title(String receita_title) {
-        this.receita_title = receita_title;
-    }
-
-    public void set_receita_descr(String receita_descr) {
-        this.receita_descr = receita_descr;
-    }
-
-    public void set_receita_value(float receita_value) {
-        this.receita_value = receita_value;
-    }
-
-    public void set_receita_type(String receita_type) {
-        this.receita_type = receita_type;
-    }
-
-    public void set_receita_date(Long receita_date) {
-        this.receita_date.setTime(receita_date);
-    }
-
-    public int get_receita_id() {
-        return receita_id;
-    }
-
-    public String get_receita_title() {
-        return receita_title;
-    }
-
-    public String get_receita_descr() {
-        return receita_descr;
-    }
-
-    public float get_receita_value() {
-        return receita_value;
-    }
-
-    public String get_receita_type() {
-        return receita_type;
-    }
-
-    public Date get_receita_date() {
-        return receita_date;
     }
 
 

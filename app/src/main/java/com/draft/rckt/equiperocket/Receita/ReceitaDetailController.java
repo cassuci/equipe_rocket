@@ -26,15 +26,9 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
 
-    private int receita_id;
-    private String receita_title;
-    private String receita_descr;
-    private float receita_value;
-    private String receita_type;
-    private Date receita_date;
-
     private Toolbar toolbar;
     private TextView textToolbar;
+
     private Receita receita;
     private TextView textView_titulo;
     private TextView textView_data;
@@ -77,35 +71,20 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
         textView_desc = (TextView) findViewById(R.id.textView_desc_id);
 
         //Pegando dados da receita selecionada
-        getReceita();
+        setReceita();
 
         //Preenchendo TextView
         fillTextView();
 
     }
 
-
-    public void getReceita(){
-
-        Bundle bundle = getIntent().getExtras();
-
-        if (bundle.containsKey("receita"))
-        {
-            receita = (Receita) bundle.getSerializable("receita");
-
-        }
-
-
-    }
-
-
     private void fillTextView()
     {
         //TODO: Arrumar Data e descrição
-        textView_titulo.setText(receita.titulo);
+        textView_titulo.setText(getReceita().getTitulo());
         textView_data.setText("A/A/A");
-        textView_valor.setText(String.valueOf(receita.valor));
-        textView_tipo.setText(receita.tipo);
+        textView_valor.setText(String.valueOf(getReceita().getValor()));
+        textView_tipo.setText(getReceita().getTipo());
         textView_desc.setText("njlabjasbo abg ud uogau ga iudgudsgids iudsgbuisdbg sdbg bdsgdks bdkldgksbkdslb");
     }
 
@@ -133,12 +112,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
             case R.id.edit:
                 Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
                 //TODO: Muito feio isso aqui, arrumar tbm. Dica: Passar um objeto Receita, só isso
-                intent.putExtra("receita_id", get_receita_id());
-                intent.putExtra("receita_title", get_receita_title());
-                intent.putExtra("receita_descr", get_receita_descr());
-                intent.putExtra("receita_value", get_receita_value());
-                intent.putExtra("receita_type", get_receita_type());
-                intent.putExtra("receita_date", get_receita_date());
+                intent.putExtra("receita", getReceita());
                 startActivity(intent);
                 return true;
 
@@ -161,7 +135,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        boolean isDeleteSucessful =  removeReceita(get_receita_id());
+        boolean isDeleteSucessful =  removeReceita(getReceita().getReceita_id());
         dialog.dismiss();
         if(isDeleteSucessful)
             Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
@@ -192,30 +166,13 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
             return true;
         else
             return false;
-
     }
 
-    public int get_receita_id() {
-        return receita_id;
+    public Receita getReceita(){
+        return this.receita;
     }
 
-    public String get_receita_title() {
-        return receita_title;
-    }
-
-    public String get_receita_descr() {
-        return receita_descr;
-    }
-
-    public float get_receita_value() {
-        return receita_value;
-    }
-
-    public String get_receita_type() {
-        return receita_type;
-    }
-
-    public Date get_receita_date() {
-        return receita_date;
+    private void setReceita(){
+        this.receita = (Receita) getIntent().getExtras().getSerializable("receita");
     }
 }

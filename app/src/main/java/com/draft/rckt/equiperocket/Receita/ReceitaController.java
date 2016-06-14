@@ -64,7 +64,7 @@ public class ReceitaController extends AppCompatActivity {
         {
             Receita rec = new Receita();
             rec.user_id = "user_id " + i;
-            rec.receita_id = "receita_id" + i;
+            rec.receita_id = Integer.parseInt("receita_id" + i);
             rec.titulo = "Receit " + i;
             rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
             rec.tipo = "qualquer uma";
