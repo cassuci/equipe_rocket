@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.R;
-import com.draft.rckt.equiperocket.Receita.CustomListAdapter;
+
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;

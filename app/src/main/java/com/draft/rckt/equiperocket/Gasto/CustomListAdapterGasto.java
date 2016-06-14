@@ -42,10 +42,16 @@ public class CustomListAdapterGasto extends RecyclerView.Adapter<CustomListAdapt
         this.gastoList = gastoList;
     }
 
+    /**TODO
+     * Escolher um nome melhor para o layout
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listview_row_layout, parent, false);
+                .inflate(R.layout.listview_row_layout2, parent, false);
 
         return new MyViewHolder(itemView);
     }
