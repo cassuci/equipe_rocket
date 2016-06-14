@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
+import com.draft.rckt.equiperocket.Receita.Receita;
+
 import com.draft.rckt.equiperocket.R;
 
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class ReceitaController extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receita_controller);
 
+
+        //TODO arrumar toolbar para padronizar
         toolbar = (Toolbar) findViewById(R.id.tb_gerenciador_id);
         //setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -59,21 +63,22 @@ public class ReceitaController extends AppCompatActivity {
 
         DatabaseController db = new DatabaseController(this);
 
+        // TESTEEEEEEEEE
         int i;
         for (i = 1; i < 15; i++)
         {
             Receita rec = new Receita();
             rec.user_id = "user_id " + i;
-            rec.receita_id = Integer.parseInt("receita_id" + i);
+            rec.receita_id = 1;
             rec.titulo = "Receit " + i;
             rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
             rec.tipo = "qualquer uma";
             rec.valor = (float) 4000.90 + i;
             array.add(rec);
+           // db.addItemReceita(rec);
         }
 
-        //teste hhjlhkh
-        // array = db.getAllItens("receita");
+       // array = db.getAllReceitaOrderByDate();
 
     }
 

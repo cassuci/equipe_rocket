@@ -1,5 +1,8 @@
 package com.draft.rckt.equiperocket.Database;
 
+import com.draft.rckt.equiperocket.Database.DatabaseContract;
+import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,51 +24,56 @@ public class DatabaseController {
             dbHelper = new DatabaseHelper(context);
     }
 
-    public void addItem(String tabela, String user_id, String receita_id, String titulo, String desc, float valor, String tipo, Date data) {
+    public void addItemReceita(Receita rec) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("receita_id", receita_id);
-        contentValues.put("user_id", user_id);
-        contentValues.put("titulo", titulo);
-        contentValues.put("descricao", desc);
-        contentValues.put("valor", valor);
-        contentValues.put("tipo", tipo);
-        //TODO: descobrir como inclue data do BD
-        //contentValues.put("data", data);
 
-        db.insert(tabela, null, contentValues);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_ENTRY_ID, rec.receita_id);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.user_id);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.titulo);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.desc);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.valor);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_TYPE, rec.tipo);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.data.getTime());
+
+        db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
+        db.close();
 
     }
 
-    public ArrayList<Receita> getAllItens(String tabela){
+    public ArrayList<Receita> getAllReceitaOrderByDate(){
 
-        String query_get = "select * FROM " + tabela;
-        //   +" where receita_id = 1 OR receita_id = 5";
+        //TODO: depois arrumar o id para o id do usuário
+        String query_get = "select * FROM " + ReceitaEntry.TABLE_NAME +
+                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = 1 " +
+                " ORDER BY " + ReceitaEntry.COLUMN_NAME_DATE + " DESC;";
+
+        // ganha acesso a database
         SQLiteDatabase db = dbHelper.getReadableDatabase();
+
         Cursor cursor = db.rawQuery(query_get, null);
         ArrayList<Receita> array = null;
 
         int i = 0;
 
-        //TODO: arrumar construtor de receita
         if (cursor != null && cursor.moveToFirst())
         {
             array = new ArrayList<Receita>();
             do {
-                //TODO: generalizar indice das colunas com cusor.getColumnIndex(NOME_COLUNA)
                 Receita receita = new Receita();
-                receita.receita_id = Integer.parseInt(cursor.getString(0));
-                receita.user_id = cursor.getString(1);
-                receita.titulo = cursor.getString(2);
-                receita.desc = cursor.getString(3);
-                receita.valor = cursor.getFloat(4);
-                receita.tipo = cursor.getString(5);
-                //TODO: descobrir como pega data do BD
+                receita.receita_id = cursor.getInt(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_ENTRY_ID));
+                receita.user_id = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_USER_ID));
+                receita.titulo = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TITLE));
+                receita.desc = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_CONTENT));
+                receita.valor = cursor.getFloat(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_VALUE));
+                receita.tipo = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TYPE));
+                receita.data = new Date(cursor.getLong(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE)));
                 array.add(receita);
 
             } while (cursor.moveToNext());
         }
+        db.close();
 
         return array;
     }
