@@ -30,10 +30,14 @@ import java.util.List;
 public class GraficoController extends AppCompatActivity
         implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
-    ExpandableListAdapter listAdapter;
-    ExpandableListView expListView;
-    List<String> listDataHeader;
-    HashMap<String, List<String>> listDataChild;
+    ExpandableListAdapter listAdapter_receitas;
+    ExpandableListAdapter listAdapter_gastos;
+    ExpandableListView expListView_receitas;
+    ExpandableListView expListView_gastos;
+    List<String> listDataHeader_receitas;
+    HashMap<String, List<String>> listDataChild_receitas;
+    List<String> listDataHeader_gastos;
+    HashMap<String, List<String>> listDataChild_gastos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,32 +62,47 @@ public class GraficoController extends AppCompatActivity
         nav_user.setText("bla");// TODO substituir por user_id
 
         // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);
+        expListView_receitas = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);
+        expListView_gastos = (ExpandableListView) findViewById(R.id.expandableList_grafico_gasto_filtro);
 
         // preparing list data
         prepareListData();
 
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+        listAdapter_receitas = new ExpandableListAdapter(this, listDataHeader_receitas, listDataChild_receitas);
+        listAdapter_gastos = new ExpandableListAdapter(this, listDataHeader_gastos, listDataChild_gastos);
 
         // setting list adapter
-        expListView.setAdapter(listAdapter);
+        expListView_receitas.setAdapter(listAdapter_receitas);
+        expListView_gastos.setAdapter(listAdapter_gastos);
     }
 
     private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataHeader_receitas = new ArrayList<String>();
+        listDataChild_receitas = new HashMap<String, List<String>>();
 
         // Adding child data
-        listDataHeader.add("Filtro de busca (opcional)");
+        listDataHeader_receitas.add("Filtro de busca (opcional)");
 
         // Adding child data
-        List<String> filtros = new ArrayList<String>();
-        filtros.add("Rendimentos");
-        filtros.add("Salário");
-        filtros.add("Bônus");
-        filtros.add("Outros");
+        List<String> filtros_receita = new ArrayList<String>();
+        filtros_receita.add("Rendimentos");
+        filtros_receita.add("Salário");
+        filtros_receita.add("Bônus");
+        filtros_receita.add("Outros");
 
-        listDataChild.put(listDataHeader.get(0), filtros); // Header, Child data
+        listDataHeader_gastos = new ArrayList<String>();
+        listDataChild_gastos = new HashMap<String, List<String>>();
+
+        listDataHeader_gastos.add("Filtro de busca (opcional)");
+
+        List<String> filtros_gasto = new ArrayList<String>();
+        filtros_gasto.add("Alimentação");
+        filtros_gasto.add("Transporte");
+        filtros_gasto.add("Contas");
+        filtros_gasto.add("Lazer");
+
+        listDataChild_receitas.put(listDataHeader_receitas.get(0), filtros_receita); // Header, Child data
+        listDataChild_gastos.put(listDataHeader_gastos.get(0), filtros_gasto); // Header, Child data
     }
 
 
