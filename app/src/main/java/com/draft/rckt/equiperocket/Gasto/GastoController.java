@@ -79,9 +79,33 @@ public class GastoController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla");
 
 
         prepareGastoData();
+        //gastoList = null;
+
+        if(checkNullList()){
+            createFirstAccessView();
+        }else{
+            createRecyclerView();
+        }
+
+
+    }
+
+    /**TODO
+     * Melhorar interface para usuário sem gastos adicionados.
+     */
+    private void createFirstAccessView() {
+        TextView nav_user = (TextView) findViewById(R.id.first_access);
+        nav_user.setText("Para adicionar um novo gasto, clique no botão + abaixo");
+
+    }
+
+    private void createRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         mAdapter = new CustomListAdapterGasto(gastoList);
@@ -94,7 +118,7 @@ public class GastoController extends AppCompatActivity
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-               showGasto(position);
+                showGasto(position);
             }
 
             @Override
@@ -103,6 +127,10 @@ public class GastoController extends AppCompatActivity
             }
         }));
 
+    }
+
+    private boolean checkNullList() {
+        return ((gastoList == null) || gastoList.isEmpty());
     }
 
     /**TODO

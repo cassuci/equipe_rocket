@@ -60,9 +60,9 @@ public class ReceitaController extends AppCompatActivity
                 /**TODO
                  * Inserir classe de Inserção de Receita aqui
                  *
-                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
+                 *  intent.setClass(ReceitaController.this,NOMECLASSEINSERCAORECEITA);
                  */
-                intent.setClass(ReceitaController.this, ReceitaDetailController.class);
+                intent.setClass(ReceitaController.this, GastoController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
