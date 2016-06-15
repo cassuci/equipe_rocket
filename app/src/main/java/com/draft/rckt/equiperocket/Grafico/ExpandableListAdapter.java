@@ -1,7 +1,6 @@
 package com.draft.rckt.equiperocket.Grafico;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.listitem_grafico_filtro_receita, null);
+            convertView = infalInflater.inflate(R.layout.listitem_grafico_filtro, null);
         }
 
         CheckBox txtListChild = (CheckBox) convertView
@@ -89,7 +88,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.listgroup_grafico_filtro_receita, null);
+            convertView = infalInflater.inflate(R.layout.listgroup_grafico_filtro, null);
         }
 
         TextView lblListHeader = (TextView) convertView

@@ -24,7 +24,11 @@
 
     <string name="switch_grafico_receita">Incluir Receitas</string>
     <string name="switch_grafico_gasto">Incluir Gastos</string>
-    <string name="text_grafico_dateSelection">Período a ser exibido</string>
+    <string name="text_grafico_dateSelection">Período a ser exibido (Opcional)</string>
+    <string name="textView_grafico_data_inicial_header">Data inicial:</string>
+    <string name="textView_grafico_data_final_header">Data final:</string>
+    <string name="buttonText_grafico_definirData">Definir</string>
+    <string name="textView_grafico_definirData">Não definida</string>
 
     <string name="title_activity_relatorio_detail_controller">RelatorioDetailController</string>
 

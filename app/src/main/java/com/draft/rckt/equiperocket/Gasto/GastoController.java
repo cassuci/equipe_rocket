@@ -36,12 +36,11 @@ import java.util.List;
 public class GastoController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private ListView listView;
-    private ArrayList<Gasto> array;
 
     private List<Gasto> gastoList = new ArrayList<>();
     private RecyclerView recyclerView;
     private CustomListAdapterGasto mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,14 +53,7 @@ public class GastoController extends AppCompatActivity
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-       /* fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
-        fab.setOnClickListener(new View.OnClickListener() {
+             fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
@@ -87,7 +79,33 @@ public class GastoController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla"); // TODO substituir por user_id
+
+
         prepareGastoData();
+        //gastoList = null;
+
+        if(checkNullList()){
+            createFirstAccessView();
+        }else{
+            createRecyclerView();
+        }
+
+
+    }
+
+    /**TODO
+     * Melhorar interface para usuário sem gastos adicionados.
+     */
+    private void createFirstAccessView() {
+        TextView nav_user = (TextView) findViewById(R.id.first_access);
+        nav_user.setText("Para adicionar um novo gasto, clique no botão + abaixo");
+
+    }
+
+    private void createRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         mAdapter = new CustomListAdapterGasto(gastoList);
@@ -100,7 +118,7 @@ public class GastoController extends AppCompatActivity
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
-               showGasto(position);
+                showGasto(position);
             }
 
             @Override
@@ -109,23 +127,15 @@ public class GastoController extends AppCompatActivity
             }
         }));
 
-        /*listView = (ListView) findViewById(R.id.listView_id);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showGasto(position);
-            }
-        });*/
-        /**TODO
-         * ListView preencher totalmente a tela
-         * Tentar mudar no xml content_gasto_controller
-         */
-        //preencherListViewTeste();
-
-        //listView.setAdapter(new CustomListAdapterGasto(this, array));
-
     }
+
+    private boolean checkNullList() {
+        return ((gastoList == null) || gastoList.isEmpty());
+    }
+
+    /**TODO
+     * Preencher lista de gastos com dados do banco
+     */
     private void prepareGastoData() {
         int i;
         for (i = 1; i < 15; i++) {
@@ -134,7 +144,7 @@ public class GastoController extends AppCompatActivity
             rec.gasto_id = 1;
             rec.titulo = "Receit " + i;
             rec.descr = "aaaaaaa bbbbbb    ccccccc " + i;
-            rec.tipo = "qualquer uma";
+            rec.tipo = "12/12/12";
             rec.valor = (float) 4000.90 + i;
             gastoList.add(rec);
         }
@@ -190,32 +200,7 @@ public class GastoController extends AppCompatActivity
         }
     }
 
-    /**TODO
-     * Preencher lista com dados do banco
-     */
-    private void preencherListViewTeste() {
-        array = new ArrayList<Gasto>();
 
-        DatabaseController db = new DatabaseController(this);
-
-        // TESTEEEEEEEEE
-        int i;
-        for (i = 1; i < 15; i++)
-        {
-            Gasto rec = new Gasto();
-            rec.user_id = "user_id " + i;
-            rec.gasto_id = 1;
-            rec.titulo = "Receit " + i;
-            rec.descr = "aaaaaaa bbbbbb    ccccccc " + i;
-            rec.tipo = "qualquer uma";
-            rec.valor = (float) 4000.90 + i;
-            array.add(rec);
-            // db.addItemgasto(rec);
-        }
-
-        // array = db.getAllgastoOrderByDate();
-
-    }
     public void showGasto(int pos) {
 
         Intent it = new Intent(this, GastoDetailController.class);

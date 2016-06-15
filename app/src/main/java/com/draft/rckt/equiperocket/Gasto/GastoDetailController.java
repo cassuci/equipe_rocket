@@ -21,12 +21,13 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase db;
 
-    private int gasto_id;
-    private String gasto_title;
-    private String gasto_descr;
-    private float gasto_value;
-    private String gasto_type;
-    private Date gasto_date;
+    private Gasto gasto;
+
+    private TextView textView_titulo;
+    private TextView textView_data;
+    private TextView textView_valor;
+    private TextView textView_descr;
+    private TextView textView_tipo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +36,36 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         mDbHelper = new DatabaseHelper(getApplicationContext());
 
         setContentView(R.layout.activity_gasto_detail_controller);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        getTextView();
+        setGasto();
+        fillTextView();
+    }
+
+    private void fillTextView() {
+        //TODO: Arrumar Data e descrição
+        textView_titulo.setText(getGasto().getTitulo());
+        textView_data.setText("A/A/A");
+        textView_valor.setText(String.valueOf(getGasto().getValor()));
+        textView_tipo.setText(getGasto().getTipo());
+        textView_descr.setText("njlabjasbo abg ud uogau ga iudgudsgids iudsgbuisdbg sdbg bdsgdks bdkldgksbkdslb");
+
+    }
+
+    private void getTextView() {
+        textView_titulo = (TextView) findViewById(R.id.textView_titulo_id);
+        textView_data = (TextView) findViewById(R.id.textView_data_id);
+        textView_valor = (TextView) findViewById(R.id.textView_valor_id);
+        textView_tipo = (TextView) findViewById(R.id.textView_tipo_id);
+        textView_descr = (TextView) findViewById(R.id.textView_desc_id);
     }
 
 
@@ -51,6 +75,9 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         return true;
     }
 
+    /**
+     * Caso o botao back tenha sido pressionado abre a view anterior
+     */
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(GastoDetailController.this, GastoController.class);
@@ -59,6 +86,11 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         finish();
     }
 
+    /**
+     * Verifica qual item e determina a acao correspondente a ele
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
@@ -68,12 +100,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
             case R.id.edit:
                 // tratamento botao modificacao
                 Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
-                intent.putExtra("gasto_id", get_gasto_id());
-                intent.putExtra("gasto_title", get_gasto_title());
-                intent.putExtra("gasto_descr", get_gasto_descr());
-                intent.putExtra("gasto_value", get_gasto_value());
-                intent.putExtra("gasto_type", get_gasto_type());
-                intent.putExtra("gasto_date", get_gasto_date());
+                intent.putExtra("gasto", getGasto());
                 startActivity(intent);
                 return true;
             default:
@@ -90,22 +117,28 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
 
     }
 
+    //Caso o usuario tenha clicado em "Cancelar", caixa de dialogo e' dispensada
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         dialog.dismiss();
 
     }
 
+    /*
+        Caso o usuario tenha clicado em "Delete": deleta o gasto e mostra Toast indicando sucesso
+        ou fracasso na exclusao do gasto do banco
+     */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        boolean isDeleteSucessful = true;
+        boolean isDeleteSucessful = false;
                 //removeGasto(get_gasto_id());
         dialog.dismiss();
-        if(isDeleteSucessful)
-            Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
-        finish();
+        if(isDeleteSucessful) {
+            Toast.makeText(getApplicationContext(), "Gasto deletado com sucesso.", Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            Toast.makeText(getApplicationContext(), "Falha ao deletar gasto.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -131,28 +164,12 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
             return false;
     }
 
-    public int get_gasto_id() {
-        return gasto_id;
+    public Gasto getGasto(){
+        return this.gasto;
     }
 
-    public String get_gasto_title() {
-        return gasto_title;
-    }
-
-    public String get_gasto_descr() {
-        return gasto_descr;
-    }
-
-    public float get_gasto_value() {
-        return gasto_value;
-    }
-
-    public String get_gasto_type() {
-        return gasto_type;
-    }
-
-    public Date get_gasto_date() {
-        return gasto_date;
+    private void setGasto(){
+        this.gasto = (Gasto) getIntent().getExtras().getSerializable("gasto");
     }
 
 

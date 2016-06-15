@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Gasto.GastoController;
@@ -33,6 +34,7 @@ public class ReceitaController extends AppCompatActivity
     private TextView textToolbar;
     private ListView listView;
     private ArrayList<Receita> array;
+    private DatabaseController dbControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +62,9 @@ public class ReceitaController extends AppCompatActivity
                 /**TODO
                  * Inserir classe de Inserção de Receita aqui
                  *
-                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
+                 *  intent.setClass(ReceitaController.this,NOMECLASSEINSERCAORECEITA);
                  */
-                intent.setClass(ReceitaController.this, ReceitaDetailController.class);
+                intent.setClass(ReceitaController.this, GastoController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -79,6 +81,13 @@ public class ReceitaController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_receita_id);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla"); //TODO substituir por user_id
+
+
+        dbControl = new DatabaseController(this.getApplicationContext());
+
 
         listView = (ListView) findViewById(R.id.listView_receita_id);
 
@@ -91,33 +100,17 @@ public class ReceitaController extends AppCompatActivity
 
         preencherListViewTeste();
 
-        listView.setAdapter(new CustomListAdapterReceita(this, array));
-
     }
 
     private void preencherListViewTeste() {
         array = new ArrayList<Receita>();
+        array = dbControl.getAllReceitaOrderByDate();
 
-        DatabaseController db = new DatabaseController(this);
-
-        //TODO voltar . Ass Ivan
-//        // TESTEEEEEEEEE
-////        int i;
-////        for (i = 1; i < 15; i++)
-////        {
-//            Receita rec = new Receita();
-//            rec.user_id = "98";
-//            rec.receita_id = i;
-//            rec.titulo = "Receit " + i;
-//            rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
-//            rec.tipo = "qualquer uma";
-//            rec.valor = (float) 4000.90 + i;
-//            //array.add(rec);
-//            db.addItemReceita(rec);
-//        }
-
-      //  array = db.getAllReceitaOrderByDate();
-
+        if (array == null) {
+            Toast.makeText(ReceitaController.this, "VAZIO", Toast.LENGTH_SHORT).show();
+        }
+        else
+            listView.setAdapter(new CustomListAdapterReceita(this, array));
     }
 
     public void showReceita(int pos) {

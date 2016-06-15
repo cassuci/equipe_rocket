@@ -18,7 +18,6 @@ public final class DatabaseContract {
         public static final String COLUMN_NAME_NAME = "nome";
     }
 
-
     public static abstract class ReceitaEntry implements BaseColumns {
         public static final String TABLE_NAME = "Receitas";
         public static final String COLUMN_NAME_ENTRY_ID = "receita_id";
@@ -27,7 +26,7 @@ public final class DatabaseContract {
         public static final String COLUMN_NAME_CONTENT = "descricao";
         public static final String COLUMN_NAME_VALUE = "valor";
         public static final String COLUMN_NAME_TYPE = "tipo";
-        public static final String COLUMN_NAME_DATE = "data";
+        public static final String COLUMN_NAME_DATE = "data_receita";
     }
 
     public static abstract class GastoEntry implements BaseColumns {
@@ -38,6 +37,6 @@ public final class DatabaseContract {
         public static final String COLUMN_NAME_CONTENT = "descricao";
         public static final String COLUMN_NAME_VALUE = "valor";
         public static final String COLUMN_NAME_TYPE = "tipo";
-        public static final String COLUMN_NAME_DATE = "data";
+        public static final String COLUMN_NAME_DATE = "data_gasto";
     }
 }
