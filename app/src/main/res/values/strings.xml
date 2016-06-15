@@ -15,14 +15,17 @@
 
     <string name="title_activity_relatorio_controller">RelatorioController</string>
     <string name="choose_data">Escolha o tipo de relatório desejado.</string>
-    <string name="checkbox_gastos">Gastos</string>
-    <string name="checkbox_receitas">Receitas</string>
-    <string name="choose_dates">Escolha as datas de início e fim.</string>
-    <string name="button_start_date">Data inicial</string>
-    <string name="button_end_date">Data final</string>
-    <string name="button_gerar_relatorio">Gerar Relatório</string>
+    <string name="checkbox_gastos">Incluir Gastos</string>
+    <string name="checkbox_receitas">Incluir Receitas</string>
+    <string name="choose_dates">Período a ser exibido</string>
+    <string name="button_start_date">Definir</string>
+    <string name="button_end_date">Definir</string>
+    <string name="button_gerar_relatorio">Criar Relatório</string>
+
     <string name="switch_grafico_receita">Incluir Receitas</string>
     <string name="switch_grafico_gasto">Incluir Gastos</string>
     <string name="text_grafico_dateSelection">Período a ser exibido</string>
+
+    <string name="title_activity_relatorio_detail_controller">RelatorioDetailController</string>
 
 </resources>

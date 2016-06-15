@@ -15,11 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
@@ -34,9 +34,13 @@ public class RelatorioController extends AppCompatActivity
 
     private Button buttonStartDate, buttonEndDate, buttonGerarRelatorio;
     private TextView textStart, textEnd;
-    private int dateSelected = -1, gastosSelected = 0, receitasSelected = 0;
+    private static int dateSelected = -1, gastosSelected = 0, receitasSelected = 0;
     private final int START_DATE = 0;
     private final int END_DATE = 1;
+    private Switch swReceitas, swGastos;
+    private static Calendar startCal = Calendar.getInstance();
+    private static Calendar endCal = Calendar.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,29 @@ public class RelatorioController extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 endDate(v);
+            }
+        });
+
+        swGastos = (Switch) findViewById(R.id.switch_relatorio_gasto_enabled);
+        swReceitas = (Switch) findViewById(R.id.switch_relatorio_receita_enabled);
+
+        swGastos.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    gastosSelected = 1;
+                else
+                    gastosSelected = 0;
+            }
+        });
+
+        swReceitas.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked)
+                    receitasSelected = 1;
+                else
+                    receitasSelected = 0;
             }
         });
 
@@ -134,7 +161,7 @@ public class RelatorioController extends AppCompatActivity
         return true;
     }
 
-    private int startYear, startMonth, startDay, endYear, endMonth, endDay;
+    private static int startYear, startMonth, startDay, endYear, endMonth, endDay;
 
     public void startDate(View view)
     {
@@ -181,20 +208,23 @@ public class RelatorioController extends AppCompatActivity
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date = "You picked the following date: "+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
         if(dateSelected == START_DATE)
         {
-            textStart.setText(date);
+            startCal.set(year, monthOfYear, dayOfMonth);
             startYear = year;
             startMonth = monthOfYear + 1;
             startDay = dayOfMonth;
+            String d = startCal.get(startCal.DAY_OF_MONTH)+"/"+(startCal.get(startCal.MONTH)+1)+"/"+startCal.get(startCal.YEAR);
+            textStart.setText(d);
         }
         if(dateSelected == END_DATE)
         {
-            textEnd.setText(date);
+            endCal.set(year, monthOfYear, dayOfMonth);
             endYear = year;
             endMonth = monthOfYear + 1;
             endDay = dayOfMonth;
+            String d = endCal.get(endCal.DAY_OF_MONTH)+"/"+(endCal.get(endCal.MONTH)+1)+"/"+endCal.get(endCal.YEAR);
+            textEnd.setText(d);
         }
     }
 
@@ -206,36 +236,29 @@ public class RelatorioController extends AppCompatActivity
         dateSelected = -1;
     }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean enabled = ((Switch) view).isEnabled();
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.switch_relatorio_gasto_enabled:
-                if (enabled)
-                    gastosSelected = 1;
-                else
-                    gastosSelected = 0;
-                break;
-            case R.id.switch_relatorio_receita_enabled:
-                if (enabled)
-                    receitasSelected = 1;
-                else
-                    receitasSelected = 0;
-                break;
-        }
-
-        textStart.setText("gastos = " + gastosSelected);
-        textEnd.setText("receitas = " + receitasSelected);
-    }
-
     public void gerarRelatorio(View view)
     {
-        if (gastosSelected == 0 && receitasSelected == 0)
-        {
+        if (gastosSelected == 0 && receitasSelected == 0) {
             Context context = getApplicationContext();
             Toast.makeText(context, "Escolha o tipo de relatório.", Toast.LENGTH_LONG).show();
+            return;
         }
+
+        if(startCal.compareTo(endCal) > 0) {
+            Context context = getApplicationContext();
+            Toast.makeText(context, "Escolha datas válidas.", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Intent intent = new Intent();
+        intent.setClass(this, RelatorioDetailController.class);
+        startActivity(intent);
     }
+
+
+    public static Calendar getStartCal() { return startCal; }
+    public static Calendar getEndCal() { return endCal; }
+    public static int getGastosSelected() {return gastosSelected; }
+    public static int getReceitasSelected() {return receitasSelected; }
+
 }

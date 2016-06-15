@@ -10,25 +10,23 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".Receita.ReceitaController" />
         <activity android:name=".MainMenu.MainMenu" />
-        <activity android:name=".Login.Login"/>
-
+        <activity android:name=".Login.Login" />
         <activity android:name=".Receita.ReceitaDetailController" />
-        <activity android:name=".Grafico.GraficoController" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".Grafico.GraficoController">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Receita.ReceitaModifyController" />
         <activity android:name=".Gasto.GastoModifyController" />
-        <activity android:name=".Grafico.GraficoViewController"/>
+        <activity android:name=".Grafico.GraficoViewController" />
         <activity android:name=".Relatorio.RelatorioController" />
-
         <activity
             android:name=".Gasto.GastoController"
             android:label="@string/title_activity_gasto_controller"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Gasto.GastoDetailController"
             android:label="@string/title_activity_gasto_detail_controller"
@@ -41,7 +39,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-
+        <activity
+            android:name=".Relatorio.RelatorioDetailController"
+            android:label="@string/title_activity_relatorio_detail_controller"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
