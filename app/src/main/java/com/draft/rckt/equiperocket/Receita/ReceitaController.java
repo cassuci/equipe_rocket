@@ -62,9 +62,9 @@ public class ReceitaController extends AppCompatActivity
                 /**TODO
                  * Inserir classe de Inserção de Receita aqui
                  *
-                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
+                 *  intent.setClass(ReceitaController.this,NOMECLASSEINSERCAORECEITA);
                  */
-                intent.setClass(ReceitaController.this, ReceitaDetailController.class);
+                intent.setClass(ReceitaController.this, GastoController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -81,6 +81,10 @@ public class ReceitaController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_receita_id);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla"); //TODO substituir por user_id
+
 
         dbControl = new DatabaseController(this.getApplicationContext());
 

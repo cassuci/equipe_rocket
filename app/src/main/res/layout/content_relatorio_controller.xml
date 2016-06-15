@@ -21,18 +21,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="@string/switch_grafico_receita"
-        android:id="@+id/switch_grafico_receita_enabled" />
-
-
-
-    <!--<ExpandableListView
-        android:id="@+id/expandableList_grafico_receita_filtro"
-        android:divider="@color/mdtp_dark_gray"
-        android:indicatorLeft="?android:attr/expandableListPreferredChildIndicatorLeft"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:dividerHeight="0.5dp">
-    </ExpandableListView>-->
+        android:id="@+id/switch_relatorio_receita_enabled" />
 
     <Switch
         android:layout_width="match_parent"
@@ -41,8 +30,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:text="@string/switch_grafico_gasto"
-        android:id="@+id/switch_grafico_gasto_enabled"
-        android:layout_below="@+id/switch_grafico_receita_enabled"
+        android:id="@+id/switch_relatorio_gasto_enabled"
+        android:layout_below="@+id/switch_relatorio_receita_enabled"
         android:layout_centerHorizontal="true" />
 
 

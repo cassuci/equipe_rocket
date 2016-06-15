@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,9 @@ public class RelatorioController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla");// TODO substituir por user_id
 
         buttonStartDate = (Button) findViewById(R.id.button_start_date);
         buttonEndDate = (Button) findViewById(R.id.button_end_date);
@@ -207,23 +211,23 @@ public class RelatorioController extends AppCompatActivity
 
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
+        boolean enabled = ((Switch) view).isEnabled();
 
-//        // Check which checkbox was clicked
-//        switch(view.getId()) {
-//            case R.id.checkbox_gastos:
-//                if (checked)
-//                    gastosSelected = 1;
-//                else
-//                    gastosSelected = 0;
-//                break;
-//            case R.id.checkbox_receitas:
-//                if (checked)
-//                    receitasSelected = 1;
-//                else
-//                    receitasSelected = 0;
-//                break;
-//        }
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.switch_relatorio_gasto_enabled:
+                if (enabled)
+                    gastosSelected = 1;
+                else
+                    gastosSelected = 0;
+                break;
+            case R.id.switch_relatorio_receita_enabled:
+                if (enabled)
+                    receitasSelected = 1;
+                else
+                    receitasSelected = 0;
+                break;
+        }
 
         textStart.setText("gastos = " + gastosSelected);
         textEnd.setText("receitas = " + receitasSelected);

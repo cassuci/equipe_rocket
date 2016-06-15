@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
@@ -20,10 +21,23 @@ import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 
 //TODO: TERMINAR INTERFACE
 public class GraficoController extends AppCompatActivity
         implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+
+    ExpandableListAdapter listAdapter_receitas;
+    ExpandableListAdapter listAdapter_gastos;
+    ExpandableListView expListView_receitas;
+    ExpandableListView expListView_gastos;
+    List<String> listDataHeader_receitas;
+    HashMap<String, List<String>> listDataChild_receitas;
+    List<String> listDataHeader_gastos;
+    HashMap<String, List<String>> listDataChild_gastos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +57,54 @@ public class GraficoController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla");// TODO substituir por user_id
+
+        // get the listview
+        expListView_receitas = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);
+        expListView_gastos = (ExpandableListView) findViewById(R.id.expandableList_grafico_gasto_filtro);
+
+        // preparing list data
+        prepareListData();
+
+        listAdapter_receitas = new ExpandableListAdapter(this, listDataHeader_receitas, listDataChild_receitas);
+        listAdapter_gastos = new ExpandableListAdapter(this, listDataHeader_gastos, listDataChild_gastos);
+
+        // setting list adapter
+        expListView_receitas.setAdapter(listAdapter_receitas);
+        expListView_gastos.setAdapter(listAdapter_gastos);
     }
+
+    private void prepareListData() {
+        listDataHeader_receitas = new ArrayList<String>();
+        listDataChild_receitas = new HashMap<String, List<String>>();
+
+        // Adding child data
+        listDataHeader_receitas.add("Filtro de busca (opcional)");
+
+        // Adding child data
+        List<String> filtros_receita = new ArrayList<String>();
+        filtros_receita.add("Rendimentos");
+        filtros_receita.add("Salário");
+        filtros_receita.add("Bônus");
+        filtros_receita.add("Outros");
+
+        listDataHeader_gastos = new ArrayList<String>();
+        listDataChild_gastos = new HashMap<String, List<String>>();
+
+        listDataHeader_gastos.add("Filtro de busca (opcional)");
+
+        List<String> filtros_gasto = new ArrayList<String>();
+        filtros_gasto.add("Alimentação");
+        filtros_gasto.add("Transporte");
+        filtros_gasto.add("Contas");
+        filtros_gasto.add("Lazer");
+
+        listDataChild_receitas.put(listDataHeader_receitas.get(0), filtros_receita); // Header, Child data
+        listDataChild_gastos.put(listDataHeader_gastos.get(0), filtros_gasto); // Header, Child data
+    }
+
 
     @Override
     public void onClick(View v) {
