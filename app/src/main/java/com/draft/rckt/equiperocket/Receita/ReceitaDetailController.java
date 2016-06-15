@@ -138,9 +138,10 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     public void onDialogPositiveClick(DialogFragment dialog) {
         boolean isDeleteSucessful =  removeReceita(getReceita().getReceita_id());
         dialog.dismiss();
-        if(isDeleteSucessful)
-            Toast.makeText(getApplicationContext(),"Receita deletada com sucesso.",Toast.LENGTH_SHORT).show();
-        else
+        if(isDeleteSucessful) {
+            Toast.makeText(getApplicationContext(), "Receita deletada com sucesso.", Toast.LENGTH_SHORT).show();
+            finish();
+        }else
             Toast.makeText(getApplicationContext(),"Falha ao deletar receita." , Toast.LENGTH_SHORT).show();
     }
 

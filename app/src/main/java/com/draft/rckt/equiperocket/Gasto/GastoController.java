@@ -144,7 +144,7 @@ public class GastoController extends AppCompatActivity
             rec.gasto_id = 1;
             rec.titulo = "Receit " + i;
             rec.descr = "aaaaaaa bbbbbb    ccccccc " + i;
-            rec.tipo = "qualquer uma";
+            rec.tipo = "12/12/12";
             rec.valor = (float) 4000.90 + i;
             gastoList.add(rec);
         }

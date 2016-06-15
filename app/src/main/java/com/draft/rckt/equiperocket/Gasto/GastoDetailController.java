@@ -130,14 +130,15 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        boolean isDeleteSucessful = true;
+        boolean isDeleteSucessful = false;
                 //removeGasto(get_gasto_id());
         dialog.dismiss();
-        if(isDeleteSucessful)
-            Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
-        finish();
+        if(isDeleteSucessful) {
+            Toast.makeText(getApplicationContext(), "Gasto deletado com sucesso.", Toast.LENGTH_SHORT).show();
+            finish();
+        }else {
+            Toast.makeText(getApplicationContext(), "Falha ao deletar gasto.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
