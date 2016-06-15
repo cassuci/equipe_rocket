@@ -12,11 +12,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
+import com.draft.rckt.equiperocket.Grafico.ExpListViewAdapterWithCheckbox;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
@@ -30,13 +34,13 @@ import java.util.List;
 public class GraficoController extends AppCompatActivity
         implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
-    ExpandableListAdapter listAdapter_receitas;
-    ExpandableListAdapter listAdapter_gastos;
+    ExpListViewAdapterWithCheckbox listAdapter_receitas;
+    ExpListViewAdapterWithCheckbox listAdapter_gastos;
     ExpandableListView expListView_receitas;
     ExpandableListView expListView_gastos;
-    List<String> listDataHeader_receitas;
+    ArrayList<String> listDataHeader_receitas;
     HashMap<String, List<String>> listDataChild_receitas;
-    List<String> listDataHeader_gastos;
+    ArrayList<String> listDataHeader_gastos;
     HashMap<String, List<String>> listDataChild_gastos;
 
     @Override
@@ -68,12 +72,34 @@ public class GraficoController extends AppCompatActivity
         // preparing list data
         prepareListData();
 
-        listAdapter_receitas = new ExpandableListAdapter(this, listDataHeader_receitas, listDataChild_receitas);
-        listAdapter_gastos = new ExpandableListAdapter(this, listDataHeader_gastos, listDataChild_gastos);
+        listAdapter_receitas = new ExpListViewAdapterWithCheckbox(this, listDataHeader_receitas, listDataChild_receitas);
+        listAdapter_gastos = new ExpListViewAdapterWithCheckbox(this, listDataHeader_gastos, listDataChild_gastos);
+
+        expListView_receitas.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                setListViewHeight(parent, groupPosition);
+                return false;
+            }
+        });
+
+        expListView_gastos.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                                        int groupPosition, long id) {
+                setListViewHeight(parent, groupPosition);
+                return false;
+            }
+        });
 
         // setting list adapter
         expListView_receitas.setAdapter(listAdapter_receitas);
+        setListViewHeight(expListView_receitas);
         expListView_gastos.setAdapter(listAdapter_gastos);
+        setListViewHeight(expListView_gastos);
     }
 
     private void prepareListData() {
@@ -133,5 +159,57 @@ public class GraficoController extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void setListViewHeight(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        int totalHeight = 0;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
+
+    private void setListViewHeight(ExpandableListView listView,
+                                   int group) {
+        ExpListViewAdapterWithCheckbox listAdapter = (ExpListViewAdapterWithCheckbox) listView.getExpandableListAdapter();
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(),
+                View.MeasureSpec.EXACTLY);
+        for (int i = 0; i < listAdapter.getGroupCount(); i++) {
+            View groupItem = listAdapter.getGroupView(i, false, null, listView);
+            groupItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+
+            totalHeight += groupItem.getMeasuredHeight();
+
+            if (((listView.isGroupExpanded(i)) && (i != group))
+                    || ((!listView.isGroupExpanded(i)) && (i == group))) {
+                for (int j = 0; j < listAdapter.getChildrenCount(i); j++) {
+                    View listItem = listAdapter.getChildView(i, j, false, null,
+                            listView);
+                    listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+
+                    totalHeight += listItem.getMeasuredHeight();
+
+                }
+            }
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        int height = totalHeight
+                + (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
+        if (height < 10)
+            height = 200;
+        params.height = height;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+
     }
 }
