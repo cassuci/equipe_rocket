@@ -81,7 +81,7 @@ public class ReceitaController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla"); //substituir por user_id
+        nav_user.setText("bla"); //TODO substituir por user_id
 
 
         listView = (ListView) findViewById(R.id.listView_receita_id);
