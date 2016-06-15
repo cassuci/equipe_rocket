@@ -209,21 +209,21 @@ public class RelatorioController extends AppCompatActivity
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkbox_gastos:
-                if (checked)
-                    gastosSelected = 1;
-                else
-                    gastosSelected = 0;
-                break;
-            case R.id.checkbox_receitas:
-                if (checked)
-                    receitasSelected = 1;
-                else
-                    receitasSelected = 0;
-                break;
-        }
+//        // Check which checkbox was clicked
+//        switch(view.getId()) {
+//            case R.id.checkbox_gastos:
+//                if (checked)
+//                    gastosSelected = 1;
+//                else
+//                    gastosSelected = 0;
+//                break;
+//            case R.id.checkbox_receitas:
+//                if (checked)
+//                    receitasSelected = 1;
+//                else
+//                    receitasSelected = 0;
+//                break;
+//        }
 
         textStart.setText("gastos = " + gastosSelected);
         textEnd.setText("receitas = " + receitasSelected);
