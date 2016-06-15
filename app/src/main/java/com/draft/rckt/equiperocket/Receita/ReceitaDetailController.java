@@ -97,7 +97,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(ReceitaDetailController.this, GastoController.class);
+        Intent intent = new Intent(ReceitaDetailController.this, ReceitaController.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
         startActivity(intent);
         finish();
@@ -133,14 +133,15 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     }
 
+
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         boolean isDeleteSucessful =  removeReceita(getReceita().getReceita_id());
         dialog.dismiss();
         if(isDeleteSucessful)
-            Toast.makeText(getApplicationContext(),"Gasto deletado com sucesso.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Receita deletada com sucesso.",Toast.LENGTH_SHORT).show();
         else
-            Toast.makeText(getApplicationContext(),"Falha ao deletar gasto." , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Falha ao deletar receita." , Toast.LENGTH_SHORT).show();
     }
 
     /**
