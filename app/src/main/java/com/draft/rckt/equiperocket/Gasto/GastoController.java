@@ -81,7 +81,7 @@ public class GastoController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla");
+        nav_user.setText("bla"); // TODO substituir por user_id
 
 
         prepareGastoData();

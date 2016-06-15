@@ -54,6 +54,9 @@ public class RelatorioController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla");// TODO substituir por user_id
 
         buttonStartDate = (Button) findViewById(R.id.button_start_date);
         buttonEndDate = (Button) findViewById(R.id.button_end_date);

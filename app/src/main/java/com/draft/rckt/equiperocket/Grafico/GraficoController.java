@@ -53,6 +53,9 @@ public class GraficoController extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        nav_user.setText("bla");// TODO substituir por user_id
 
         // get the listview
         expListView = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);
