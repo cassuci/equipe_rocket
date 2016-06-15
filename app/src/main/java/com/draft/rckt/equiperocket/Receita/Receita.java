@@ -13,7 +13,7 @@ public class Receita implements Serializable {
     public String titulo;
     public String tipo;
     public String desc;
-    public float valor;
+    public double valor;
     public Date data;
 
     public Receita(){
@@ -70,7 +70,7 @@ public class Receita implements Serializable {
         this.desc = desc;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 

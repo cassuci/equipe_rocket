@@ -3,10 +3,13 @@ package com.draft.rckt.equiperocket.Database;
 import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
 
+import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Receita.Receita;
 
@@ -18,37 +21,44 @@ import java.util.Date;
  */
 public class DatabaseController {
     private static DatabaseHelper dbHelper = null;
+    private static Context context;
+    private SQLiteDatabase db ;
 
     public DatabaseController(Context context) {
         if (dbHelper == null) {
-            dbHelper = new DatabaseHelper(context);
+            this.context = context;
+
+            dbHelper = new DatabaseHelper(this.context);
 
             //TODO temporario
-            SQLiteDatabase db = dbHelper.getWritableDatabase();
+            if  (getAllReceitaOrderByDate() == null) {
 
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("username", "100");
-            contentValues.put("senha", "senhaTeste");
-            contentValues.put("nome", "NomeTeste");
-
-            db.insert("Users", null, contentValues);
-
-            ContentValues cont = new ContentValues();
-            cont.put("receita_id", 55);
-            cont.put("user_id", "100");
-            cont.put("valor", 98.0);
-            cont.put("data", "default");
-            db.insert("Receitas", null, cont);
-
-            db.close();
-
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("username", "1");
+                contentValues.put("senha", "senhaTeste");
+                contentValues.put("nome", "NomeTeste");
+                db.insert("Users", null, contentValues);
+                int i;
+                double v = 402;
+                for (i = 1; i < 15; i++) {
+                    Receita rec = new Receita();
+                    rec.user_id = "1";
+                    rec.receita_id = i;
+                    rec.titulo = "Receit " + i;
+                    rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
+                    rec.tipo = "qualquer uma";
+                    v += i;
+                    rec.valor = v;
+                    addItemReceita(rec);
+                }
+            }
         }
     }
 
 
 
     public void addItemReceita(Receita rec) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
 
@@ -61,19 +71,17 @@ public class DatabaseController {
         //contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.data.getTime());
 
         db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
-        db.close();
-
     }
 
     public ArrayList<Receita> getAllReceitaOrderByDate(){
 
         //TODO: depois arrumar o id para o id do usuário
         String query_get = "select * FROM " + ReceitaEntry.TABLE_NAME +
-                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '99' " +
-                " ORDER BY " + ReceitaEntry.COLUMN_NAME_DATE + " DESC;";
+                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '1'";
+//                " ORDER BY " + ReceitaEntry.COLUMN_NAME_DATE + " DESC;";
 
         // ganha acesso a database
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        db = dbHelper.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(query_get, null);
         ArrayList<Receita> array = null;
@@ -82,6 +90,8 @@ public class DatabaseController {
 
         if (cursor != null && cursor.moveToFirst())
         {
+            Toast.makeText(context, "VAZIO", Toast.LENGTH_SHORT).show();
+
             array = new ArrayList<Receita>();
             do {
                 Receita receita = new Receita();
@@ -91,15 +101,13 @@ public class DatabaseController {
                 receita.desc = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_CONTENT));
                 receita.valor = cursor.getFloat(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_VALUE));
                 receita.tipo = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TYPE));
-                receita.data = new Date(cursor.getLong(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE)));
+                //receita.data = new Date(cursor.getLong(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE)));
+                //TODO arrumar data (IVAN)
                 array.add(receita);
 
             } while (cursor.moveToNext());
         }
-        db.close();
 
         return array;
     }
-
-
 }
