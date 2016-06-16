@@ -18,7 +18,9 @@ import com.draft.rckt.equiperocket.Receita.Receita;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by ivanlucas on 12/06/16.
@@ -205,5 +207,14 @@ public class DatabaseController {
         if (n_rows > 0)
             return true;
         return  false;
+    }
+
+    public ArrayList<Receita> getReceitaByPeriod(ArrayList<Receita> arrayReceita, Calendar startDate, Calendar finishDate)
+    {
+        ArrayList<Receita>  array = new ArrayList<Receita>();
+      //  startDate.set(Calendar.YEAR);
+      //  startDate.s
+
+        return array;
     }
 }

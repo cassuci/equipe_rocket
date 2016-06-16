@@ -32,5 +32,6 @@
     <string name="buttonText_grafico_createGraph">Criar Gráfico</string>
 
     <string name="title_activity_relatorio_detail_controller">RelatorioDetailController</string>
+    <string name="title_activity_receita_insert_controller">ReceitaInsertController</string>
 
 </resources>
