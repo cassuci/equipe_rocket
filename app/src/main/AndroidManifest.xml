@@ -12,10 +12,7 @@
         <activity android:name=".Receita.ReceitaController" />
         <activity android:name=".MainMenu.MainMenu" />
         <activity android:name=".Login.Login" />
-        <activity
-            android:name=".Login.SplashScreen"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/action_settings">
+        <activity android:name=".Login.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +21,11 @@
         </activity>
         <activity android:name=".Receita.ReceitaDetailController" />
         <activity android:name=".Grafico.GraficoController">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Receita.ReceitaModifyController" />
         <activity android:name=".Gasto.GastoModifyController" />
