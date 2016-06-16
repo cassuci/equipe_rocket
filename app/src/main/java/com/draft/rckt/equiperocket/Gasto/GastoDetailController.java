@@ -53,13 +53,13 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
     }
 
     private void fillTextView() {
-        textView_titulo.setText(getGasto().getTitulo());
+        textView_titulo.setText(gasto.getTitulo());
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-        String data = formatoData.format(getGasto().getData());
+        String data = formatoData.format(gasto.getData());
         textView_data.setText(data);
-        textView_valor.setText(String.valueOf(getGasto().getValor()));
-        textView_tipo.setText(getGasto().getTipo());
-        textView_descr.setText(getGasto().getDescr());
+        textView_valor.setText(String.valueOf(gasto.getValor()));
+        textView_tipo.setText(gasto.getTipo());
+        textView_descr.setText(gasto.getDescr());
 
     }
 
@@ -103,7 +103,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
             case R.id.edit:
                 // tratamento botao modificacao
                 Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
-                intent.putExtra("gasto", getGasto());
+                intent.putExtra("gasto",gasto);
                 startActivity(intent);
                 return true;
             default:
@@ -144,10 +144,6 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         }
     }
 
-
-    public Gasto getGasto(){
-        return this.gasto;
-    }
 
     private void setGasto(){
         this.gasto = (Gasto) getIntent().getExtras().getSerializable("gasto");

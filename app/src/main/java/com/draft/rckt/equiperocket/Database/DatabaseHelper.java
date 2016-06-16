@@ -34,8 +34,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ReceitaEntry.COLUMN_NAME_DATE + " BIGINT NOT NULL, " +
                     " FOREIGN KEY (" + ReceitaEntry.COLUMN_NAME_USER_ID + " ) " +
                         "REFERENCES " + UserEntry.TABLE_NAME + " ( " + UserEntry.COLUMN_NAME_USER_ID + " ) " +
-                        " ON DELETE NO ACTION " +
-                        " ON UPDATE NO ACTION " +
+                        " ON DELETE CASCADE " +
+                        " ON UPDATE CASCADE " +
             " )";
 
     private static final String SQL_CREATE_GASTOS =
@@ -49,8 +49,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     GastoEntry.COLUMN_NAME_DATE + " BIGINT NOT NULL, " +
                     " FOREIGN KEY (" + GastoEntry.COLUMN_NAME_USER_ID + " ) " +
                     "REFERENCES " + UserEntry.TABLE_NAME + " ( " + UserEntry.COLUMN_NAME_USER_ID + " ) " +
-                    " ON DELETE NO ACTION " +
-                    " ON UPDATE NO ACTION " +
+                    " ON DELETE CASCADE " +
+                    " ON UPDATE CASCADE " +
             " )";
 
 
@@ -76,9 +76,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Conversao de versoes da database nao foi implementada
         // Para nao causar inconsistencia, a atualizacao apaga a versao anterior
+        db.execSQL(SQL_DELETE_USERS);
         db.execSQL(SQL_DELETE_RECEITA);
         db.execSQL(SQL_DELETE_GASTO);
-        db.execSQL(SQL_DELETE_USERS);
 
         onCreate(db);
     }

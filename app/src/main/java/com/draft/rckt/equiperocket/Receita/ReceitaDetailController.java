@@ -94,11 +94,11 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     {
         textView_titulo.setText(receita.getTitulo());
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-        String data = formatoData.format(getReceita().getData());
+        String data = formatoData.format(receita.getData());
         textView_data.setText(data);
-        textView_valor.setText(String.valueOf(getReceita().getValor()));
-        textView_tipo.setText(getReceita().getTipo());
-        textView_desc.setText(getReceita().getDesc());
+        textView_valor.setText(String.valueOf(receita.getValor()));
+        textView_tipo.setText(receita.getTipo());
+        textView_desc.setText(receita.getDesc());
     }
 
     private void setReceita(){
@@ -128,7 +128,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
                 return true;
             case R.id.edit:
                 Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
-                intent.putExtra("receita", getReceita());
+                intent.putExtra("receita", receita);
                 startActivity(intent);
                 return true;
 
@@ -160,10 +160,4 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
         }else
            Toast.makeText(getApplicationContext(),"Falha ao deletar receita." , Toast.LENGTH_SHORT).show();
     }
-
-
-    public Receita getReceita(){
-        return this.receita;
-    }
-
 }

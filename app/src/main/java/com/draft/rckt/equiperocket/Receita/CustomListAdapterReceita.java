@@ -43,11 +43,11 @@ public class CustomListAdapterReceita extends BaseAdapter {
         }
 
         Receita rec = arrayReceita.get(position);
-        view.titulo.setText(rec.titulo);
+        view.titulo.setText(rec.getTitulo());
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-        String data = formatoData.format(rec.data);
+        String data = formatoData.format(rec.getData());
         view.data.setText(data);
-        view.valor.setText(String.valueOf(rec.valor));
+        view.valor.setText(String.valueOf(rec.getValor()));
         return convertView;
     }
 
