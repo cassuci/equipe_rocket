@@ -12,14 +12,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import com.draft.rckt.equiperocket.Database.DatabaseContract;
+import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.R;
 
 public class GastoDetailController extends AppCompatActivity implements CreateGastoDialog.NoticeDialogListener{
-    private DatabaseHelper mDbHelper;
-    private SQLiteDatabase db;
 
     private Gasto gasto;
 
@@ -28,12 +28,14 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
     private TextView textView_valor;
     private TextView textView_descr;
     private TextView textView_tipo;
+    private DatabaseController dbControl;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mDbHelper = new DatabaseHelper(getApplicationContext());
+        dbControl = new DatabaseController(getApplicationContext());
 
         setContentView(R.layout.activity_gasto_detail_controller);
 
@@ -51,12 +53,13 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
     }
 
     private void fillTextView() {
-        //TODO: Arrumar Data e descrição
         textView_titulo.setText(getGasto().getTitulo());
-        textView_data.setText("A/A/A");
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        String data = formatoData.format(getGasto().getData());
+        textView_data.setText(data);
         textView_valor.setText(String.valueOf(getGasto().getValor()));
         textView_tipo.setText(getGasto().getTipo());
-        textView_descr.setText("njlabjasbo abg ud uogau ga iudgudsgids iudsgbuisdbg sdbg bdsgdks bdkldgksbkdslb");
+        textView_descr.setText(getGasto().getDescr());
 
     }
 
@@ -130,8 +133,8 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        boolean isDeleteSucessful = false;
-                //removeGasto(get_gasto_id());
+        boolean isDeleteSucessful = dbControl.deleteGasto(gasto);;
+
         dialog.dismiss();
         if(isDeleteSucessful) {
             Toast.makeText(getApplicationContext(), "Gasto deletado com sucesso.", Toast.LENGTH_SHORT).show();
@@ -141,28 +144,6 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         }
     }
 
-    /**
-     * Remove uma entrada da tabela de gastos
-     * @param gasto_id identificador unico da entrada a ser deletada
-     * @return true se houve sucesso na remocao, false caso contrario
-     */
-    public boolean removeGasto(int gasto_id){
-        int n_rows; // numero de registros alterados na database
-
-        db = mDbHelper.getWritableDatabase(); // ganha acesso a database
-
-        // condicao de where da query
-        String where_clause = DatabaseContract.GastoEntry.COLUMN_NAME_ENTRY_ID +
-                " = " + Integer.toString(gasto_id);
-        n_rows = db.delete(DatabaseContract.GastoEntry.TABLE_NAME, where_clause, null);
-        db.close(); // libera database
-
-        // se alterou alguma linha retorna true
-        if (n_rows > 0)
-            return true;
-        else
-            return false;
-    }
 
     public Gasto getGasto(){
         return this.gasto;

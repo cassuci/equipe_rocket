@@ -31,6 +31,7 @@
     <string name="textView_grafico_data_final_header">Data final:</string>
     <string name="buttonText_grafico_definirData">Definir</string>
     <string name="textView_grafico_definirData">Não definida</string>
+    <string name="buttonText_grafico_createGraph">Criar Gráfico</string>
 
     <string name="title_activity_relatorio_detail_controller">RelatorioDetailController</string>
 

@@ -68,7 +68,7 @@ public class CustomListAdapterGasto extends RecyclerView.Adapter<CustomListAdapt
         //Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Gasto gasto = gastoList.get(position);
         holder.title.setText(gasto.getTitulo());
-        holder.value.setText(Float.toString(gasto.getValor()));
+        holder.value.setText(String.valueOf(gasto.getValor()));
         holder.date.setText(gasto.getTipo());
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.draft.rckt.equiperocket.Gasto.GastoDetailController">
+    tools:context="com.draft.rckt.equiperocket.Receita.ReceitaDetailController">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -32,8 +32,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_gasto_detail_controller" />
-
+    <include layout="@layout/content_relatorio_detail_controller" />
 
     <LinearLayout
         android:orientation="vertical"

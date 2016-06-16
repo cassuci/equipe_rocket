@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 /**
  * Created by ivanlucas on 12/06/16.
@@ -42,7 +44,9 @@ public class CustomListAdapterReceita extends BaseAdapter {
 
         Receita rec = arrayReceita.get(position);
         view.titulo.setText(rec.titulo);
-        view.data.setText("aaaaaa");
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        String data = formatoData.format(rec.data);
+        view.data.setText(data);
         view.valor.setText(String.valueOf(rec.valor));
         return convertView;
     }

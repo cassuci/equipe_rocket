@@ -69,7 +69,7 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
     private void modify_confirmed(Gasto gasto_modificado) {
         String gasto_title = null;
         String gasto_descr = null;
-        float gasto_value;
+        double gasto_value;
         String gasto_type = null;
 
         // separa informacoes a serem atualizadas
