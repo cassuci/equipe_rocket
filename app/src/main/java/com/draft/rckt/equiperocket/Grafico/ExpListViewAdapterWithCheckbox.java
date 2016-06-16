@@ -35,6 +35,7 @@ public class ExpListViewAdapterWithCheckbox extends BaseExpandableListAdapter {
     // hashmap points to
     private ArrayList<String> mListDataGroup;
 
+
     // Hashmap for keeping track of our checkbox check states
     private HashMap<Integer, boolean[]> mChildCheckStates;
 
@@ -65,6 +66,11 @@ public class ExpListViewAdapterWithCheckbox extends BaseExpandableListAdapter {
         // Initialize our hashmap containing our check states here
         mChildCheckStates = new HashMap<Integer, boolean[]>();
     }
+
+    public boolean[] getChildCheckStates(int groupPosition){
+        return mChildCheckStates.get(groupPosition);
+    }
+
 
     @Override
     public int getGroupCount() {
@@ -254,4 +260,6 @@ public class ExpListViewAdapterWithCheckbox extends BaseExpandableListAdapter {
         TextView mChildText;
         CheckBox mCheckBox;
     }
+
+
 }

@@ -13,9 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
@@ -26,6 +30,7 @@ import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,6 +38,10 @@ import java.util.List;
 //TODO: TERMINAR INTERFACE
 public class GraficoController extends AppCompatActivity
         implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+
+
+    boolean include_receitas;
+    boolean include_gastos;
 
     ExpListViewAdapterWithCheckbox listAdapter_receitas;
     ExpListViewAdapterWithCheckbox listAdapter_gastos;
@@ -42,6 +51,13 @@ public class GraficoController extends AppCompatActivity
     HashMap<String, List<String>> listDataChild_receitas;
     ArrayList<String> listDataHeader_gastos;
     HashMap<String, List<String>> listDataChild_gastos;
+
+    private static Calendar startDate = Calendar.getInstance();
+    private static Calendar endDate = Calendar.getInstance();
+
+    String[] filtros_receitas = new String[]{"Rendimentos", "Salário", "Bônus", "Outros"};
+    String[] filtros_gastos = new String[] {"Alimentação", "Transporte", "Contas", "Lazer", "Outros"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +116,34 @@ public class GraficoController extends AppCompatActivity
         setListViewHeight(expListView_receitas);
         expListView_gastos.setAdapter(listAdapter_gastos);
         setListViewHeight(expListView_gastos);
+
+
+        // configurando tratadores dos switches
+        Switch switch_receitas = (Switch) findViewById(R.id.switch_grafico_receita_enabled);
+        switch_receitas.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        include_receitas = isChecked;
+                    }
+                });
+        Switch switch_gastos = (Switch) findViewById(R.id.switch_grafico_gasto_enabled);
+        switch_gastos.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                include_gastos = isChecked;
+            }
+        });
+
+        // configurando tratadores dos botoes
+        Button button_startDate = (Button) findViewById(R.id.button_grafico_startDate);
+        button_startDate.setOnClickListener(this);
+
+        Button button_endDate = (Button) findViewById(R.id.button_grafico_endDate);
+        button_endDate.setOnClickListener(this);
+
+
+        Button button_createGraph = (Button) findViewById(R.id.button_grafico_createGraph);
+        button_createGraph.setOnClickListener(this);
     }
 
     private void prepareListData() {
@@ -111,10 +155,10 @@ public class GraficoController extends AppCompatActivity
 
         // Adding child data
         List<String> filtros_receita = new ArrayList<String>();
-        filtros_receita.add("Rendimentos");
-        filtros_receita.add("Salário");
-        filtros_receita.add("Bônus");
-        filtros_receita.add("Outros");
+
+        for (int i = 0; i < this.filtros_receitas.length; i++){
+            filtros_receita.add(filtros_receitas[i]);
+        }
 
         listDataHeader_gastos = new ArrayList<String>();
         listDataChild_gastos = new HashMap<String, List<String>>();
@@ -122,10 +166,9 @@ public class GraficoController extends AppCompatActivity
         listDataHeader_gastos.add("Filtro de busca (opcional)");
 
         List<String> filtros_gasto = new ArrayList<String>();
-        filtros_gasto.add("Alimentação");
-        filtros_gasto.add("Transporte");
-        filtros_gasto.add("Contas");
-        filtros_gasto.add("Lazer");
+        for (int i = 0; i < this.filtros_gastos.length; i++){
+            filtros_gasto.add(filtros_gastos[i]);
+        }
 
         listDataChild_receitas.put(listDataHeader_receitas.get(0), filtros_receita); // Header, Child data
         listDataChild_gastos.put(listDataHeader_gastos.get(0), filtros_gasto); // Header, Child data
@@ -135,6 +178,38 @@ public class GraficoController extends AppCompatActivity
     @Override
     public void onClick(View v) {
         //TODO: coletar informacoes inseridas na UI e comecar a atividade de visualizacao
+
+        if(v.getId() == R.id.button_grafico_createGraph){
+            startGraphCreateActivity();
+        }
+    }
+
+    private void startGraphCreateActivity() {
+
+
+        HashMap<String, Boolean> filtro_receitas = new HashMap<String, Boolean>();
+        HashMap<String, Boolean> filtro_gastos = new HashMap<String, Boolean>();
+
+        boolean[] filtro_receitas_itens_checked = listAdapter_receitas.getChildCheckStates(0);
+        boolean[] filtro_gastos_itens_checked = listAdapter_receitas.getChildCheckStates(1);
+
+        for (int i = 0; i < filtro_receitas_itens_checked.length; i++){
+            filtro_receitas.put(this.filtros_receitas[i], filtro_receitas_itens_checked[i]);
+        }
+        for (int i = 0; i < filtro_receitas_itens_checked.length; i++){
+            filtro_receitas.put(this.filtros_receitas[i], filtro_receitas_itens_checked[i]);
+        }
+
+        //TODO: extrair datas
+
+        Intent intent = new Intent(GraficoController.this, GraficoViewController.class);
+        intent.putExtra("receitas_include", include_receitas);
+        intent.putExtra("gastos_include", include_gastos);
+        intent.putExtra("receitas_filtros", filtro_receitas);
+        intent.putExtra("gastos_filtros", filtro_gastos);
+        intent.putExtra("startDate",false);
+        intent.putExtra("endDate",false);
+        //startActivity(intent);
     }
 
     @Override
