@@ -139,6 +139,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         if(isDeleteSucessful) {
             Toast.makeText(getApplicationContext(), "Gasto deletado com sucesso.", Toast.LENGTH_SHORT).show();
             finish();
+
         }else {
             Toast.makeText(getApplicationContext(), "Falha ao deletar gasto.", Toast.LENGTH_SHORT).show();
         }

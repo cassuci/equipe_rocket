@@ -228,15 +228,13 @@ public class GastoController extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    /*TODO
-        Recarregar pagina atual apos mudancas ou utilizar onRestart()?
-    **/
-    /*@Override
+    
+    @Override
     protected void onRestart() {
         super.onRestart();
         finish();
         startActivity(getIntent());
-    }*/
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
