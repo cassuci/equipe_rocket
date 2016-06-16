@@ -47,8 +47,9 @@ public class DatabaseController {
                 int i;
 
                 Receita a = new Receita();
+
                 double v = 402;
-                for (i = 1; i < 15; i++) {
+                for (i = 1; i < 20; i++) {
                     Receita rec = new Receita();
                     rec.user_id = "1";
                     rec.receita_id = i;
@@ -57,7 +58,10 @@ public class DatabaseController {
                     rec.tipo = "qualquer uma";
                     v += i;
                     rec.valor = v;
-                    rec.data = new Date();
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DAY_OF_MONTH, i);
+                    rec.data = calendar.getTime();
                     addItemReceita(rec);
                     a = rec;
                 }
@@ -211,9 +215,65 @@ public class DatabaseController {
 
     public ArrayList<Receita> getReceitaByPeriod(ArrayList<Receita> arrayReceita, Calendar startDate, Calendar finishDate)
     {
-        ArrayList<Receita>  array = new ArrayList<Receita>();
-      //  startDate.set(Calendar.YEAR);
-      //  startDate.s
+        ArrayList<Receita> array = new ArrayList<Receita>();
+        int i = 0;
+        startDate.add(Calendar.HOUR, 0);
+        startDate.add(Calendar.MINUTE, 0);
+        startDate.add(Calendar.SECOND, 0);
+
+        finishDate.add(Calendar.HOUR, 23);
+        finishDate.add(Calendar.MINUTE, 59);
+        finishDate.add(Calendar.SECOND, 59);
+
+        long inicio = (startDate.getTime()).getTime();
+        long fim = (finishDate.getTime()).getTime();
+        long atual;
+        int ver = 0;
+        for (i = 0; i < arrayReceita.size(); i++)
+        {
+            atual = arrayReceita.get(i).getData().getTime();
+            if (atual >= inicio && atual <= fim) {
+                Receita rec = new Receita();
+                rec = arrayReceita.get(i);
+                array.add(rec);
+                ver = 1;
+            }
+        }
+        if (ver == 0)
+            array =  null;
+
+        return array;
+    }
+
+
+    public ArrayList<Gasto> getGastoByPeriod(ArrayList<Gasto> arrayGasto, Calendar startDate, Calendar finishDate)
+    {
+        ArrayList<Gasto> array = new ArrayList<Gasto>();
+        int i = 0;
+        startDate.add(Calendar.HOUR, 0);
+        startDate.add(Calendar.MINUTE, 0);
+        startDate.add(Calendar.SECOND, 0);
+
+        finishDate.add(Calendar.HOUR, 23);
+        finishDate.add(Calendar.MINUTE, 59);
+        finishDate.add(Calendar.SECOND, 59);
+
+        long inicio = (startDate.getTime()).getTime();
+        long fim = (finishDate.getTime()).getTime();
+        long atual;
+        int ver = 0;
+        for (i = 0; i < arrayGasto.size(); i++)
+        {
+            atual = arrayGasto.get(i).getData().getTime();
+            if (atual >= inicio && atual <= fim) {
+                Gasto aux = new Gasto();
+                aux = arrayGasto.get(i);
+                array.add(aux);
+                ver = 1;
+            }
+        }
+        if (ver == 0)
+            array =  null;
 
         return array;
     }

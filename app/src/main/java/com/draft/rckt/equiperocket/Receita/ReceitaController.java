@@ -25,6 +25,7 @@ import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /////////////////////////////////   VOLTAR ATE AQUIIIIIIIIIIIIIIIIIIII    //////////////////
 public class ReceitaController extends AppCompatActivity
@@ -107,7 +108,7 @@ public class ReceitaController extends AppCompatActivity
         array = new ArrayList<Receita>();
         array = dbControl.getAllReceitaOrderByDate();
 
-        listView.setAdapter(new CustomListAdapterReceita(this, array));
+       listView.setAdapter(new CustomListAdapterReceita(this, array));
     }
 
     public void showReceita(int pos) {
