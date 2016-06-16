@@ -12,7 +12,10 @@
         <activity android:name=".Receita.ReceitaController" />
         <activity android:name=".MainMenu.MainMenu" />
         <activity android:name=".Login.Login" />
-        <activity android:name=".Login.SplashScreen">
+        <activity
+            android:name=".Login.SplashScreen"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/action_settings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
