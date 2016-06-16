@@ -13,7 +13,7 @@ public class Gasto implements Serializable{
     public String titulo;
     public String tipo;
     public String descr;
-    public float valor;
+    public double valor;
     public Date data;
 
     public Gasto(){
@@ -70,7 +70,7 @@ public class Gasto implements Serializable{
         this.descr = desc;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 

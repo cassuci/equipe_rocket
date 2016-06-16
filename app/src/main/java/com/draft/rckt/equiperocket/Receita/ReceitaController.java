@@ -26,6 +26,7 @@ import com.draft.rckt.equiperocket.Grafico.GraficoController;
 
 import java.util.ArrayList;
 
+/////////////////////////////////   VOLTAR ATE AQUIIIIIIIIIIIIIIIIIIII    //////////////////
 public class ReceitaController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -98,19 +99,15 @@ public class ReceitaController extends AppCompatActivity
             }
         });
 
-        preencherListViewTeste();
+        preencherListView();
 
     }
 
-    private void preencherListViewTeste() {
+    private void preencherListView() {
         array = new ArrayList<Receita>();
         array = dbControl.getAllReceitaOrderByDate();
 
-        if (array == null) {
-            Toast.makeText(ReceitaController.this, "VAZIO", Toast.LENGTH_SHORT).show();
-        }
-        else
-            listView.setAdapter(new CustomListAdapterReceita(this, array));
+        listView.setAdapter(new CustomListAdapterReceita(this, array));
     }
 
     public void showReceita(int pos) {
@@ -118,10 +115,8 @@ public class ReceitaController extends AppCompatActivity
         Intent it = new Intent(this, ReceitaDetailController.class);
         Receita receita = array.get(pos);
         it.putExtra("receita", receita);
-
-        startActivity(it);
         finish();
-
+        startActivity(it);
     }
 
     @Override

@@ -26,6 +26,8 @@ import android.widget.Toast;
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.R;
 
+import com.draft.rckt.equiperocket.Receita.CustomListAdapterReceita;
+import com.draft.rckt.equiperocket.Receita.Receita;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
@@ -40,6 +42,7 @@ public class GastoController extends AppCompatActivity
     private List<Gasto> gastoList = new ArrayList<>();
     private RecyclerView recyclerView;
     private CustomListAdapterGasto mAdapter;
+    private DatabaseController dbControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,7 @@ public class GastoController extends AppCompatActivity
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
         nav_user.setText("bla"); // TODO substituir por user_id
 
+        dbControl = new DatabaseController(this.getApplicationContext());
 
         prepareGastoData();
         //gastoList = null;
@@ -137,17 +141,21 @@ public class GastoController extends AppCompatActivity
      * Preencher lista de gastos com dados do banco
      */
     private void prepareGastoData() {
-        int i;
-        for (i = 1; i < 15; i++) {
-            Gasto rec = new Gasto();
-            rec.user_id = "user_id " + i;
-            rec.gasto_id = 1;
-            rec.titulo = "Receit " + i;
-            rec.descr = "aaaaaaa bbbbbb    ccccccc " + i;
-            rec.tipo = "12/12/12";
-            rec.valor = (float) 4000.90 + i;
-            gastoList.add(rec);
-        }
+
+        gastoList = new ArrayList<Gasto>();
+        gastoList = dbControl.getAllGastoOrderByDate();
+
+//        int i;
+//        for (i = 1; i < 15; i++) {
+//            Gasto rec = new Gasto();
+//            rec.user_id = "user_id " + i;
+//            rec.gasto_id = 1;
+//            rec.titulo = "Receit " + i;
+//            rec.descr = "aaaaaaa bbbbbb    ccccccc " + i;
+//            rec.tipo = "12/12/12";
+//            rec.valor = (float) 4000.90 + i;
+//            gastoList.add(rec);
+//        }
        // mAdapter.notifyDataSetChanged();
     }
 
