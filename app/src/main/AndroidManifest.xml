@@ -8,9 +8,17 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
         <activity android:name=".Receita.ReceitaController" />
         <activity android:name=".MainMenu.MainMenu" />
         <activity android:name=".Login.Login" />
+        <activity android:name=".Login.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Receita.ReceitaDetailController" />
         <activity android:name=".Grafico.GraficoController">
             <intent-filter>
@@ -47,6 +55,7 @@
             android:name=".Receita.ReceitaInsertController"
             android:label="@string/title_activity_receita_insert_controller"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>
