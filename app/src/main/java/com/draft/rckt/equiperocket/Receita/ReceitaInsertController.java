@@ -1,12 +1,12 @@
 package com.draft.rckt.equiperocket.Receita;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -58,18 +58,7 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
             }
         });
     }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(ReceitaInsertController.this, ReceitaController.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// clear back stack
-        startActivity(intent);
-        finish();
-    }
-
-    /**
-     * Validating form
-     */
+    
     private void submitForm() {
         if (!validateName()) {
             return;
@@ -82,6 +71,7 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
         double valor = Double.parseDouble(inputValor.getText().toString());
         String str = "nome = " + inputName.getText().toString() + "\nvalor = " + valor + "\ntipo = " + tipo + "\ndesc = " + inputDesc.getText().toString();
         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+
 
         // TODO
         // inserir nome, valor, tipo e descrição,  VERIFICAR TAMANHOS
@@ -128,7 +118,7 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
     }
 
     public void cancela(View view) {
-        onBackPressed();
+        finish();
     }
 
     private class MyTextWatcher implements TextWatcher {
