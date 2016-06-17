@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.draft.rckt.equiperocket.Receita.ReceitaDetailController"
+    tools:showIn="@layout/activity_gasto_detail_controller">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tb_detalhes_id">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|left"
+            android:layout_margin="3dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Titulo:"
+                android:id="@+id/textV1"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textView_titulo_receita_id"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|left"
+            android:layout_margin="3dp"
+             >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Valor:"
+                android:id="@+id/textV2"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textView_valor_receita_id"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|left"
+            android:layout_margin="3dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Data:"
+                android:id="@+id/textV3"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textView_data_receita_id"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|left"
+            android:layout_margin="3dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Tipo:"
+                android:id="@+id/textV4"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textView_tipo_receita_id"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Descrição:"
+                android:id="@+id/textV5"
+                android:textStyle="bold"
+                android:layout_gravity="top"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/textView_desc_receita_id"
+                android:gravity="center_vertical|top"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="2dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

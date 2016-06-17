@@ -104,7 +104,7 @@ public class DatabaseController {
     }
 
 
-    public void addItemReceita(Receita rec) {
+    public boolean addItemReceita(Receita rec) {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -115,10 +115,13 @@ public class DatabaseController {
         contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.getValor());
         contentValues.put(ReceitaEntry.COLUMN_NAME_TYPE, rec.getTipo());
         contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.getData().getTime());
-        db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
+        long flag = db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
+        if (flag == -1)
+            return false;
+        return true;
     }
 
-    public void addItemGasto(Gasto gasto) {
+    public boolean addItemGasto(Gasto gasto) {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -129,7 +132,10 @@ public class DatabaseController {
         contentValues.put(GastoEntry.COLUMN_NAME_VALUE, gasto.getValor());
         contentValues.put(GastoEntry.COLUMN_NAME_TYPE, gasto.getTipo());
         contentValues.put(GastoEntry.COLUMN_NAME_DATE, gasto.getData().getTime());
-        db.insert(GastoEntry.TABLE_NAME, null, contentValues);
+        long flag = db.insert(GastoEntry.TABLE_NAME, null, contentValues);
+        if (flag == -1)
+            return false;
+        return true;
     }
 
     public ArrayList<Receita> getAllReceitaOrderByDate(){
