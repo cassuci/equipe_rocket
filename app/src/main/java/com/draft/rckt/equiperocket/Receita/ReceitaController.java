@@ -37,7 +37,6 @@ import com.draft.rckt.equiperocket.Grafico.GraficoController;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-/////////////////////////////////   VOLTAR ATE AQUIIIIIIIIIIIIIIIIIIII    //////////////////
 public class ReceitaController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 

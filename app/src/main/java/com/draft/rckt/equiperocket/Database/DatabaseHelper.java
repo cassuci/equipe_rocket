@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_RECEITAS =
             " CREATE TABLE " + ReceitaEntry.TABLE_NAME + " (" +
-                    ReceitaEntry.COLUMN_NAME_ENTRY_ID + " INTEGER NOT NULL PRIMARY KEY, " +
+                    ReceitaEntry.COLUMN_NAME_ENTRY_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                     ReceitaEntry.COLUMN_NAME_USER_ID  + " VARCHAR(20) NOT NULL, " +
                     ReceitaEntry.COLUMN_NAME_TITLE + " VARCHAR(20), " +
                     ReceitaEntry.COLUMN_NAME_CONTENT  + " VARCHAR(200) , " +
@@ -40,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_GASTOS =
             " CREATE TABLE " + GastoEntry.TABLE_NAME + " (" +
-                    GastoEntry.COLUMN_NAME_ENTRY_ID + " INTEGER NOT NULL PRIMARY KEY, " +
+                    GastoEntry.COLUMN_NAME_ENTRY_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                     GastoEntry.COLUMN_NAME_USER_ID  + " VARCHAR(20) NOT NULL, " +
                     GastoEntry.COLUMN_NAME_TITLE + " VARCHAR(20), " +
                     GastoEntry.COLUMN_NAME_CONTENT  + " VARCHAR(200) , " +
