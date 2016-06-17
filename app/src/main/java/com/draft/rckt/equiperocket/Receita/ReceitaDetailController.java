@@ -29,9 +29,6 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     private SQLiteDatabase db;
 
-    private Toolbar toolbar;
-    private TextView textToolbar;
-
     private Receita receita;
     private TextView textView_titulo;
     private TextView textView_data;
@@ -51,26 +48,16 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
         setContentView(R.layout.activity_receita_detail_controller);
 
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_receita_id);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title_receita_id);
 
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        //TOOLBAR
-//        toolbar = (Toolbar) findViewById(R.id.tb_detalhes_id);
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//
-//        textToolbar = (TextView) findViewById(R.id.textToolbar_id);
-//        textToolbar.setText("Detalhes da receita");
-
-
         //Setando TextViews
-        setTextViews();
+        getTextViews();
 
         //Pegando dados da receita selecionada
         setReceita();
@@ -80,25 +67,25 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     }
 
-    private void setTextViews()
+    private void getTextViews()
     {
         //TEXTVIEW
-        textView_titulo = (TextView) findViewById(R.id.textView_titulo_id);
-        textView_data = (TextView) findViewById(R.id.textView_data_id);
-        textView_valor = (TextView) findViewById(R.id.textView_valor_id);
-        textView_tipo = (TextView) findViewById(R.id.textView_tipo_id);
-        textView_desc = (TextView) findViewById(R.id.textView_desc_id);
+        textView_titulo = (TextView) findViewById(R.id.textView_titulo_receita_id);
+        textView_data = (TextView) findViewById(R.id.textView_data_receita_id);
+        textView_valor = (TextView) findViewById(R.id.textView_valor_receita_id);
+        textView_tipo = (TextView) findViewById(R.id.textView_tipo_receita_id);
+        textView_desc = (TextView) findViewById(R.id.textView_desc_receita_id);
     }
 
     private void fillTextView()
     {
         textView_titulo.setText(receita.getTitulo());
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-        String data = formatoData.format(getReceita().getData());
+        String data = formatoData.format(receita.getData());
         textView_data.setText(data);
-        textView_valor.setText(String.valueOf(getReceita().getValor()));
-        textView_tipo.setText(getReceita().getTipo());
-        textView_desc.setText(getReceita().getDesc());
+        textView_valor.setText(String.valueOf(receita.getValor()));
+        textView_tipo.setText(receita.getTipo());
+        textView_desc.setText(receita.getDesc());
     }
 
     private void setReceita(){
@@ -107,7 +94,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_detail_gasto_controller_menu, menu);
+        getMenuInflater().inflate(R.menu.activity_detail_receita_controller_menu, menu);
         return true;
     }
 
@@ -123,22 +110,22 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.delete:
-                //TODO conferir função, até agora (15.06) não ta funcionando
                 showNoticeDialog();
                 return true;
             case R.id.edit:
                 Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
-                intent.putExtra("receita", getReceita());
+                intent.putExtra("receita", receita);
                 startActivity(intent);
                 return true;
-
+            default:
+                finish();
+                return true;
         }
-        return true;
     }
 
     public void showNoticeDialog() {
         // Create an instance of the dialog fragment and show it
-        DialogFragment dialog = new CreateGastoDialog();
+        DialogFragment dialog = new CreateReceitaDialog();
         dialog.show(getFragmentManager(), "NoticeDialogFragment");
 
     }
@@ -160,10 +147,4 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
         }else
            Toast.makeText(getApplicationContext(),"Falha ao deletar receita." , Toast.LENGTH_SHORT).show();
     }
-
-
-    public Receita getReceita(){
-        return this.receita;
-    }
-
 }

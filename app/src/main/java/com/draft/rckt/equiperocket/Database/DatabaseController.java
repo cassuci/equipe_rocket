@@ -47,35 +47,52 @@ public class DatabaseController {
                 int i;
 
                 Receita a = new Receita();
+
                 double v = 402;
-                for (i = 1; i < 15; i++) {
+                for (i = 1; i < 20; i++) {
                     Receita rec = new Receita();
-                    rec.user_id = "1";
-                    rec.receita_id = i;
-                    rec.titulo = "Receit " + i;
-                    rec.desc = "aaaaaaa bbbbbb    ccccccc " + i;
-                    rec.tipo = "qualquer uma";
+                    rec.setUser_id("1");
+                    rec.setReceita_id(i);
+                    rec.setTitulo("Receit " + i);
+                    rec.setDesc("aaaaaaa bbbbbb    ccccccc " + i);
+                    rec.setTipo("qualquer uma");
                     v += i;
-                    rec.valor = v;
-                    rec.data = new Date();
+                    rec.setValor(v);
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DAY_OF_MONTH, i);
+                    rec.setData(calendar.getTime());
                     addItemReceita(rec);
                     a = rec;
                 }
 
                 deleteReceita(a);
 
+                Receita rec = new Receita();
+                rec.setUser_id("1");
+                rec.setReceita_id(35);
+                rec.setTitulo("Receita alterada ");
+                rec.setDesc("o importante é que alterou");
+                rec.setTipo("aaaaaa ");
+                rec.setValor(67.90);
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.add(Calendar.DAY_OF_MONTH, 60);
+                rec.setData(calendar.getTime());
+                addItemReceita(rec);
+
                 Gasto b = new Gasto();
                 v = 402;
-                for (i = 1; i < 15; i++) {
+                for (i = 1; i < 21; i++) {
                     Gasto gasto = new Gasto();
-                    gasto.user_id = "1";
-                    gasto.gasto_id = i;
-                    gasto.titulo = "Receit " + i;
-                    gasto.descr = "aaaaaaa bbbbbb    ccccccc " + i;
-                    gasto.tipo = "qualquer uma";
+                    gasto.setUser_id("1");
+                    gasto.setGasto_id(i);
+                    gasto.setTitulo("Gasto " + i);
+                    gasto.setDescr("aaaaaaa bbbbbb    ccccccc " + i);
+                    gasto.setTipo("qualquer uma");
                     v += i;
-                    gasto.valor = v;
-                    gasto.data = new Date();
+                    gasto.setValor(v);
+                    gasto.setData(new Date());
                     addItemGasto(gasto);
                     b = gasto;
                 }
@@ -87,32 +104,38 @@ public class DatabaseController {
     }
 
 
-    public void addItemReceita(Receita rec) {
+    public boolean addItemReceita(Receita rec) {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ReceitaEntry.COLUMN_NAME_ENTRY_ID, rec.receita_id);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.user_id);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.titulo);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.desc);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.valor);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_TYPE, rec.tipo);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.data.getTime());
-        db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
+        contentValues.put(ReceitaEntry.COLUMN_NAME_ENTRY_ID, rec.getReceita_id());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.getUser_id());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.getTitulo());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.getDesc());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.getValor());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_TYPE, rec.getTipo());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.getData().getTime());
+        long flag = db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
+        if (flag == -1)
+            return false;
+        return true;
     }
 
-    public void addItemGasto(Gasto gasto) {
+    public boolean addItemGasto(Gasto gasto) {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(GastoEntry.COLUMN_NAME_ENTRY_ID, gasto.gasto_id);
-        contentValues.put(GastoEntry.COLUMN_NAME_USER_ID, gasto.user_id);
-        contentValues.put(GastoEntry.COLUMN_NAME_TITLE, gasto.titulo);
-        contentValues.put(GastoEntry.COLUMN_NAME_CONTENT, gasto.descr);
-        contentValues.put(GastoEntry.COLUMN_NAME_VALUE, gasto.valor);
-        contentValues.put(GastoEntry.COLUMN_NAME_TYPE, gasto.tipo);
-        contentValues.put(GastoEntry.COLUMN_NAME_DATE, gasto.data.getTime());
-        db.insert(GastoEntry.TABLE_NAME, null, contentValues);
+        contentValues.put(GastoEntry.COLUMN_NAME_ENTRY_ID, gasto.getGasto_id());
+        contentValues.put(GastoEntry.COLUMN_NAME_USER_ID, gasto.getUser_id());
+        contentValues.put(GastoEntry.COLUMN_NAME_TITLE, gasto.getTitulo());
+        contentValues.put(GastoEntry.COLUMN_NAME_CONTENT, gasto.getDescr());
+        contentValues.put(GastoEntry.COLUMN_NAME_VALUE, gasto.getValor());
+        contentValues.put(GastoEntry.COLUMN_NAME_TYPE, gasto.getTipo());
+        contentValues.put(GastoEntry.COLUMN_NAME_DATE, gasto.getData().getTime());
+        long flag = db.insert(GastoEntry.TABLE_NAME, null, contentValues);
+        if (flag == -1)
+            return false;
+        return true;
     }
 
     public ArrayList<Receita> getAllReceitaOrderByDate(){
@@ -135,13 +158,13 @@ public class DatabaseController {
             array = new ArrayList<Receita>();
             do {
                 Receita receita = new Receita();
-                receita.receita_id = cursor.getInt(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_ENTRY_ID));
-                receita.user_id = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_USER_ID));
-                receita.titulo = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TITLE));
-                receita.desc = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_CONTENT));
-                receita.valor = cursor.getDouble(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_VALUE));
-                receita.tipo = cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TYPE));
-                receita.data = new Date(cursor.getLong(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE)));
+                receita.setReceita_id(cursor.getInt(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_ENTRY_ID)));
+                receita.setUser_id(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_USER_ID)));
+                receita.setTitulo(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TITLE)));
+                receita.setDesc(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_CONTENT)));
+                receita.setValor(cursor.getDouble(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_VALUE)));
+                receita.setTipo(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TYPE)));
+                receita.setData(new Date(cursor.getLong(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE))));
                 array.add(receita);
 
             } while (cursor.moveToNext());
@@ -169,13 +192,13 @@ public class DatabaseController {
             array = new ArrayList<Gasto>();
             do {
                 Gasto gasto = new Gasto();
-                gasto.gasto_id = cursor.getInt(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_ENTRY_ID));
-                gasto.user_id = cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_USER_ID));
-                gasto.titulo = cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_TITLE));
-                gasto.descr = cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_CONTENT));
-                gasto.valor = cursor.getDouble(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_VALUE));
-                gasto.tipo = cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_TYPE));
-                gasto.data = new Date(cursor.getLong(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_DATE)));
+                gasto.setGasto_id(cursor.getInt(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_ENTRY_ID)));
+                gasto.setUser_id(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_USER_ID)));
+                gasto.setTitulo(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_TITLE)));
+                gasto.setDescr(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_CONTENT)));
+                gasto.setValor(cursor.getDouble(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_VALUE)));
+                gasto.setTipo(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_TYPE)));
+                gasto.setData(new Date(cursor.getLong(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_DATE))));
                 array.add(gasto);
 
             } while (cursor.moveToNext());
@@ -188,8 +211,9 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID +
-                " = " + receita.getReceita_id();
+        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + receita.getReceita_id() +
+                " AND " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '" + receita.getUser_id() + "' ";
+
         int n_rows = db.delete(DatabaseContract.ReceitaEntry.TABLE_NAME, where_clause, null);
         if (n_rows > 0)
             return true;
@@ -201,8 +225,9 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID +
-                " = " + gasto.getGasto_id();
+        String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID + " = " + gasto.getGasto_id() +
+                " AND " + GastoEntry.COLUMN_NAME_USER_ID + " = '" + gasto.getUser_id() + "' ";
+
         int n_rows = db.delete(GastoEntry.TABLE_NAME, where_clause, null);
         if (n_rows > 0)
             return true;
@@ -211,10 +236,89 @@ public class DatabaseController {
 
     public ArrayList<Receita> getReceitaByPeriod(ArrayList<Receita> arrayReceita, Calendar startDate, Calendar finishDate)
     {
-        ArrayList<Receita>  array = new ArrayList<Receita>();
-      //  startDate.set(Calendar.YEAR);
-      //  startDate.s
+        ArrayList<Receita> array = new ArrayList<Receita>();
+        int i = 0;
+        startDate.add(Calendar.HOUR, 0);
+        startDate.add(Calendar.MINUTE, 0);
+        startDate.add(Calendar.SECOND, 0);
+
+        finishDate.add(Calendar.HOUR, 23);
+        finishDate.add(Calendar.MINUTE, 59);
+        finishDate.add(Calendar.SECOND, 59);
+
+        long inicio = (startDate.getTime()).getTime();
+        long fim = (finishDate.getTime()).getTime();
+        long atual;
+        int ver = 0;
+        for (i = 0; i < arrayReceita.size(); i++)
+        {
+            atual = arrayReceita.get(i).getData().getTime();
+            if (atual >= inicio && atual <= fim) {
+                Receita rec = new Receita();
+                rec = arrayReceita.get(i);
+                array.add(rec);
+                ver = 1;
+            }
+        }
+        if (ver == 0)
+            array =  null;
 
         return array;
+    }
+
+
+    public ArrayList<Gasto> getGastoByPeriod(ArrayList<Gasto> arrayGasto, Calendar startDate, Calendar finishDate)
+    {
+        ArrayList<Gasto> array = new ArrayList<Gasto>();
+        int i = 0;
+        startDate.add(Calendar.HOUR, 0);
+        startDate.add(Calendar.MINUTE, 0);
+        startDate.add(Calendar.SECOND, 0);
+
+        finishDate.add(Calendar.HOUR, 23);
+        finishDate.add(Calendar.MINUTE, 59);
+        finishDate.add(Calendar.SECOND, 59);
+
+        long inicio = (startDate.getTime()).getTime();
+        long fim = (finishDate.getTime()).getTime();
+        long atual;
+        int ver = 0;
+        for (i = 0; i < arrayGasto.size(); i++)
+        {
+            atual = arrayGasto.get(i).getData().getTime();
+            if (atual >= inicio && atual <= fim) {
+                Gasto aux = new Gasto();
+                aux = arrayGasto.get(i);
+                array.add(aux);
+                ver = 1;
+            }
+        }
+        if (ver == 0)
+            array =  null;
+
+        return array;
+    }
+
+    public boolean updateReceita(Receita rec)
+    {
+        db = dbHelper.getWritableDatabase(); // ganha acesso a database
+
+        // condicao de where da query
+        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + rec.getReceita_id() +
+                " AND " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '" + rec.getUser_id() + "' ";
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ReceitaEntry.COLUMN_NAME_ENTRY_ID, rec.getReceita_id());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.getUser_id());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.getTitulo());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.getDesc());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.getValor());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_TYPE, rec.getTipo());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.getData().getTime());
+
+        int n_rows = db.update(ReceitaEntry.TABLE_NAME, contentValues, where_clause, null);
+        if (n_rows > 0)
+            return true;
+        return false;
     }
 }

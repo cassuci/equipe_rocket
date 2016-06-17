@@ -1,19 +1,15 @@
 package com.draft.rckt.equiperocket.Gasto;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.R;
 
-import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,7 +47,7 @@ public class CustomListAdapterGasto extends RecyclerView.Adapter<CustomListAdapt
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.listview_row_layout2, parent, false);
+                .inflate(R.layout.listview_row_layout, parent, false);
 
         return new MyViewHolder(itemView);
     }
@@ -69,7 +65,9 @@ public class CustomListAdapterGasto extends RecyclerView.Adapter<CustomListAdapt
         Gasto gasto = gastoList.get(position);
         holder.title.setText(gasto.getTitulo());
         holder.value.setText(String.valueOf(gasto.getValor()));
-        holder.date.setText(gasto.getTipo());
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        String data = formatoData.format(gasto.getData());
+        holder.date.setText(data);
     }
 
     @Override

@@ -8,13 +8,13 @@ import java.util.Date;
  */
 public class Gasto implements Serializable{
 
-    public String user_id;
-    public int gasto_id;
-    public String titulo;
-    public String tipo;
-    public String descr;
-    public double valor;
-    public Date data;
+    private String user_id;
+    private int gasto_id;
+    private String titulo;
+    private String tipo;
+    private String descr;
+    private double valor;
+    private Date data;
 
     public Gasto(){
 
@@ -74,7 +74,7 @@ public class Gasto implements Serializable{
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

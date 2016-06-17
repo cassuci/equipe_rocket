@@ -8,13 +8,13 @@ import java.util.Date;
  */
 public class Receita implements Serializable {
 
-    public String user_id;
-    public int receita_id;
-    public String titulo;
-    public String tipo;
-    public String desc;
-    public double valor;
-    public Date data;
+    private String user_id;
+    private int receita_id;
+    private String titulo;
+    private String tipo;
+    private String desc;
+    private double valor;
+    private Date data;
 
     public Receita(){
 
@@ -74,7 +74,7 @@ public class Receita implements Serializable {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
