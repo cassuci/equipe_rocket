@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -58,7 +57,7 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
             }
         });
     }
-    
+
     private void submitForm() {
         if (!validateName()) {
             return;
