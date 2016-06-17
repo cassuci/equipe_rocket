@@ -1,9 +1,15 @@
 package com.draft.rckt.equiperocket.Receita;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +23,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.RecyclerView;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
+import com.draft.rckt.equiperocket.Gasto.CustomListAdapterGasto;
+import com.draft.rckt.equiperocket.Gasto.DividerItemDecoration;
 import com.draft.rckt.equiperocket.Gasto.GastoController;
+import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
@@ -31,11 +41,10 @@ import java.util.Calendar;
 public class ReceitaController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-    private Toolbar toolbar;
-    private TextView textToolbar;
-    private ListView listView;
+    private RecyclerView recyclerView;
     private ArrayList<Receita> array;
+    private CustomListAdapterReceita mAdapter;
+
     private DatabaseController dbControl;
 
     @Override
@@ -50,13 +59,6 @@ public class ReceitaController extends AppCompatActivity
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title_receita_id);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_receita_id);
-       /* fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,9 +66,9 @@ public class ReceitaController extends AppCompatActivity
                 /**TODO
                  * Inserir classe de Inserção de Receita aqui
                  *
-                 *  intent.setClass(ReceitaController.this,NOMECLASSEINSERCAORECEITA);
+                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
                  */
-                intent.setClass(ReceitaController.this, GastoController.class);
+                intent.setClass(ReceitaController.this,GastoDetailController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -87,28 +89,57 @@ public class ReceitaController extends AppCompatActivity
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
         nav_user.setText("bla"); //TODO substituir por user_id
 
-
         dbControl = new DatabaseController(this.getApplicationContext());
 
+        prepareReceitaList();
 
-        listView = (ListView) findViewById(R.id.listView_receita_id);
+        if(checkNullList()){
+            createFirstAccessView();
+        }else{
+            createRecyclerView();
+        }
+    }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showReceita(position);
-            }
-        });
+    private void prepareReceitaList() {
+        array = new ArrayList<Receita>();
+        array = dbControl.getAllReceitaOrderByDate();
+    }
 
-        preencherListView();
+    private boolean checkNullList() {
+        return ((array == null) || array.isEmpty());
+    }
+
+    /**TODO
+     * Melhorar interface para usuário sem gastos adicionados.
+     */
+    private void createFirstAccessView() {
+        TextView nav_user = (TextView) findViewById(R.id.first_access_receita_id);
+        nav_user.setText("Para adicionar uma nova receita, clique no botão + abaixo");
 
     }
 
-    private void preencherListView() {
-        array = new ArrayList<Receita>();
-        array = dbControl.getAllReceitaOrderByDate();
+    private void createRecyclerView() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_receita_id);
 
-       listView.setAdapter(new CustomListAdapterReceita(this, array));
+        mAdapter = new CustomListAdapterReceita(array);
+        //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        recyclerView.setAdapter(mAdapter);
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                showReceita(position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
     }
 
     public void showReceita(int pos) {
@@ -116,21 +147,76 @@ public class ReceitaController extends AppCompatActivity
         Intent it = new Intent(this, ReceitaDetailController.class);
         Receita receita = array.get(pos);
         it.putExtra("receita", receita);
-        finish();
+
+        //TODO verificar se precisa do finish
+        //finish();
         startActivity(it);
+
+    }
+
+
+    public interface ClickListener {
+        void onClick(View view, int position);
+
+        void onLongClick(View view, int position);
+    }
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private ReceitaController.ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ReceitaController.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_receita_id);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
-    /*Atualizar a pagina atual depois de mudancas
-    @Override
+    /*TODO
+        Recarregar pagina atual apos mudancas ou utilizar onRestart()?
+    **/
+    /*@Override
     protected void onRestart() {
         super.onRestart();
         finish();
@@ -140,7 +226,7 @@ public class ReceitaController extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.gasto_controller, menu);
+        getMenuInflater().inflate(R.menu.receita_controller, menu);
         return true;
     }
 
@@ -152,7 +238,7 @@ public class ReceitaController extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings_id) {
+        if (id == R.id.action_settings) {
             return true;
         }
 

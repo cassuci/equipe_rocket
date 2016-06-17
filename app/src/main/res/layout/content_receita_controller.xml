@@ -12,33 +12,17 @@
     tools:context="com.draft.rckt.equiperocket.Receita.ReceitaController"
     tools:showIn="@layout/app_bar_receita_controller">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_receita_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id ="@+id/first_access_receita_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar_receita_id"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_margin="0dp"
-        android:layout_marginRight="0dp"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="0dp">
-
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/listView_receita_id"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:choiceMode="singleChoice"
-            android:background="#56adf9"
-            android:textFilterEnabled="true"
-            android:touchscreenBlocksFocus="true"
-            android:layout_centerHorizontal="true"
-            android:dividerHeight="2dp">
-        </ListView>
-
-    </LinearLayout>
+        android:gravity="center"
+        android:textSize="40sp"/>
 
 </RelativeLayout>
