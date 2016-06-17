@@ -52,7 +52,8 @@
         <activity
             android:name=".Gasto.GastoInsertController"
             android:label="@string/title_activity_gasto_insert_controller"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Gasto.GastoController"></activity>
     </application>
 
 </manifest>

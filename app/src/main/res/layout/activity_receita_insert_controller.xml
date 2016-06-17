@@ -83,6 +83,7 @@
                 android:id="@+id/input_desc_rec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:hint="@string/hint_desc" />
         </android.support.design.widget.TextInputLayout>
 

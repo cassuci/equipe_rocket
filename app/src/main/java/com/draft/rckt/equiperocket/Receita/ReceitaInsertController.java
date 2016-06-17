@@ -60,12 +60,6 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        Toast.makeText(getApplicationContext(), "BACKKK", Toast.LENGTH_SHORT);
-        finish();
-    }
-
     private void submitForm() {
         if (!validateName()) {
             return;

@@ -60,15 +60,10 @@ public class GastoController extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                /**TODO
-                 * Inserir classe de Inserção de Receita aqui
-                 *
-                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
-                 */
-                intent.setClass(GastoController.this,GastoDetailController.class);
+                intent.setClass(GastoController.this,GastoInsertController.class);
                 startActivity(intent);
-                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
 
             }

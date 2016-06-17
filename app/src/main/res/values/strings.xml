@@ -34,8 +34,8 @@
     <string name="buttonText_grafico_createGraph">Criar Gráfico</string>
 
     <string name="title_activity_relatorio_detail_controller">RelatorioDetailController</string>
-    <string name="title_activity_receita_insert_controller">ReceitaInsertController</string>
 
+    <string name="title_activity_receita_insert_controller">ReceitaInsertController</string>
     <string name="hint_name">Nome</string>
     <string name="hint_valor">Valor</string>
     <string name="hint_desc">Descrição (Opcional)</string>
@@ -48,8 +48,18 @@
         <item>Bônus</item>
         <item>Outros</item>
     </string-array>
-
     <string name="button_cancel">Cancela</string>
+
     <string name="title_activity_gasto_insert_controller">GastoInsertController</string>
+    <string name="btn_gasto_ins">Inserir Gasto</string>
+    <string name="err_msg_name_gasto">Insira o nome do gasto</string>
+    <string name="err_msg_valor_gasto">Insira o valor do gasto</string>
+    <string-array name="tipos_gasto_array">
+        <item>Alimentação</item>
+        <item>Transporte</item>
+        <item>Contas</item>
+        <item>Lazer</item>
+        <item>Outros</item>
+    </string-array>
 
 </resources>
