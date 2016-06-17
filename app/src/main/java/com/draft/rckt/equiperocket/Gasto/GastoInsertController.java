@@ -16,7 +16,10 @@ import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
 
+import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.R;
+
+import java.util.Date;
 
 public class GastoInsertController extends AppCompatActivity implements OnItemSelectedListener  {
 
@@ -73,10 +76,16 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
         String str = "nome = " + inputName.getText().toString() + "\nvalor = " + valor + "\ntipo = " + tipo + "\ndesc = " + inputDesc.getText().toString();
         Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
 
-
         // TODO
         // inserir nome, valor, tipo e descrição,  VERIFICAR TAMANHOS
         // if (inserção ok) -> toast
+
+        Gasto novoGasto = new Gasto();
+        novoGasto.setTitulo(inputName.getText().toString());
+        novoGasto.setDescr(inputDesc.getText().toString());
+        novoGasto.setTipo(tipo);
+        novoGasto.setValor(Double.parseDouble(inputValor.getText().toString()));
+        novoGasto.setData(new Date());
     }
 
     private boolean validateName() {
