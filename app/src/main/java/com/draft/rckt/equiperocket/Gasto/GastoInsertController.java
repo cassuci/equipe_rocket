@@ -28,6 +28,7 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
     private TextInputLayout inputLayoutName, inputLayoutValor;
     private Button btnInsert;
     private String tipo;
+    private DatabaseController dbControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
                 submitForm();
             }
         });
+
+        dbControl = new DatabaseController(getApplication());
     }
 
     private void submitForm() {
@@ -72,20 +75,23 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
             return;
         }
 
-        double valor = Double.parseDouble(inputValor.getText().toString());
-        String str = "nome = " + inputName.getText().toString() + "\nvalor = " + valor + "\ntipo = " + tipo + "\ndesc = " + inputDesc.getText().toString();
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-
         // TODO
-        // inserir nome, valor, tipo e descrição,  VERIFICAR TAMANHOS
-        // if (inserção ok) -> toast
+        // VERIFICAR TAMANHOS e retirar user_id quando o ivan deixar
 
-        Gasto novoGasto = new Gasto();
-        novoGasto.setTitulo(inputName.getText().toString());
-        novoGasto.setDescr(inputDesc.getText().toString());
-        novoGasto.setTipo(tipo);
-        novoGasto.setValor(Double.parseDouble(inputValor.getText().toString()));
-        novoGasto.setData(new Date());
+        Gasto gasto = new Gasto();
+        gasto.setTitulo(inputName.getText().toString());
+        gasto.setDescr(inputDesc.getText().toString());
+        gasto.setTipo(tipo);
+        gasto.setValor(Double.parseDouble(inputValor.getText().toString()));
+        gasto.setData(new Date());
+        gasto.setUser_id("1");
+
+        if (dbControl.addItemGasto(gasto))
+            Toast.makeText(getApplicationContext(), "Gasto inserido com sucesso", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), "Falha na inserção do gasto", Toast.LENGTH_SHORT).show();
+
+        finish();
     }
 
     private boolean validateName() {

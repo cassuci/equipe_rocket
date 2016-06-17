@@ -16,7 +16,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.R;
+
+import java.util.Date;
 
 public class ReceitaInsertController extends AppCompatActivity implements OnItemSelectedListener {
 
@@ -25,6 +28,7 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
     private TextInputLayout inputLayoutName, inputLayoutValor;
     private Button btnInsert;
     private String tipo;
+    DatabaseController dbControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
                 submitForm();
             }
         });
+
+        dbControl = new DatabaseController(getApplication());
     }
 
     private void submitForm() {
@@ -69,14 +75,23 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
             return;
         }
 
-        double valor = Double.parseDouble(inputValor.getText().toString());
-        String str = "nome = " + inputName.getText().toString() + "\nvalor = " + valor + "\ntipo = " + tipo + "\ndesc = " + inputDesc.getText().toString();
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-
-
         // TODO
-        // inserir nome, valor, tipo e descrição,  VERIFICAR TAMANHOS
-        // if (inserção ok) -> toast
+        // VERIFICAR TAMANHOS e retirar user_id quando o ivan deixar
+
+        Receita receita = new Receita();
+        receita.setTitulo(inputName.getText().toString());
+        receita.setDesc(inputDesc.getText().toString());
+        receita.setTipo(tipo);
+        receita.setValor(Double.parseDouble(inputValor.getText().toString()));
+        receita.setData(new Date());
+        receita.setUser_id("1");
+
+        if (dbControl.addItemReceita(receita))
+            Toast.makeText(getApplicationContext(), "Receita inserida com sucesso", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getApplicationContext(), "Falha na inserção da receita", Toast.LENGTH_SHORT).show();
+
+        finish();
     }
 
     private boolean validateName() {
