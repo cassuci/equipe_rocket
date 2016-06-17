@@ -50,5 +50,6 @@
     </string-array>
 
     <string name="button_cancel">Cancela</string>
+    <string name="title_activity_gasto_insert_controller">GastoInsertController</string>
 
 </resources>

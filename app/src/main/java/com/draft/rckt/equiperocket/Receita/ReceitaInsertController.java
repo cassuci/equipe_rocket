@@ -30,8 +30,10 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receita_insert_controller);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_receita_insert);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputLayoutName = (TextInputLayout) findViewById(R.id.input_layout_name_rec);
         inputLayoutValor = (TextInputLayout) findViewById(R.id.input_layout_valor_rec);
@@ -56,6 +58,12 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
                 submitForm();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(getApplicationContext(), "BACKKK", Toast.LENGTH_SHORT);
+        finish();
     }
 
     private void submitForm() {
@@ -114,10 +122,6 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-    }
-
-    public void cancela(View view) {
-        finish();
     }
 
     private class MyTextWatcher implements TextWatcher {

@@ -8,7 +8,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
         <activity android:name=".Receita.ReceitaController" />
         <activity android:name=".MainMenu.MainMenu" />
         <activity android:name=".Login.Login" />
@@ -48,8 +47,12 @@
         <activity
             android:name=".Receita.ReceitaInsertController"
             android:label="@string/title_activity_receita_insert_controller"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Receita.ReceitaController" />
+        <activity
+            android:name=".Gasto.GastoInsertController"
+            android:label="@string/title_activity_gasto_insert_controller"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
     </application>
 
 </manifest>
