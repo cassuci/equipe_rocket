@@ -52,7 +52,6 @@ public class DatabaseController {
                 for (i = 1; i < 20; i++) {
                     Receita rec = new Receita();
                     rec.setUser_id("1");
-                    rec.setReceita_id(i);
                     rec.setTitulo("Receit " + i);
                     rec.setDesc("aaaaaaa bbbbbb    ccccccc " + i);
                     rec.setTipo("qualquer uma");
@@ -70,7 +69,7 @@ public class DatabaseController {
 
                 Receita rec = new Receita();
                 rec.setUser_id("1");
-                rec.setReceita_id(35);
+                rec.setReceita_id(1);
                 rec.setTitulo("Receita alterada ");
                 rec.setDesc("o importante é que alterou");
                 rec.setTipo("aaaaaa ");
@@ -79,14 +78,13 @@ public class DatabaseController {
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_MONTH, 60);
                 rec.setData(calendar.getTime());
-                addItemReceita(rec);
+               // updateReceita(rec);
 
                 Gasto b = new Gasto();
                 v = 402;
                 for (i = 1; i < 21; i++) {
                     Gasto gasto = new Gasto();
                     gasto.setUser_id("1");
-                    gasto.setGasto_id(i);
                     gasto.setTitulo("Gasto " + i);
                     gasto.setDescr("aaaaaaa bbbbbb    ccccccc " + i);
                     gasto.setTipo("qualquer uma");
@@ -108,7 +106,7 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ReceitaEntry.COLUMN_NAME_ENTRY_ID, rec.getReceita_id());
+        contentValues.putNull(ReceitaEntry.COLUMN_NAME_ENTRY_ID);
         contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.getUser_id());
         contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.getTitulo());
         contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.getDesc());
@@ -125,7 +123,7 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(GastoEntry.COLUMN_NAME_ENTRY_ID, gasto.getGasto_id());
+        contentValues.putNull(GastoEntry.COLUMN_NAME_ENTRY_ID);
         contentValues.put(GastoEntry.COLUMN_NAME_USER_ID, gasto.getUser_id());
         contentValues.put(GastoEntry.COLUMN_NAME_TITLE, gasto.getTitulo());
         contentValues.put(GastoEntry.COLUMN_NAME_CONTENT, gasto.getDescr());
@@ -211,9 +209,7 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + receita.getReceita_id() +
-                " AND " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '" + receita.getUser_id() + "' ";
-
+        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + receita.getReceita_id();
         int n_rows = db.delete(DatabaseContract.ReceitaEntry.TABLE_NAME, where_clause, null);
         if (n_rows > 0)
             return true;
@@ -225,8 +221,7 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID + " = " + gasto.getGasto_id() +
-                " AND " + GastoEntry.COLUMN_NAME_USER_ID + " = '" + gasto.getUser_id() + "' ";
+        String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID + " = " + gasto.getGasto_id();
 
         int n_rows = db.delete(GastoEntry.TABLE_NAME, where_clause, null);
         if (n_rows > 0)
@@ -304,11 +299,10 @@ public class DatabaseController {
         db = dbHelper.getWritableDatabase(); // ganha acesso a database
 
         // condicao de where da query
-        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + rec.getReceita_id() +
-                " AND " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '" + rec.getUser_id() + "' ";
+        String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + rec.getReceita_id();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ReceitaEntry.COLUMN_NAME_ENTRY_ID, rec.getReceita_id());
+        contentValues.putNull(ReceitaEntry.COLUMN_NAME_ENTRY_ID);
         contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.getUser_id());
         contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.getTitulo());
         contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.getDesc());
