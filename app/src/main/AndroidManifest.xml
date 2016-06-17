@@ -20,13 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Receita.ReceitaDetailController" />
-        <activity android:name=".Grafico.GraficoController">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Grafico.GraficoController" />
         <activity android:name=".Receita.ReceitaModifyController" />
         <activity android:name=".Gasto.GastoModifyController" />
         <activity android:name=".Grafico.GraficoViewController" />

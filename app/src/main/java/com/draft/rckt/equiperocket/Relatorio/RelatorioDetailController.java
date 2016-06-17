@@ -8,9 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.draft.rckt.equiperocket.Database.DatabaseController;
+import com.draft.rckt.equiperocket.Gasto.Gasto;
 import com.draft.rckt.equiperocket.R;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -28,7 +31,6 @@ public class RelatorioDetailController extends AppCompatActivity {
         /*
         TODO
         - salvar relatorio em txt   https://www.sitepoint.com/store-user-data-using-simple-text-files-and-apis-in-android/
-        - alterar o ícone de msg pra um de save https://design.google.com/icons/#ic_save
          */
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -83,6 +85,8 @@ public class RelatorioDetailController extends AppCompatActivity {
     private void insereGastos() {
         // TODO
         // obter gastos
+        //ArrayList<Gasto> list_gastos = DatabaseController.getGastoByPeriod(startCal, endCal);
+        //se tipo contido list_gastos.
         relatorio += "\tNomeGasto1 = R$ 1.20\n\tNomeGasto2 = R$1000.00\n";
         relatorio += "TOTAL GASTOS = R$" + totalGastos + "\n\n";
     }
@@ -106,8 +110,9 @@ public class RelatorioDetailController extends AppCompatActivity {
             relatorio = "RELATÓRIO DE RECEITAS\n\n";
         }
 
-        relatorio += "Período: " + String.format("%02d", startCal.get(startCal.DAY_OF_MONTH))+"/"+String.format("%02d", startCal.get(startCal.MONTH)+1)+"/"
-                        +String.format("%02d", startCal.get(startCal.YEAR)) + " a " + String.format("%02d", endCal.get(endCal.DAY_OF_MONTH))+"/"
-                        +String.format("%02d", (endCal.get(endCal.MONTH)+1))+"/"+String.format("%02d", endCal.get(endCal.YEAR)) + "\n\n";
+        relatorio += "Período: " + String.format("%02d", startCal.get(startCal.DAY_OF_MONTH)) + "/" +
+                    String.format("%02d", startCal.get(startCal.MONTH)+1) + "/" + String.format("%02d", startCal.get(startCal.YEAR)) +
+                    " a " + String.format("%02d", endCal.get(endCal.DAY_OF_MONTH)) + "/" +
+                    String.format("%02d", (endCal.get(endCal.MONTH)+1)) + "/" + String.format("%02d", endCal.get(endCal.YEAR)) + "\n\n";
     }
 }

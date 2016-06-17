@@ -36,4 +36,19 @@
     <string name="title_activity_relatorio_detail_controller">RelatorioDetailController</string>
     <string name="title_activity_receita_insert_controller">ReceitaInsertController</string>
 
+    <string name="hint_name">Nome</string>
+    <string name="hint_valor">Valor</string>
+    <string name="hint_desc">Descrição (Opcional)</string>
+    <string name="btn_rec_ins">Inserir Receita</string>
+    <string name="err_msg_name_rec">Insira o nome da receita</string>
+    <string name="err_msg_valor_rec">Insira o valor da receita</string>
+    <string-array name="tipos_receita_array">
+        <item>Rendimentos</item>
+        <item>Salário</item>
+        <item>Bônus</item>
+        <item>Outros</item>
+    </string-array>
+
+    <string name="button_cancel">Cancela</string>
+
 </resources>

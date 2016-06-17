@@ -49,28 +49,14 @@ public class ReceitaController extends AppCompatActivity
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title_receita_id);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_receita_id);
-       /* fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                /**TODO
-                 * Inserir classe de Inserção de Receita aqui
-                 *
-                 *  intent.setClass(ReceitaController.this,NOMECLASSEINSERCAORECEITA);
-                 */
-                intent.setClass(ReceitaController.this, GastoController.class);
+                intent.setClass(ReceitaController.this, ReceitaInsertController.class);
                 startActivity(intent);
                 Snackbar.make(view, "Receita adicionada", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-
             }
         });
 
