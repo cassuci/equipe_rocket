@@ -228,7 +228,7 @@ public class GastoController extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    
+
     @Override
     protected void onRestart() {
         super.onRestart();
