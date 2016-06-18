@@ -79,7 +79,6 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -116,7 +115,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         if (include_receitas) {
             receitas = mDbController.getAllReceitaOrderByDate();
 
-            ArrayList<DataPoint> pontos_receitas = new ArrayList<DataPoint>();
+            ArrayList<DataPoint> pontos_receitas = new ArrayList<>();
             for (int i = 0; i < receitas.size(); i++){
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(receitas.get(i).getData());
@@ -131,7 +130,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                     if (filtro_receitas.containsValue(true)) {
                         Boolean filter = filtro_receitas.get(receitas.get(i).getTipo());
                         if (filter != null) {
-                            if (filter == true)
+                            if (filter)
                                 include_curr_rec = true;
                         }
                     } else {
@@ -158,7 +157,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                         minTime_rec = calendar.getTime();
                     }
 
-                    double value = (double) receitas.get(i).getValor();
+                    double value = receitas.get(i).getValor();
                     pontos_receitas.add(
                             new DataPoint(calendar.getTime(), value
                             ));
@@ -194,7 +193,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         if (include_gastos) {
             gastos = mDbController.getAllGastoOrderByDate();
 
-            ArrayList<DataPoint> pontos_gastos = new ArrayList<DataPoint>();
+            ArrayList<DataPoint> pontos_gastos = new ArrayList<>();
             for (int i = 0; i < gastos.size(); i++) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(gastos.get(i).getData());
@@ -209,7 +208,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                     if (filtro_gastos.containsValue(true)) {
                         Boolean filter = filtro_gastos.get(gastos.get(i).getTipo());
                         if (filter != null) {
-                            if (filter == true)
+                            if (filter)
                                 include_curr_gasto = true;
                         }
                     } else {
@@ -236,7 +235,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                         minTime_gasto = calendar.getTime();
                     }
 
-                    double value = (double) gastos.get(i).getValor();
+                    double value = gastos.get(i).getValor();
                     pontos_gastos.add(
                             new DataPoint(calendar.getTime(), value
                             ));
@@ -303,6 +302,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        assert drawer != null;
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
