@@ -13,197 +13,26 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_receita_id"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/toolbar_title_receita_id"
                 style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="Detalhes Receita"
+                android:text="Detalhes Receitas"
                 android:textAlignment="center"
                 android:textColor="@android:color/white" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_relatorio_detail_controller" />
+    <include layout="@layout/content_receita_detail_controller" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tb_detalhes_id">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|left"
-            android:layout_margin="3dp"
-            android:background="#ae2929">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Titulo:"
-                android:id="@+id/textV1"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView_titulo_id"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|left"
-            android:layout_margin="3dp"
-            android:background="#ae2929" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Valor:"
-                android:id="@+id/textV2"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView_valor_id"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|left"
-            android:layout_margin="3dp"
-            android:background="#ae2929" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Data:"
-                android:id="@+id/textV3"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView_data_id"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical|left"
-            android:layout_margin="3dp"
-            android:background="#ae2929" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Tipo:"
-                android:id="@+id/textV4"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView_tipo_id"
-                android:gravity="center_vertical"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#f4fd01"
-            android:layout_margin="3dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Descrição:"
-                android:id="@+id/textV5"
-                android:background="#16a816"
-                android:layout_gravity="top"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp" />
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Medium Text"
-                android:id="@+id/textView_desc_id"
-                android:gravity="center_vertical|top"
-                android:layout_marginLeft="8dp"
-                android:background="#16a816"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="2dp" />
-        </LinearLayout>
-
-    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -25,6 +25,7 @@ import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -60,7 +61,8 @@ public class RelatorioController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla");// TODO substituir por user_id
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
 
         buttonStartDate = (Button) findViewById(R.id.button_start_date);
         buttonEndDate = (Button) findViewById(R.id.button_end_date);
@@ -115,28 +117,6 @@ public class RelatorioController extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.relatorio_controller, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

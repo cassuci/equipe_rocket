@@ -31,6 +31,7 @@ import com.draft.rckt.equiperocket.Receita.Receita;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,8 @@ public class GastoController extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gasto_controller);
 
+        dbControl = new DatabaseController(this.getApplicationContext());
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -60,15 +63,10 @@ public class GastoController extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                /**TODO
-                 * Inserir classe de Inserção de Receita aqui
-                 *
-                 *  intent.setClass(GastoController.this,NOMECLASSEINSERCAORECEITA);
-                 */
-                intent.setClass(GastoController.this,GastoDetailController.class);
+                intent.setClass(GastoController.this,GastoInsertController.class);
                 startActivity(intent);
-                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
 
             }
@@ -84,9 +82,8 @@ public class GastoController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla"); // TODO substituir por user_id
-
-        dbControl = new DatabaseController(this.getApplicationContext());
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
 
         prepareGastoData();
         //gastoList = null;
@@ -96,7 +93,6 @@ public class GastoController extends AppCompatActivity
         }else{
             createRecyclerView();
         }
-
 
     }
 
@@ -137,26 +133,12 @@ public class GastoController extends AppCompatActivity
         return ((gastoList == null) || gastoList.isEmpty());
     }
 
-    /**TODO
-     * Preencher lista de gastos com dados do banco
-     */
+
     private void prepareGastoData() {
 
         gastoList = new ArrayList<Gasto>();
         gastoList = dbControl.getAllGastoOrderByDate();
 
-//        int i;
-//        for (i = 1; i < 15; i++) {
-//            Gasto rec = new Gasto();
-//            rec.user_id = "user_id " + i;
-//            rec.gasto_id = 1;
-//            rec.titulo = "Receit " + i;
-//            rec.descr = "aaaaaaa bbbbbb    ccccccc " + i;
-//            rec.tipo = "12/12/12";
-//            rec.valor = (float) 4000.90 + i;
-//            gastoList.add(rec);
-//        }
-       // mAdapter.notifyDataSetChanged();
     }
 
     public interface ClickListener {

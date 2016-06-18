@@ -1,76 +1,75 @@
 package com.draft.rckt.equiperocket.Receita;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.TimeZone;
+import java.util.List;
 
 /**
  * Created by ivanlucas on 12/06/16.
  */
 
-public class CustomListAdapterReceita extends BaseAdapter {
+public class CustomListAdapterReceita extends RecyclerView.Adapter<CustomListAdapterReceita.MyViewHolder> {
 
-    private ArrayList<Receita> arrayReceita;
-    private LayoutInflater layoutInflater;
+        private ArrayList<Receita> arrayReceita;
+        private LayoutInflater layoutInflater;
+        private List<Receita> receitaList;
 
-    public CustomListAdapterReceita(Context aContext, ArrayList<Receita> arrayReceita) {
-        this.arrayReceita = arrayReceita;
-        layoutInflater = LayoutInflater.from(aContext);
-    }
+        public class MyViewHolder extends RecyclerView.ViewHolder {
+            public TextView title, value, date;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-
-        MyView view;
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.listview_row_layout, null);
-            view = new MyView();
-            view.titulo = (TextView) convertView.findViewById(R.id.titulo_id);
-            view.valor = (TextView) convertView.findViewById(R.id.valor_id);
-            view.data = (TextView) convertView.findViewById(R.id.data_id);
-            convertView.setTag(view);
-        } else {
-            view = (MyView) convertView.getTag();
+            public MyViewHolder(View view) {
+                super(view);
+                title = (TextView) view.findViewById(R.id.titulo_id);
+                value = (TextView) view.findViewById(R.id.valor_id);
+                date = (TextView) view.findViewById(R.id.data_id);
+            }
         }
 
-        Receita rec = arrayReceita.get(position);
-        view.titulo.setText(rec.titulo);
-        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-        String data = formatoData.format(rec.data);
-        view.data.setText(data);
-        view.valor.setText(String.valueOf(rec.valor));
-        return convertView;
+
+        public CustomListAdapterReceita(List<Receita> receitaList) {
+            this.receitaList = receitaList;
+        }
+
+        /**TODO
+         * Escolher um nome melhor para o layout
+         * @param parent
+         * @param viewType
+         * @return
+         */
+        @Override
+        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.listview_row_layout, parent, false);
+
+            return new MyViewHolder(itemView);
+        }
+
+        /**
+         * @param holder
+         * @param position
+         */
+        @Override
+        public void onBindViewHolder(MyViewHolder holder, int position) {
+
+            Receita rec = receitaList.get(position);
+            holder.title.setText(rec.getTitulo());
+            holder.value.setText(String.valueOf(rec.getValor()));
+            SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+            String data = formatoData.format(rec.getData());
+            holder.date.setText(data);
+        }
+
+        @Override
+        public int getItemCount() {
+        return receitaList.size();
     }
-
-    static class MyView {
-        TextView titulo;
-        TextView valor;
-        TextView data;
-    }
-
-
-    @Override
-    public int getCount() {
-        return arrayReceita.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return arrayReceita.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
 }
+

@@ -88,7 +88,7 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
 
         // where statement para identificar registro a ser atualizado
         String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID
-                + " = " + Integer.toString(getGasto().getGasto_id());
+                + " = " + Integer.toString(gasto.getGasto_id());
 
         mDbHelper = new DatabaseHelper(getApplicationContext());
         db = mDbHelper.getWritableDatabase();
@@ -101,9 +101,5 @@ public class GastoModifyController extends AppCompatActivity implements View.OnC
             //TODO: informar falha na modificacao
         }
 
-    }
-
-    public Gasto getGasto() {
-        return this.gasto;
     }
 }

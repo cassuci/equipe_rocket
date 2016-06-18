@@ -8,12 +8,24 @@ import java.util.Date;
  */
 public class Usuario implements Serializable{
 
-    public String user_id;
-    public String nome;
+    private String user_id;
+    private String nome;
+
+    private static Usuario instance;
+
+    public Usuario() {
+    }
 
     public Usuario(String user_id, String nome) {
         this.user_id = user_id;
         this.nome = nome;
+    }
+
+    public static Usuario getInstance () {
+        if (Usuario.instance == null) {
+            Usuario.instance = new Usuario();
+        }
+        return Usuario.instance;
     }
 
     public String getUser_id() {
