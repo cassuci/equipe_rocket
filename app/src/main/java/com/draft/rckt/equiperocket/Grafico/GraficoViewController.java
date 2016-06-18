@@ -23,6 +23,7 @@ import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -169,7 +170,10 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
             PointsGraphSeries<DataPoint> series_receita_2 = new PointsGraphSeries<>(pontos_receitas_array);
 
             series_receita.setColor(Color.BLUE);
+            series_receita.setTitle("Receitas");
+
             series_receita_2.setColor(Color.BLUE);
+            series_receita_2.setTitle("Receitas");
 
             // set manual x bounds to have nice steps
             if (minTime_rec != null && maxTime_rec != null) {
@@ -188,6 +192,8 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
 
             grafico.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
             grafico.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of
+            grafico.getLegendRenderer().setVisible(true);
+            grafico.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         }
 
         if (include_gastos) {
@@ -247,7 +253,10 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
             PointsGraphSeries<DataPoint> series_gasto_2 = new PointsGraphSeries<>(pontos_gastos_array);
 
             series_gasto.setColor(Color.RED);
+            series_gasto.setTitle("Gastos");
+
             series_gasto_2.setColor(Color.RED);
+            series_gasto_2.setTitle("Gastos");
 
             // set manual x bounds to have nice steps
             if (minTime_gasto != null && maxTime_gasto != null) {
@@ -279,6 +288,8 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
 
             grafico.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
             grafico.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of
+            grafico.getLegendRenderer().setVisible(true);
+            grafico.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         }
     }
 
