@@ -90,7 +90,7 @@
             android:text="@string/textView_grafico_data_inicial_header"/>
 
         <TextView
-            android:id="@+id/editText_grafico_startDate"
+            android:id="@+id/textView_grafico_startDate"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="17sp"
@@ -117,7 +117,7 @@
             android:text="@string/textView_grafico_data_final_header"/>
 
         <TextView
-            android:id="@+id/editText_grafico_endDate"
+            android:id="@+id/textView_grafico_endDate"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:textSize="17sp"

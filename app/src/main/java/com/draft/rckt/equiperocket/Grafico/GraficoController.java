@@ -1,9 +1,9 @@
 package com.draft.rckt.equiperocket.Grafico;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,22 +23,20 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Gasto.GastoController;
-import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
-import com.draft.rckt.equiperocket.Grafico.ExpListViewAdapterWithCheckbox;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Usuario.Usuario;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-
-//TODO: TERMINAR INTERFACE
 public class GraficoController extends AppCompatActivity
-        implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
+        implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener,
+        DatePickerDialog.OnDateSetListener, DialogInterface.OnCancelListener {
 
 
     boolean include_receitas;
@@ -53,11 +51,35 @@ public class GraficoController extends AppCompatActivity
     ArrayList<String> listDataHeader_gastos;
     HashMap<String, List<String>> listDataChild_gastos;
 
-    private static Calendar startDate = Calendar.getInstance();
-    private static Calendar endDate = Calendar.getInstance();
+
+    private TextView startDateText;
+    private TextView endDateText;
+
+    private static Calendar startCal = Calendar.getInstance();
+    private static Calendar endCal = Calendar.getInstance();
+
+    private Button button_endDate;
+    private Button button_startDate;
+    private Button button_createGraph;
+
+    private static int dateSelected = -1;
+    private boolean startDateSet = false;
+    private boolean endDateSet = false;
+
+    private final int START_DATE = 0;
+    private final int END_DATE = 1;
+
+    private static int startYear;
+    private static int startMonth;
+    private static int startDay;
+    private static int endYear;
+    private static int endMonth;
+    private static int endDay;
+
 
     String[] filtros_receitas = new String[]{"Rendimentos", "Salário", "Bônus", "Outros"};
     String[] filtros_gastos = new String[] {"Alimentação", "Transporte", "Contas", "Lazer", "Outros"};
+
 
 
     @Override
@@ -122,6 +144,7 @@ public class GraficoController extends AppCompatActivity
 
         // configurando tratadores dos switches
         Switch switch_receitas = (Switch) findViewById(R.id.switch_grafico_receita_enabled);
+        assert switch_receitas != null;
         switch_receitas.setOnCheckedChangeListener(new OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -129,6 +152,7 @@ public class GraficoController extends AppCompatActivity
                     }
                 });
         Switch switch_gastos = (Switch) findViewById(R.id.switch_grafico_gasto_enabled);
+        assert switch_gastos != null;
         switch_gastos.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -137,15 +161,30 @@ public class GraficoController extends AppCompatActivity
         });
 
         // configurando tratadores dos botoes
-        Button button_startDate = (Button) findViewById(R.id.button_grafico_startDate);
-        button_startDate.setOnClickListener(this);
-
-        Button button_endDate = (Button) findViewById(R.id.button_grafico_endDate);
-        button_endDate.setOnClickListener(this);
-
-
-        Button button_createGraph = (Button) findViewById(R.id.button_grafico_createGraph);
+        button_createGraph = (Button) findViewById(R.id.button_grafico_createGraph);
+        assert button_createGraph != null;
         button_createGraph.setOnClickListener(this);
+
+        button_startDate = (Button) findViewById(R.id.button_grafico_startDate);
+        button_endDate = (Button) findViewById(R.id.button_grafico_endDate);
+
+        button_startDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDate(v);
+            }
+        });
+        button_endDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endDate(v);
+            }
+        });
+
+        //instanciando textFields das datas
+        startDateText = (TextView) findViewById(R.id.textView_grafico_startDate);
+        endDateText = (TextView) findViewById(R.id.textView_grafico_endDate);
+
     }
 
     private void prepareListData() {
@@ -179,8 +218,6 @@ public class GraficoController extends AppCompatActivity
 
     @Override
     public void onClick(View v) {
-        //TODO: coletar informacoes inseridas na UI e comecar a atividade de visualizacao
-
         if(v.getId() == R.id.button_grafico_createGraph){
             startGraphCreateActivity();
         }
@@ -193,25 +230,38 @@ public class GraficoController extends AppCompatActivity
         HashMap<String, Boolean> filtro_gastos = new HashMap<String, Boolean>();
 
         boolean[] filtro_receitas_itens_checked = listAdapter_receitas.getChildCheckStates(0);
-        boolean[] filtro_gastos_itens_checked = listAdapter_receitas.getChildCheckStates(1);
+        boolean[] filtro_gastos_itens_checked = listAdapter_gastos.getChildCheckStates(0);
 
-        for (int i = 0; i < filtro_receitas_itens_checked.length; i++){
-            filtro_receitas.put(this.filtros_receitas[i], filtro_receitas_itens_checked[i]);
+        if (filtro_receitas_itens_checked != null) {
+            for (int i = 0; i < this.filtros_receitas.length; i++) {
+                filtro_receitas.put(this.filtros_receitas[i], filtro_receitas_itens_checked[i]);
+            }
+        }else {
+            for (int i = 0; i < this.filtros_receitas.length; i++) {
+                filtro_receitas.put(this.filtros_receitas[i], false);
+            }
         }
-        for (int i = 0; i < filtro_receitas_itens_checked.length; i++){
-            filtro_receitas.put(this.filtros_receitas[i], filtro_receitas_itens_checked[i]);
+        if (filtro_gastos_itens_checked != null) {
+            for (int i = 0; i < this.filtros_gastos.length; i++) {
+                filtro_gastos.put(this.filtros_gastos[i], filtro_gastos_itens_checked[i]);
+            }
+        }else{
+            for (int i = 0; i < this.filtros_gastos.length; i++) {
+                filtro_gastos.put(this.filtros_gastos[i], false);
+            }
         }
-
-        //TODO: extrair datas
 
         Intent intent = new Intent(GraficoController.this, GraficoViewController.class);
         intent.putExtra("receitas_include", include_receitas);
         intent.putExtra("gastos_include", include_gastos);
         intent.putExtra("receitas_filtros", filtro_receitas);
         intent.putExtra("gastos_filtros", filtro_gastos);
-        intent.putExtra("startDate",false);
-        intent.putExtra("endDate",false);
-        //startActivity(intent);
+        intent.putExtra("startDateSet", startDateSet);
+        intent.putExtra("startDate", startCal);
+        intent.putExtra("endDateSet", endDateSet);
+        intent.putExtra("endDate", endCal);
+
+        startActivity(intent);
     }
 
     @Override
@@ -289,4 +339,83 @@ public class GraficoController extends AppCompatActivity
         listView.requestLayout();
 
     }
+
+    public void startDate(View view)
+    {
+        dateSelected = START_DATE;
+        initDateData();
+        Calendar cDefault = Calendar.getInstance();
+        cDefault.set(startYear, startMonth, startDay);
+
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                (DatePickerDialog.OnDateSetListener) this,
+                cDefault.get(Calendar.YEAR),
+                cDefault.get(Calendar.MONTH),   // 0 a 11  !!!!
+                cDefault.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.setOnCancelListener((DialogInterface.OnCancelListener) this);
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");
+    }
+
+    public void endDate(View view)
+    {
+        dateSelected = END_DATE;
+        initDateData();
+        Calendar cDefault = Calendar.getInstance();
+        cDefault.set(endYear, endMonth, endDay);
+
+        DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
+                (DatePickerDialog.OnDateSetListener) this,
+                cDefault.get(Calendar.YEAR),
+                cDefault.get(Calendar.MONTH),   // 0 a 11  !!!!
+                cDefault.get(Calendar.DAY_OF_MONTH)
+        );
+
+        datePickerDialog.setOnCancelListener((DialogInterface.OnCancelListener) this);
+        datePickerDialog.show(getFragmentManager(), "DatePickerDialog");    }
+
+    private void initDateData()
+    {
+        Calendar c = Calendar.getInstance();
+        startYear = endYear = c.get(Calendar.YEAR);
+        startMonth = endMonth = c.get(Calendar.MONTH);
+        startDay = endDay = c.get(Calendar.DAY_OF_MONTH);
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+        if(dateSelected == START_DATE)
+        {
+            startCal.set(year, monthOfYear, dayOfMonth);
+            startYear = year;
+            startMonth = monthOfYear + 1;
+            startDay = dayOfMonth;
+            String d = startCal.get(startCal.DAY_OF_MONTH)+"/"+(startCal.get(startCal.MONTH)+1)+"/"+startCal.get(startCal.YEAR);
+            startDateText.setText(d);
+            startDateSet = true;
+        }
+        if(dateSelected == END_DATE)
+        {
+            endCal.set(year, monthOfYear, dayOfMonth);
+            endYear = year;
+            endMonth = monthOfYear + 1;
+            endDay = dayOfMonth;
+            String d = endCal.get(endCal.DAY_OF_MONTH)+"/"+(endCal.get(endCal.MONTH)+1)+"/"+endCal.get(endCal.YEAR);
+            endDateText.setText(d);
+            endDateSet = true;
+        }
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        /*startYear = startMonth = startDay = endYear = endMonth = endDay = 0;
+        startDateText.setText("Não definida");
+        endDateText.setText("Não definida");
+        dateSelected = -1;*/
+    }
+
+    public static Calendar getStartCal() { return startCal; }
+    public static Calendar getEndCal() { return endCal; }
+
 }
