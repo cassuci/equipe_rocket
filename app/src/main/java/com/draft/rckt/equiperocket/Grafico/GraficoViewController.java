@@ -1,26 +1,20 @@
 package com.draft.rckt.equiperocket.Grafico;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.provider.ContactsContract;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.draft.rckt.equiperocket.Database.DatabaseContract.GastoEntry;
-import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
 import com.draft.rckt.equiperocket.Database.DatabaseController;
-import com.draft.rckt.equiperocket.Database.DatabaseHelper;
 import com.draft.rckt.equiperocket.Gasto.Gasto;
 import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.R;
@@ -30,42 +24,22 @@ import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
-import com.jjoe64.graphview.series.Series;
 
-import java.lang.reflect.Array;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class GraficoViewController extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int RECEITA = 0;
-    private static final int GASTO = 1;
-    private static final int GRAFICO_BARRAS = 0;
-    private static final int GRAFICO_LINHAS = 1;
-    private static final int GRAFICO_PONTOS = 2;
-
-
-    private DatabaseHelper mDbHelper;
-    private SQLiteDatabase db;
-
-    private int graph_type;
-    private boolean showReceitas;
-    private boolean showGastos;
-    private HashMap<String, Boolean> filtro_receitas;
-    private HashMap<String, Boolean> filtro_gastos;
-
-    private long data_inicio;
-    private long data_fim;
-
     private boolean include_receitas;
     private boolean include_gastos;
+
+    private HashMap<String, Boolean> filtro_receitas;
+    private HashMap<String, Boolean> filtro_gastos;
 
     private Calendar startCal;
     private Calendar endCal;
@@ -84,6 +58,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         filtro_receitas = (HashMap<String, Boolean>) b.get("receitas_filtros");
         filtro_gastos = (HashMap<String, Boolean>) b.get("gastos_filtros");
 
+
         boolean startDateSet = (boolean) b.get("startDateSet");
         if (startDateSet)
             startCal = (Calendar) b.get("startDate");
@@ -97,7 +72,6 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
             endCal = (Calendar) b.get("endDate");
         else{
             endCal = Calendar.getInstance();
-            endCal.set(1970, 0 , 2);
         }
 
         setContentView(R.layout.activity_grafico_view_controller);
@@ -133,46 +107,85 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         ArrayList<Receita> receitas;
         ArrayList<Gasto> gastos;
 
+        Date maxTime_rec = null;
+        Date minTime_rec = null;
+
+        Date maxTime_gasto = null;
+        Date minTime_gasto = null;
+
         if (include_receitas) {
             receitas = mDbController.getAllReceitaOrderByDate();
 
-            Date maxTime = receitas.get(0).getData();
-            Date minTime = receitas.get(0).getData();
-
             ArrayList<DataPoint> pontos_receitas = new ArrayList<DataPoint>();
             for (int i = 0; i < receitas.size(); i++){
-                double value = (double)receitas.get(i).getValor();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(receitas.get(i).getData());
+                boolean include_curr_rec = false;
 
-                // mantem registro das datas maxima e minima
-                // para ajustar o eixo temporal do grafico
-                if (maxTime.getTime() < calendar.getTime().getTime()){
-                    maxTime = calendar.getTime();
-                }
-                if (calendar.getTime().getTime() < minTime.getTime()){
-                    minTime = calendar.getTime();
+                // testes dos filtros
+                // data
+                if (calendar.getTime().getTime() >= startCal.getTime().getTime()
+                        && calendar.getTime().getTime() <= (endCal.getTime().getTime() +  8.64e+7)) {
+
+                    // filtro do tipo
+                    if (filtro_receitas.containsValue(true)) {
+                        Boolean filter = filtro_receitas.get(receitas.get(i).getTipo());
+                        if (filter != null) {
+                            if (filter == true)
+                                include_curr_rec = true;
+                        }
+                    } else {
+                        include_curr_rec = true;
+                    }
                 }
 
-                pontos_receitas.add(
-                        new DataPoint(calendar.getTime(),value
-                        ));
+                // inclui a receita
+                if (include_curr_rec){
+                    // inicializa as variaveis de maximo e minimo com a primeira receita valida
+                    if (maxTime_rec == null){
+                        maxTime_rec = calendar.getTime();
+                    }
+                    if (minTime_rec == null){
+                        minTime_rec = calendar.getTime();
+                    }
+
+                    // mantem registro das datas maxima e minima
+                    // para ajustar o eixo temporal do grafico
+                    if (maxTime_rec.getTime() < calendar.getTime().getTime()) {
+                        maxTime_rec = calendar.getTime();
+                    }
+                    if (minTime_rec.getTime() > calendar.getTime().getTime()) {
+                        minTime_rec = calendar.getTime();
+                    }
+
+                    double value = (double) receitas.get(i).getValor();
+                    pontos_receitas.add(
+                            new DataPoint(calendar.getTime(), value
+                            ));
+                }
             }
 
             DataPoint[] pontos_receitas_array = pontos_receitas.toArray(new DataPoint[pontos_receitas.size()]);
             LineGraphSeries<DataPoint> series_receita = new LineGraphSeries<>(pontos_receitas_array);
+            PointsGraphSeries<DataPoint> series_receita_2 = new PointsGraphSeries<>(pontos_receitas_array);
+
             series_receita.setColor(Color.BLUE);
-            /*BarGraphSeries<DataPoint> series_receita = new BarGraphSeries<DataPoint>(new DataPoint[]{
-                    new DataPoint(receitas.get(0).getData().getTime(), receitas.get(0).getValor()),
-                    new DataPoint(receitas.get(1).getData().getTime(), receitas.get(1).getValor())
-            });*/
+            series_receita_2.setColor(Color.BLUE);
 
             // set manual x bounds to have nice steps
-            grafico.getViewport().setMinX(minTime.getTime());
-            grafico.getViewport().setMaxX(maxTime.getTime());
-            grafico.getViewport().setXAxisBoundsManual(true);
+            if (minTime_rec != null && maxTime_rec != null) {
+                maxTime_rec.setTime((long) (maxTime_rec.getTime() + 8.64e+7));
+                minTime_rec.setTime((long) (minTime_rec.getTime() - 8.64e+7));
+                grafico.getViewport().setMinX(minTime_rec.getTime());
+                grafico.getViewport().setMaxX(maxTime_rec.getTime());
+                grafico.getViewport().setXAxisBoundsManual(true);
+            }
 
-            grafico.addSeries(series_receita);
+            if (pontos_receitas.size() == 1)
+                grafico.addSeries(series_receita_2);
+            else if(pontos_receitas.size() > 1) {
+                grafico.addSeries(series_receita);
+            }
 
             grafico.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
             grafico.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of
@@ -181,64 +194,93 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         if (include_gastos) {
             gastos = mDbController.getAllGastoOrderByDate();
 
-            Date maxTime = gastos.get(0).getData();
-            Date minTime = gastos.get(0).getData();
-
             ArrayList<DataPoint> pontos_gastos = new ArrayList<DataPoint>();
             for (int i = 0; i < gastos.size(); i++) {
-                double value = (double) gastos.get(i).getValor();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(gastos.get(i).getData());
+                boolean include_curr_gasto = false;
 
-                // mantem registro das datas maxima e minima
-                // para ajustar o eixo temporal do grafico
-                if (maxTime.getTime() < calendar.getTime().getTime()) {
-                    maxTime = calendar.getTime();
-                }
-                if (calendar.getTime().getTime() < minTime.getTime()) {
-                    minTime = calendar.getTime();
+                // testes dos filtros
+                // data
+                if (calendar.getTime().getTime() >= startCal.getTime().getTime()
+                        && calendar.getTime().getTime() <= (endCal.getTime().getTime()+  8.64e+7)){
+
+                    // filtro do tipo
+                    if (filtro_gastos.containsValue(true)) {
+                        Boolean filter = filtro_gastos.get(gastos.get(i).getTipo());
+                        if (filter != null) {
+                            if (filter == true)
+                                include_curr_gasto = true;
+                        }
+                    } else {
+                        include_curr_gasto = true;
+                    }
                 }
 
-                pontos_gastos.add(
-                        new DataPoint(calendar.getTime(), value
-                        ));
+                // inclui a receita
+                if (include_curr_gasto){
+                    // inicializa as variaveis de maximo e minimo com a primeira receita valida
+                    if (maxTime_gasto == null){
+                        maxTime_gasto = calendar.getTime();
+                    }
+                    if (minTime_gasto == null){
+                        minTime_gasto = calendar.getTime();
+                    }
+
+                    // mantem registro das datas maxima e minima
+                    // para ajustar o eixo temporal do grafico
+                    if (maxTime_gasto.getTime() < calendar.getTime().getTime()) {
+                        maxTime_gasto = calendar.getTime();
+                    }
+                    if (minTime_gasto.getTime() > calendar.getTime().getTime()) {
+                        minTime_gasto = calendar.getTime();
+                    }
+
+                    double value = (double) gastos.get(i).getValor();
+                    pontos_gastos.add(
+                            new DataPoint(calendar.getTime(), value
+                            ));
+                }
             }
 
             DataPoint[] pontos_gastos_array = pontos_gastos.toArray(new DataPoint[pontos_gastos.size()]);
-            PointsGraphSeries<DataPoint> series_gasto = new PointsGraphSeries<>(pontos_gastos_array);
+            LineGraphSeries<DataPoint> series_gasto = new LineGraphSeries<>(pontos_gastos_array);
+            PointsGraphSeries<DataPoint> series_gasto_2 = new PointsGraphSeries<>(pontos_gastos_array);
+
             series_gasto.setColor(Color.RED);
-                /*BarGraphSeries<DataPoint> series_receita = new BarGraphSeries<DataPoint>(new DataPoint[]{
-                        new DataPoint(receitas.get(0).getData().getTime(), receitas.get(0).getValor()),
-                        new DataPoint(receitas.get(1).getData().getTime(), receitas.get(1).getValor())
-                });*/
+            series_gasto_2.setColor(Color.RED);
 
             // set manual x bounds to have nice steps
-            grafico.getViewport().setMinX(minTime.getTime());
-            grafico.getViewport().setMaxX(maxTime.getTime());
-            grafico.getViewport().setXAxisBoundsManual(true);
+            if (minTime_gasto != null && maxTime_gasto != null) {
+                if (minTime_rec != null) {
+                    if (minTime_gasto.getTime() < minTime_rec.getTime()) {
+                        minTime_gasto.setTime((long) (minTime_gasto.getTime() - 8.64e+7));
+                        grafico.getViewport().setMinX(minTime_gasto.getTime());
+                    }
+                }else{
+                    minTime_gasto.setTime((long) (minTime_gasto.getTime() - 8.64e+7));
+                    grafico.getViewport().setMinX(minTime_gasto.getTime());
+                }
+                if (maxTime_rec != null) {
+                    if (maxTime_gasto.getTime() > maxTime_rec.getTime()) {
+                        maxTime_gasto.setTime((long) (maxTime_gasto.getTime() + 8.64e+7));
+                        grafico.getViewport().setMaxX(maxTime_gasto.getTime());
+                    }
+                }else{
+                    maxTime_gasto.setTime((long) (maxTime_gasto.getTime() + 8.64e+7));
+                    grafico.getViewport().setMaxX(maxTime_gasto.getTime());
+                }
+                grafico.getViewport().setXAxisBoundsManual(true);
+            }
 
-            grafico.addSeries(series_gasto);
+            if (pontos_gastos.size()== 1)
+                grafico.addSeries(series_gasto_2);
+            else if (pontos_gastos.size() > 1)
+                grafico.addSeries(series_gasto);
 
             grafico.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
             grafico.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of
         }
-
-    }
-
-    private void plot_lines(List<Graph_Item> receita_items, List<Graph_Item> gasto_items) {
-        //TODO: implementar
-    }
-
-    private void plot_bars(List<Graph_Item> receita_items, List<Graph_Item> gasto_items) {
-        //TODO: implementar
-    }
-
-    private void plot_points(List<Graph_Item> receita_items, List<Graph_Item> gasto_items) {
-        //TODO: implementar
-    }
-
-    public int get_graph_type() {
-        return graph_type;
     }
 
     @Override
