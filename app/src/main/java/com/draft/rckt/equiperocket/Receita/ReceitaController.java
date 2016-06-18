@@ -146,6 +146,12 @@ public class ReceitaController extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 
     public interface ClickListener {
         void onClick(View view, int position);
