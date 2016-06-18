@@ -108,6 +108,10 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:maxLength="200"
+                android:inputType="textShortMessage|textMultiLine"
+                android:maxLines="10"
+                android:scrollHorizontally="false"
+                android:scrollbars="vertical"
                 android:hint="@string/hint_desc" />
         </android.support.design.widget.TextInputLayout>
 
@@ -123,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/btn_gasto_ins"
                 android:layout_weight="1"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="40dp" />
 
         </LinearLayout>
 
