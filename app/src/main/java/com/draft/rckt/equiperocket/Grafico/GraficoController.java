@@ -29,6 +29,7 @@ import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -104,6 +105,10 @@ public class GraficoController extends AppCompatActivity
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
         Usuario user = Usuario.getInstance();
         nav_user.setText(user.getNome());
+
+        TextView nav_saldo = (TextView)hView.findViewById(R.id.navHeaderSaldo);
+        DecimalFormat formatoValor = new DecimalFormat("###,###,##0.00");
+        nav_saldo.setText("R$ " + formatoValor.format(user.getSaldo()));
 
         // get the listview
         expListView_receitas = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);

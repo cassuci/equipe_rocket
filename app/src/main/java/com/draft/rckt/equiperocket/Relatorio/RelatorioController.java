@@ -28,6 +28,7 @@ import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 public class RelatorioController extends AppCompatActivity
@@ -63,6 +64,10 @@ public class RelatorioController extends AppCompatActivity
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
         Usuario user = Usuario.getInstance();
         nav_user.setText(user.getNome());
+
+        TextView nav_saldo = (TextView)hView.findViewById(R.id.navHeaderSaldo);
+        DecimalFormat formatoValor = new DecimalFormat("###,###,##0.00");
+        nav_saldo.setText("R$ " + formatoValor.format(user.getSaldo()));
 
         buttonStartDate = (Button) findViewById(R.id.button_start_date);
         buttonEndDate = (Button) findViewById(R.id.button_end_date);
