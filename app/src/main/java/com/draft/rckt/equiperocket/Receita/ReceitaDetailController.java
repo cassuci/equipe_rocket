@@ -23,6 +23,7 @@ import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
 
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 public class ReceitaDetailController extends AppCompatActivity implements CreateReceitaDialog.NoticeDialogListener {
@@ -81,7 +82,8 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         String data = formatoData.format(receita.getData());
         textView_data.setText(data);
-        textView_valor.setText(String.valueOf(receita.getValor()));
+        DecimalFormat formatoValor = new DecimalFormat("###,###,##0.00"); // aqui criamos um
+        textView_valor.setText("R$ " + formatoValor.format(receita.getValor()));
         textView_tipo.setText(receita.getTipo());
         textView_desc.setText(receita.getDesc());
     }

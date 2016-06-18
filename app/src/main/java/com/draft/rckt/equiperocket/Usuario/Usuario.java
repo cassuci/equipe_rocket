@@ -10,15 +10,17 @@ public class Usuario implements Serializable{
 
     private String user_id;
     private String nome;
+    private  Double saldo;
 
     private static Usuario instance;
 
     public Usuario() {
     }
 
-    public Usuario(String user_id, String nome) {
+    public Usuario(String user_id, String nome, Double saldo) {
         this.user_id = user_id;
         this.nome = nome;
+        this.saldo = saldo;
     }
 
     public static Usuario getInstance () {
@@ -44,6 +46,16 @@ public class Usuario implements Serializable{
     public void setNome(String nome) {
 
         this.nome = nome;
+    }
+
+    public void setSaldo(Double saldo)
+    {
+        this.saldo = saldo;
+    }
+
+    public double getSaldo() {
+
+        return saldo;
     }
 
 }

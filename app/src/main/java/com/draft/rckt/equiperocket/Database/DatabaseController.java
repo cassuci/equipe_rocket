@@ -40,6 +40,7 @@ public class DatabaseController {
             user = Usuario.getInstance();
 
             //TODO temporario
+            //TODO verificar se para quando não tem nenhuma receita/gasto
             if  (loginUser("marininha", "10anos") == false)
                 addUsers("Marina Bolada", "marininha", "10anos");
 
@@ -120,6 +121,7 @@ public class DatabaseController {
         if (cursor != null && cursor.moveToFirst()) {
             user.setNome(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_NAME_NAME)));
             user.setUser_id(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_NAME_USER_ID)));
+            updateSaldo();
             return true;
         }
 
@@ -139,6 +141,7 @@ public class DatabaseController {
 
         user.setUser_id(username);
         user.setNome(nome);
+        user.setSaldo((double) 0);
 
         return true;
     }
@@ -157,6 +160,8 @@ public class DatabaseController {
         long flag = db.insert(ReceitaEntry.TABLE_NAME, null, contentValues);
         if (flag == -1)
             return false;
+
+        updateSaldo();
         return true;
     }
 
@@ -174,6 +179,8 @@ public class DatabaseController {
         long flag = db.insert(GastoEntry.TABLE_NAME, null, contentValues);
         if (flag == -1)
             return false;
+
+        updateSaldo();
         return true;
     }
 
@@ -246,8 +253,10 @@ public class DatabaseController {
         // condicao de where da query
         String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + receita.getReceita_id();
         int n_rows = db.delete(DatabaseContract.ReceitaEntry.TABLE_NAME, where_clause, null);
-        if (n_rows > 0)
+        if (n_rows > 0) {
+            updateSaldo();
             return true;
+        }
         return  false;
     }
 
@@ -259,8 +268,10 @@ public class DatabaseController {
         String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID + " = " + gasto.getGasto_id();
 
         int n_rows = db.delete(GastoEntry.TABLE_NAME, where_clause, null);
-        if (n_rows > 0)
+        if (n_rows > 0) {
+            updateSaldo();
             return true;
+        }
         return  false;
     }
 
@@ -344,8 +355,10 @@ public class DatabaseController {
         contentValues.put(ReceitaEntry.COLUMN_NAME_DATE, rec.getData().getTime());
 
         int n_rows = db.update(ReceitaEntry.TABLE_NAME, contentValues, where_clause, null);
-        if (n_rows > 0)
+        if (n_rows > 0) {
+            updateSaldo();
             return true;
+        }
         return false;
     }
 
@@ -364,10 +377,45 @@ public class DatabaseController {
         contentValues.put(GastoEntry.COLUMN_NAME_DATE, gasto.getData().getTime());
 
         int n_rows = db.update(GastoEntry.TABLE_NAME, contentValues, where_clause, null);
-        if (n_rows > 0)
+        if (n_rows > 0) {
+            updateSaldo();
             return true;
+        }
         return false;
     }
 
 
+    public void updateSaldo()
+    {
+        String query_rec = "select sum(" + ReceitaEntry.COLUMN_NAME_VALUE + ") " +
+                "from " + ReceitaEntry.TABLE_NAME +
+                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '" + user.getUser_id() + "' ";
+
+        // ganha acesso a database
+        db = dbHelper.getReadableDatabase();
+
+        double valorReceita = 0;
+        try {
+            Cursor cursor = db.rawQuery(query_rec, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                valorReceita = cursor.getDouble(0);
+            }
+
+        } catch (Throwable e) { }
+
+        String query_gasto = "select sum(" + GastoEntry.COLUMN_NAME_VALUE + ") " +
+                "from " + GastoEntry.TABLE_NAME +
+                " WHERE " + GastoEntry.COLUMN_NAME_USER_ID + " = '" + user.getUser_id() + "' ";
+
+        double valorGasto = 0;
+        try {
+            Cursor cursor = db.rawQuery(query_gasto, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                valorGasto = cursor.getDouble(0);
+            }
+
+        } catch (Throwable e) { }
+
+        user.setSaldo(valorReceita - valorGasto);
+    }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.R;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +39,6 @@ public class CustomListAdapterReceita extends RecyclerView.Adapter<CustomListAda
             this.receitaList = receitaList;
         }
 
-        /**TODO
-         * Escolher um nome melhor para o layout
-         * @param parent
-         * @param viewType
-         * @return
-         */
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View itemView = LayoutInflater.from(parent.getContext())
@@ -52,16 +47,14 @@ public class CustomListAdapterReceita extends RecyclerView.Adapter<CustomListAda
             return new MyViewHolder(itemView);
         }
 
-        /**
-         * @param holder
-         * @param position
-         */
+
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
 
             Receita rec = receitaList.get(position);
             holder.title.setText(rec.getTitulo());
-            holder.value.setText(String.valueOf(rec.getValor()));
+            DecimalFormat formatoValor = new DecimalFormat("###,###,##0.00");
+            holder.value.setText("R$ " + formatoValor.format(rec.getValor()));
             SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
             String data = formatoData.format(rec.getData());
             holder.date.setText(data);

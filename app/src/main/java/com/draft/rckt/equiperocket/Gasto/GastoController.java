@@ -33,6 +33,7 @@ import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 import com.draft.rckt.equiperocket.Usuario.Usuario;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,9 @@ public class GastoController extends AppCompatActivity
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
         Usuario user = Usuario.getInstance();
         nav_user.setText(user.getNome());
+        TextView nav_saldo = (TextView)hView.findViewById(R.id.navHeaderSaldo);
+        DecimalFormat formatoValor = new DecimalFormat("###,###,##0.00");
+        nav_saldo.setText("R$ " + formatoValor.format(user.getSaldo()));
 
         prepareGastoData();
         //gastoList = null;

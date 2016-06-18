@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 import com.draft.rckt.equiperocket.Database.DatabaseContract;
@@ -57,7 +58,8 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         String data = formatoData.format(gasto.getData());
         textView_data.setText(data);
-        textView_valor.setText(String.valueOf(gasto.getValor()));
+        DecimalFormat formatoValor = new DecimalFormat("###,###,##0.00"); // aqui criamos um
+        textView_valor.setText("R$ " + formatoValor.format(gasto.getValor()));
         textView_tipo.setText(gasto.getTipo());
         textView_descr.setText(gasto.getDescr());
 

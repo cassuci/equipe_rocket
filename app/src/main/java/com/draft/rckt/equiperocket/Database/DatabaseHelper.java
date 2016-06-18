@@ -19,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + UserEntry.TABLE_NAME + " ( " +
                     UserEntry.COLUMN_NAME_USER_ID + " VARCHAR(20), " +
                     UserEntry.COLUMN_NAME_PASSWORD + " VARCHAR(20) NOT NULL, " +
-                    UserEntry.COLUMN_NAME_NAME + " VARCHAR(40) , " +
+                    UserEntry.COLUMN_NAME_NAME + " VARCHAR(30) , " +
                     " PRIMARY KEY (" + UserEntry.COLUMN_NAME_USER_ID + ")" +
                 " );" ;
 
