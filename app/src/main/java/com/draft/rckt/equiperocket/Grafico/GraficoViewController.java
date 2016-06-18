@@ -261,7 +261,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
             // set manual x bounds to have nice steps
             if (minTime_gasto != null && maxTime_gasto != null) {
                 if (minTime_rec != null) {
-                    if (minTime_gasto.getTime() < minTime_rec.getTime()) {
+                    if (minTime_gasto.getTime() <= (minTime_rec.getTime()  + 8.64e+7 )) {
                         minTime_gasto.setTime((long) (minTime_gasto.getTime() - 8.64e+7));
                         grafico.getViewport().setMinX(minTime_gasto.getTime());
                     }
@@ -270,7 +270,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                     grafico.getViewport().setMinX(minTime_gasto.getTime());
                 }
                 if (maxTime_rec != null) {
-                    if (maxTime_gasto.getTime() > maxTime_rec.getTime()) {
+                    if (maxTime_gasto.getTime() >= (maxTime_rec.getTime() - 8.64e+7)){
                         maxTime_gasto.setTime((long) (maxTime_gasto.getTime() + 8.64e+7));
                         grafico.getViewport().setMaxX(maxTime_gasto.getTime());
                     }
