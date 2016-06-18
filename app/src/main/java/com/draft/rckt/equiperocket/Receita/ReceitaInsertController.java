@@ -76,7 +76,7 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
         }
 
         // TODO
-        // VERIFICAR TAMANHOS e retirar user_id quando o ivan deixar
+        // VERIFICAR TAMANHOS e verificar se precisa do finish
 
         Receita receita = new Receita();
         receita.setTitulo(inputName.getText().toString());
@@ -84,7 +84,6 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
         receita.setTipo(tipo);
         receita.setValor(Double.parseDouble(inputValor.getText().toString()));
         receita.setData(new Date());
-        receita.setUser_id("1");
 
         if (dbControl.addItemReceita(receita))
             Toast.makeText(getApplicationContext(), "Receita inserida com sucesso", Toast.LENGTH_SHORT).show();

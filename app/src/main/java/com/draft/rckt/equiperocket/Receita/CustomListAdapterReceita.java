@@ -52,16 +52,13 @@ public class CustomListAdapterReceita extends RecyclerView.Adapter<CustomListAda
             return new MyViewHolder(itemView);
         }
 
-        /**TODO
-         * Arrumar holder.date.setText para mostrar a data. Antes utilizar o formatter comentado
+        /**
          * @param holder
          * @param position
          */
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
 
-
-            //Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Receita rec = receitaList.get(position);
             holder.title.setText(rec.getTitulo());
             holder.value.setText(String.valueOf(rec.getValor()));

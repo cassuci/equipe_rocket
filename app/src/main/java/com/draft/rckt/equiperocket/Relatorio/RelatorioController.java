@@ -25,6 +25,7 @@ import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -60,7 +61,8 @@ public class RelatorioController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla");// TODO substituir por user_id
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
 
         buttonStartDate = (Button) findViewById(R.id.button_start_date);
         buttonEndDate = (Button) findViewById(R.id.button_end_date);

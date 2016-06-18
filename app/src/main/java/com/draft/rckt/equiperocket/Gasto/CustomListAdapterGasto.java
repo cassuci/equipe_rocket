@@ -52,16 +52,13 @@ public class CustomListAdapterGasto extends RecyclerView.Adapter<CustomListAdapt
         return new MyViewHolder(itemView);
     }
 
-    /**TODO
-     * Arrumar holder.date.setText para mostrar a data. Antes utilizar o formatter comentado
+    /**
      * @param holder
      * @param position
      */
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-
-        //Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Gasto gasto = gastoList.get(position);
         holder.title.setText(gasto.getTitulo());
         holder.value.setText(String.valueOf(gasto.getValor()));

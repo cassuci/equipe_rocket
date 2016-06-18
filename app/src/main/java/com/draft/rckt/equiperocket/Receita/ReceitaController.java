@@ -33,6 +33,7 @@ import com.draft.rckt.equiperocket.Gasto.GastoDetailController;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,6 +51,8 @@ public class ReceitaController extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receita_controller);
+
+        dbControl = new DatabaseController(this.getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_receita_id);
         setSupportActionBar(toolbar);
@@ -77,9 +80,8 @@ public class ReceitaController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla"); //TODO substituir por user_id
-
-        dbControl = new DatabaseController(this.getApplicationContext());
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
 
         prepareReceitaList();
 

@@ -44,8 +44,6 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
         dbControl = new DatabaseController(getApplicationContext());
 
-        // TODO: verificar as funcionalidades dos botões
-
         setContentView(R.layout.activity_receita_detail_controller);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_receita_id);

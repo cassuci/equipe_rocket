@@ -31,6 +31,7 @@ import com.draft.rckt.equiperocket.Receita.Receita;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
 import com.draft.rckt.equiperocket.Grafico.GraficoController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,8 @@ public class GastoController extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gasto_controller);
+
+        dbControl = new DatabaseController(this.getApplicationContext());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,9 +82,8 @@ public class GastoController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla"); // TODO substituir por user_id
-
-        dbControl = new DatabaseController(this.getApplicationContext());
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
 
         prepareGastoData();
         //gastoList = null;
@@ -91,7 +93,6 @@ public class GastoController extends AppCompatActivity
         }else{
             createRecyclerView();
         }
-
 
     }
 
@@ -132,15 +133,12 @@ public class GastoController extends AppCompatActivity
         return ((gastoList == null) || gastoList.isEmpty());
     }
 
-    /**TODO
-     * Preencher lista de gastos com dados do banco
-     */
+
     private void prepareGastoData() {
 
         gastoList = new ArrayList<Gasto>();
         gastoList = dbControl.getAllGastoOrderByDate();
 
-       // mAdapter.notifyDataSetChanged();
     }
 
     public interface ClickListener {

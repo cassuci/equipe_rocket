@@ -76,7 +76,7 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
         }
 
         // TODO
-        // VERIFICAR TAMANHOS e retirar user_id quando o ivan deixar
+        // VERIFICAR TAMANHOS - verificar se precisa do finish
 
         Gasto gasto = new Gasto();
         gasto.setTitulo(inputName.getText().toString());
@@ -84,7 +84,6 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
         gasto.setTipo(tipo);
         gasto.setValor(Double.parseDouble(inputValor.getText().toString()));
         gasto.setData(new Date());
-        gasto.setUser_id("1");
 
         if (dbControl.addItemGasto(gasto))
             Toast.makeText(getApplicationContext(), "Gasto inserido com sucesso", Toast.LENGTH_SHORT).show();

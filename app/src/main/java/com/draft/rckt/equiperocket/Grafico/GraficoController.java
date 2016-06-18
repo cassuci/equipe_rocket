@@ -28,6 +28,7 @@ import com.draft.rckt.equiperocket.Grafico.ExpListViewAdapterWithCheckbox;
 import com.draft.rckt.equiperocket.R;
 import com.draft.rckt.equiperocket.Receita.ReceitaController;
 import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -79,7 +80,8 @@ public class GraficoController extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
         TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
-        nav_user.setText("bla");// TODO substituir por user_id
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
 
         // get the listview
         expListView_receitas = (ExpandableListView) findViewById(R.id.expandableList_grafico_receita_filtro);

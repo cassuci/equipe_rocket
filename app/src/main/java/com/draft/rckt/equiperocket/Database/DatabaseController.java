@@ -3,6 +3,7 @@ package com.draft.rckt.equiperocket.Database;
 import com.draft.rckt.equiperocket.Database.DatabaseContract;
 import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
 import com.draft.rckt.equiperocket.Database.DatabaseContract.GastoEntry;
+import com.draft.rckt.equiperocket.Database.DatabaseContract.UserEntry;
 
 
 import android.app.Application;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Gasto.Gasto;
 import com.draft.rckt.equiperocket.Receita.Receita;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,30 +30,26 @@ import java.util.concurrent.locks.ReentrantLock;
 public class DatabaseController {
     private static DatabaseHelper dbHelper = null;
     private static Context context;
-    private SQLiteDatabase db ;
+    private SQLiteDatabase db;
+    private static Usuario user;
 
     public DatabaseController(Context context) {
         if (dbHelper == null) {
             this.context = context;
-
             dbHelper = new DatabaseHelper(this.context);
+            user = Usuario.getInstance();
 
             //TODO temporario
-            if  (getAllReceitaOrderByDate() == null) {
+            if  (loginUser("marininha", "10anos") == false)
+                addUsers("Marina Bolada", "marininha", "10anos");
 
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("username", "1");
-                contentValues.put("senha", "senhaTeste");
-                contentValues.put("nome", "NomeTeste");
-                db.insert("Users", null, contentValues);
+            if (getAllReceitaOrderByDate() == null)
+            {
                 int i;
-
                 Receita a = new Receita();
-
                 double v = 402;
                 for (i = 1; i < 20; i++) {
                     Receita rec = new Receita();
-                    rec.setUser_id("1");
                     rec.setTitulo("Receit " + i);
                     rec.setDesc("aaaaaaa bbbbbb    ccccccc " + i);
                     rec.setTipo("qualquer uma");
@@ -59,7 +57,7 @@ public class DatabaseController {
                     rec.setValor(v);
 
                     Calendar calendar = Calendar.getInstance();
-                    calendar.add(Calendar.DAY_OF_MONTH, i);
+                    calendar.add(Calendar.DAY_OF_MONTH, -i);
                     rec.setData(calendar.getTime());
                     addItemReceita(rec);
                     a = rec;
@@ -68,46 +66,89 @@ public class DatabaseController {
                 deleteReceita(a);
 
                 Receita rec = new Receita();
-                rec.setUser_id("1");
                 rec.setReceita_id(1);
                 rec.setTitulo("Receita alterada ");
                 rec.setDesc("o importante é que alterou");
                 rec.setTipo("aaaaaa ");
                 rec.setValor(67.90);
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DAY_OF_MONTH, 60);
-                rec.setData(calendar.getTime());
-               // updateReceita(rec);
+                rec.setData(new Date());
+                updateReceita(rec);
 
                 Gasto b = new Gasto();
                 v = 402;
                 for (i = 1; i < 21; i++) {
                     Gasto gasto = new Gasto();
-                    gasto.setUser_id("1");
                     gasto.setTitulo("Gasto " + i);
                     gasto.setDescr("aaaaaaa bbbbbb    ccccccc " + i);
                     gasto.setTipo("qualquer uma");
                     v += i;
                     gasto.setValor(v);
-                    gasto.setData(new Date());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DAY_OF_MONTH, -i);
+                    gasto.setData(calendar.getTime());
                     addItemGasto(gasto);
                     b = gasto;
                 }
 
                 deleteGasto(b);
 
+                Gasto g = new Gasto();
+                g.setGasto_id(1);
+                g.setTitulo("Gasto alterado  ");
+                g.setDescr("o importante é que alterou!!! uhuuuul");
+                g.setTipo("aaaaaa");
+                g.setData(new Date());
+                g.setValor(67.90);
+                updateGasto(g);
             }
         }
     }
 
+
+    public boolean loginUser(String username, String senha)
+    {
+        String query_get = "select * FROM " + UserEntry.TABLE_NAME +
+                " WHERE " + UserEntry.COLUMN_NAME_USER_ID + " = '" + username + "' " +
+                " AND " + UserEntry.COLUMN_NAME_PASSWORD + " = '" + senha + "' ";
+
+        // ganha acesso a database
+        db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query_get, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            user.setNome(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_NAME_NAME)));
+            user.setUser_id(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_NAME_USER_ID)));
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean addUsers(String nome, String username, String senha) {
+        db = dbHelper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(UserEntry.COLUMN_NAME_NAME, nome);
+        contentValues.put(UserEntry.COLUMN_NAME_USER_ID, username);
+        contentValues.put(UserEntry.COLUMN_NAME_PASSWORD, senha);
+        long flag = db.insert(UserEntry.TABLE_NAME, null, contentValues);
+        if (flag == -1)
+            return false;
+
+        user.setUser_id(username);
+        user.setNome(nome);
+
+        return true;
+    }
 
     public boolean addItemReceita(Receita rec) {
         db = dbHelper.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
         contentValues.putNull(ReceitaEntry.COLUMN_NAME_ENTRY_ID);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.getUser_id());
+        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, user.getUser_id());
         contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.getTitulo());
         contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.getDesc());
         contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.getValor());
@@ -124,7 +165,7 @@ public class DatabaseController {
 
         ContentValues contentValues = new ContentValues();
         contentValues.putNull(GastoEntry.COLUMN_NAME_ENTRY_ID);
-        contentValues.put(GastoEntry.COLUMN_NAME_USER_ID, gasto.getUser_id());
+        contentValues.put(GastoEntry.COLUMN_NAME_USER_ID, user.getUser_id());
         contentValues.put(GastoEntry.COLUMN_NAME_TITLE, gasto.getTitulo());
         contentValues.put(GastoEntry.COLUMN_NAME_CONTENT, gasto.getDescr());
         contentValues.put(GastoEntry.COLUMN_NAME_VALUE, gasto.getValor());
@@ -138,9 +179,8 @@ public class DatabaseController {
 
     public ArrayList<Receita> getAllReceitaOrderByDate(){
 
-        //TODO: depois arrumar o id para o id do usuário
         String query_get = "select * FROM " + ReceitaEntry.TABLE_NAME +
-                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '1'" +
+                " WHERE " + ReceitaEntry.COLUMN_NAME_USER_ID + " = '" + user.getUser_id() + "' " +
                 " ORDER BY " + ReceitaEntry.COLUMN_NAME_DATE + " DESC;";
 
         // ganha acesso a database
@@ -148,8 +188,6 @@ public class DatabaseController {
 
         Cursor cursor = db.rawQuery(query_get, null);
         ArrayList<Receita> array = null;
-
-        int i = 0;
 
         if (cursor != null && cursor.moveToFirst())
         {
@@ -172,9 +210,8 @@ public class DatabaseController {
 
     public ArrayList<Gasto> getAllGastoOrderByDate(){
 
-        //TODO: depois arrumar o id para o id do usuário
         String query_get = "select * FROM " + GastoEntry.TABLE_NAME +
-                " WHERE " + GastoEntry.COLUMN_NAME_USER_ID + " = '1'" +
+                " WHERE " + GastoEntry.COLUMN_NAME_USER_ID + " = '"  + user.getUser_id() + "' " +
                 " ORDER BY " + GastoEntry.COLUMN_NAME_DATE + " DESC;";
 
         // ganha acesso a database
@@ -182,8 +219,6 @@ public class DatabaseController {
 
         Cursor cursor = db.rawQuery(query_get, null);
         ArrayList<Gasto> array = null;
-
-        int i = 0;
 
         if (cursor != null && cursor.moveToFirst())
         {
@@ -302,8 +337,6 @@ public class DatabaseController {
         String where_clause = ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + rec.getReceita_id();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.putNull(ReceitaEntry.COLUMN_NAME_ENTRY_ID);
-        contentValues.put(ReceitaEntry.COLUMN_NAME_USER_ID, rec.getUser_id());
         contentValues.put(ReceitaEntry.COLUMN_NAME_TITLE, rec.getTitulo());
         contentValues.put(ReceitaEntry.COLUMN_NAME_CONTENT, rec.getDesc());
         contentValues.put(ReceitaEntry.COLUMN_NAME_VALUE, rec.getValor());
@@ -315,4 +348,26 @@ public class DatabaseController {
             return true;
         return false;
     }
+
+    public boolean updateGasto(Gasto gasto)
+    {
+        db = dbHelper.getWritableDatabase(); // ganha acesso a database
+
+        // condicao de where da query
+        String where_clause = GastoEntry.COLUMN_NAME_ENTRY_ID + " = " + gasto.getGasto_id();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(GastoEntry.COLUMN_NAME_TITLE, gasto.getTitulo());
+        contentValues.put(GastoEntry.COLUMN_NAME_CONTENT, gasto.getDescr());
+        contentValues.put(GastoEntry.COLUMN_NAME_VALUE, gasto.getValor());
+        contentValues.put(GastoEntry.COLUMN_NAME_TYPE, gasto.getTipo());
+        contentValues.put(GastoEntry.COLUMN_NAME_DATE, gasto.getData().getTime());
+
+        int n_rows = db.update(GastoEntry.TABLE_NAME, contentValues, where_clause, null);
+        if (n_rows > 0)
+            return true;
+        return false;
+    }
+
+
 }
