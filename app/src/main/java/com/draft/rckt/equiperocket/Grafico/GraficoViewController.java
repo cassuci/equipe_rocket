@@ -3,19 +3,47 @@ package com.draft.rckt.equiperocket.Grafico;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.draft.rckt.equiperocket.Database.DatabaseContract.GastoEntry;
 import com.draft.rckt.equiperocket.Database.DatabaseContract.ReceitaEntry;
+import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Database.DatabaseHelper;
+import com.draft.rckt.equiperocket.Gasto.Gasto;
+import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.R;
+import com.draft.rckt.equiperocket.Receita.Receita;
+import com.draft.rckt.equiperocket.Receita.ReceitaController;
+import com.draft.rckt.equiperocket.Relatorio.RelatorioController;
+import com.draft.rckt.equiperocket.Usuario.Usuario;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.jjoe64.graphview.series.Series;
 
-import java.sql.Date;
+import java.lang.reflect.Array;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
-public class GraficoViewController extends AppCompatActivity {
+public class GraficoViewController extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int RECEITA = 0;
     private static final int GASTO = 1;
@@ -30,11 +58,17 @@ public class GraficoViewController extends AppCompatActivity {
     private int graph_type;
     private boolean showReceitas;
     private boolean showGastos;
-    private String receita_type;
-    private String gasto_type;
-    private Date data_inicio;
-    private Date data_fim;
+    private HashMap<String, Boolean> filtro_receitas;
+    private HashMap<String, Boolean> filtro_gastos;
 
+    private long data_inicio;
+    private long data_fim;
+
+    private boolean include_receitas;
+    private boolean include_gastos;
+
+    private Calendar startCal;
+    private Calendar endCal;
 
 
     @Override
@@ -44,84 +78,150 @@ public class GraficoViewController extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
 
-        //TODO: Separar informacoes do bundle
+        include_receitas = (boolean) b.get("receitas_include");
+        include_gastos = (boolean) b.get("gastos_include");
+
+        filtro_receitas = (HashMap<String, Boolean>) b.get("receitas_filtros");
+        filtro_gastos = (HashMap<String, Boolean>) b.get("gastos_filtros");
+
+        boolean startDateSet = (boolean) b.get("startDateSet");
+        if (startDateSet)
+            startCal = (Calendar) b.get("startDate");
+        else{
+            startCal = Calendar.getInstance();
+            startCal.set(1970,0,1);
+        }
+
+        boolean endDateSet = (boolean) b.get("endDateSet");
+        if (endDateSet)
+            endCal = (Calendar) b.get("endDate");
+        else{
+            endCal = Calendar.getInstance();
+            endCal.set(1970, 0 , 2);
+        }
 
         setContentView(R.layout.activity_grafico_view_controller);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_grafico_view);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        TextView nav_user = (TextView)hView.findViewById(R.id.navHeaderTitle);
+        Usuario user = Usuario.getInstance();
+        nav_user.setText(user.getNome());
+
+        show_graph();
     }
 
 
-    protected void show_graph(){
+    protected void show_graph() {
 
-        String where_clause_receita = null;
-        String where_clause_gasto = null;
-        List<Graph_Item> receita_items = null;
-        List<Graph_Item> gasto_items = null;
+        DatabaseController mDbController = new DatabaseController(getApplicationContext());
 
+        GraphView grafico = (GraphView) findViewById(R.id.graphView_grafico);
 
+        ArrayList<Receita> receitas;
+        ArrayList<Gasto> gastos;
 
-        if (showReceitas) {
-            // se algum campo de restricao foi especificado, construir statement de WHERE
-            if (receita_type != null || data_inicio != null || data_fim != null) {
-                where_clause_receita = create_where_clause(RECEITA);
-            }
+        if (include_receitas) {
+            receitas = mDbController.getAllReceitaOrderByDate();
 
-            //TODO: verificar consulta das receitas
-            mDbHelper = new DatabaseHelper(this.getApplicationContext());
-            db = mDbHelper.getReadableDatabase(); // ganha acesso a database
+            Date maxTime = receitas.get(0).getData();
+            Date minTime = receitas.get(0).getData();
 
-            String[] columns= {ReceitaEntry.COLUMN_NAME_VALUE,
-                    ReceitaEntry.COLUMN_NAME_DATE};
-            Cursor cursor = db.query(ReceitaEntry.TABLE_NAME, columns, where_clause_receita, null,
-                    null, null, ReceitaEntry.COLUMN_NAME_DATE);
+            ArrayList<DataPoint> pontos_receitas = new ArrayList<DataPoint>();
+            for (int i = 0; i < receitas.size(); i++){
+                double value = (double)receitas.get(i).getValor();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(receitas.get(i).getData());
 
-            if (cursor != null){
-                while(cursor.moveToNext()){
-                    Graph_Item item = new Graph_Item(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_VALUE)),
-                            cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE)));
-                    receita_items.add(item);
+                // mantem registro das datas maxima e minima
+                // para ajustar o eixo temporal do grafico
+                if (maxTime.getTime() < calendar.getTime().getTime()){
+                    maxTime = calendar.getTime();
                 }
-                cursor.close();
-            }
-
-            db.close();
-        }
-
-        if (showGastos) {
-            // se algum campo de restricao foi especificado, construir statement de WHERE
-            if (gasto_type != null || data_inicio != null || data_fim != null) {
-                where_clause_receita = create_where_clause(GASTO);
-            }
-
-            //TODO: testar consulta dos gasto
-            mDbHelper = new DatabaseHelper(this.getApplicationContext());
-            db = mDbHelper.getReadableDatabase(); // ganha acesso a database
-
-            String[] columns ={GastoEntry.COLUMN_NAME_VALUE,
-                    GastoEntry.COLUMN_NAME_DATE};
-            Cursor cursor = db.query(GastoEntry.TABLE_NAME, columns, where_clause_receita, null,
-                    null, null, GastoEntry.COLUMN_NAME_DATE);
-
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    Graph_Item item = new Graph_Item(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_VALUE)),
-                            cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_DATE)));
-                    gasto_items.add(item);
+                if (calendar.getTime().getTime() < minTime.getTime()){
+                    minTime = calendar.getTime();
                 }
-                cursor.close();
+
+                pontos_receitas.add(
+                        new DataPoint(calendar.getTime(),value
+                        ));
             }
-            db.close();
+
+            DataPoint[] pontos_receitas_array = pontos_receitas.toArray(new DataPoint[pontos_receitas.size()]);
+            LineGraphSeries<DataPoint> series_receita = new LineGraphSeries<>(pontos_receitas_array);
+            series_receita.setColor(Color.BLUE);
+            /*BarGraphSeries<DataPoint> series_receita = new BarGraphSeries<DataPoint>(new DataPoint[]{
+                    new DataPoint(receitas.get(0).getData().getTime(), receitas.get(0).getValor()),
+                    new DataPoint(receitas.get(1).getData().getTime(), receitas.get(1).getValor())
+            });*/
+
+            // set manual x bounds to have nice steps
+            grafico.getViewport().setMinX(minTime.getTime());
+            grafico.getViewport().setMaxX(maxTime.getTime());
+            grafico.getViewport().setXAxisBoundsManual(true);
+
+            grafico.addSeries(series_receita);
+
+            grafico.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+            grafico.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of
         }
 
-        if(get_graph_type() == GRAFICO_BARRAS){
-            plot_bars(receita_items, gasto_items);
-        }else if(get_graph_type() == GRAFICO_LINHAS){
-            plot_lines(receita_items, gasto_items);
-        }else if (get_graph_type() == GRAFICO_PONTOS){
-            plot_points(receita_items, gasto_items);
-        }else{
-            //TODO: tratamento de erro
-        }
+        if (include_gastos) {
+            gastos = mDbController.getAllGastoOrderByDate();
 
+            Date maxTime = gastos.get(0).getData();
+            Date minTime = gastos.get(0).getData();
+
+            ArrayList<DataPoint> pontos_gastos = new ArrayList<DataPoint>();
+            for (int i = 0; i < gastos.size(); i++) {
+                double value = (double) gastos.get(i).getValor();
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(gastos.get(i).getData());
+
+                // mantem registro das datas maxima e minima
+                // para ajustar o eixo temporal do grafico
+                if (maxTime.getTime() < calendar.getTime().getTime()) {
+                    maxTime = calendar.getTime();
+                }
+                if (calendar.getTime().getTime() < minTime.getTime()) {
+                    minTime = calendar.getTime();
+                }
+
+                pontos_gastos.add(
+                        new DataPoint(calendar.getTime(), value
+                        ));
+            }
+
+            DataPoint[] pontos_gastos_array = pontos_gastos.toArray(new DataPoint[pontos_gastos.size()]);
+            PointsGraphSeries<DataPoint> series_gasto = new PointsGraphSeries<>(pontos_gastos_array);
+            series_gasto.setColor(Color.RED);
+                /*BarGraphSeries<DataPoint> series_receita = new BarGraphSeries<DataPoint>(new DataPoint[]{
+                        new DataPoint(receitas.get(0).getData().getTime(), receitas.get(0).getValor()),
+                        new DataPoint(receitas.get(1).getData().getTime(), receitas.get(1).getValor())
+                });*/
+
+            // set manual x bounds to have nice steps
+            grafico.getViewport().setMinX(minTime.getTime());
+            grafico.getViewport().setMaxX(maxTime.getTime());
+            grafico.getViewport().setXAxisBoundsManual(true);
+
+            grafico.addSeries(series_gasto);
+
+            grafico.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(this));
+            grafico.getGridLabelRenderer().setNumHorizontalLabels(3); // only 4 because of
+        }
 
     }
 
@@ -137,69 +237,31 @@ public class GraficoViewController extends AppCompatActivity {
         //TODO: implementar
     }
 
-    private String create_where_clause(int registro_type) {
-
-        String where = null;
-
-        String receita_type = get_receita_type();
-        String gasto_type = get_gasto_type();
-        Date data_inicio = get_data_inicio();
-        Date data_fim = get_data_fim();
-
-
-        if (registro_type == RECEITA) {
-            if (receita_type != null)
-                where.concat(ReceitaEntry.COLUMN_NAME_TYPE + " = " + receita_type);
-
-            if (data_inicio != null)
-                if (where != null)
-                    where.concat(" AND" + ReceitaEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
-                else
-                    where.concat(ReceitaEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
-
-            if (data_fim != null)
-                if (where != null)
-                    where.concat(" AND" + ReceitaEntry.COLUMN_NAME_DATE + " <= " + data_fim);
-                else
-                    where.concat(ReceitaEntry.COLUMN_NAME_DATE + " <= " + data_fim);
-
-        }else if(registro_type == GASTO){
-            if (gasto_type != null)
-                where.concat(GastoEntry.COLUMN_NAME_TYPE + " = " + receita_type);
-
-            if (data_inicio != null)
-                if (where != null)
-                    where.concat(" AND" + GastoEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
-                else
-                    where.concat(GastoEntry.COLUMN_NAME_DATE + " >= " + data_inicio);
-
-            if (data_fim != null)
-                if (where != null)
-                    where.concat(" AND" + GastoEntry.COLUMN_NAME_DATE + " <= " + data_fim);
-                else
-                    where.concat(GastoEntry.COLUMN_NAME_DATE + " <= " + data_fim);
-        }
-
-        return where;
-    }
-
     public int get_graph_type() {
         return graph_type;
     }
 
-    public String get_receita_type() {
-        return receita_type;
-    }
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Intent intent = new Intent();
 
-    public String get_gasto_type() {
-        return gasto_type;
-    }
+        if (id == R.id.gerenciador_gastos) {
+            intent.setClass(this, GastoController.class);
+            startActivity(intent);
+        } else if (id == R.id.gerenciador_receitas) {
+            intent.setClass(this, ReceitaController.class);
+            startActivity(intent);
+        } else if (id == R.id.relatorio) {
+            intent.setClass(this, RelatorioController.class);
+            startActivity(intent);
+        } else if (id == R.id.grafico) {
+            // do nothings
+        }
 
-    public Date get_data_inicio() {
-        return data_inicio;
-    }
-
-    public Date get_data_fim() {
-        return data_fim;
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
