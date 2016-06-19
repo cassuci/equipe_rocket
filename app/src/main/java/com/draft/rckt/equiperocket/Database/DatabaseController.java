@@ -278,16 +278,32 @@ public class DatabaseController {
     {
         ArrayList<Receita> array = new ArrayList<Receita>();
         int i = 0;
-        startDate.add(Calendar.HOUR, 0);
-        startDate.add(Calendar.MINUTE, 0);
-        startDate.add(Calendar.SECOND, 0);
+        long inicio = 0;
+        if (startDate != null) {
+            startDate.add(Calendar.HOUR, 0);
+            startDate.add(Calendar.MINUTE, 0);
+            startDate.add(Calendar.SECOND, 0);
+            inicio = (startDate.getTime()).getTime();
+        }
+        else
+        {
+            Receita rec = arrayReceita.get(arrayReceita.size() - 1);
+            inicio = rec.getData().getTime();
+        }
 
-        finishDate.add(Calendar.HOUR, 23);
-        finishDate.add(Calendar.MINUTE, 59);
-        finishDate.add(Calendar.SECOND, 59);
+        long fim = 0;
+        if (finishDate != null) {
+            finishDate.add(Calendar.HOUR, 23);
+            finishDate.add(Calendar.MINUTE, 59);
+            finishDate.add(Calendar.SECOND, 59);
+            fim = (finishDate.getTime()).getTime();
+        }
+        else
+        {
+            Receita rec = arrayReceita.get(0);
+            fim = rec.getData().getTime();
+        }
 
-        long inicio = (startDate.getTime()).getTime();
-        long fim = (finishDate.getTime()).getTime();
         long atual;
         int ver = 0;
         for (i = 0; i < arrayReceita.size(); i++)
@@ -311,16 +327,32 @@ public class DatabaseController {
     {
         ArrayList<Gasto> array = new ArrayList<Gasto>();
         int i = 0;
-        startDate.add(Calendar.HOUR, 0);
-        startDate.add(Calendar.MINUTE, 0);
-        startDate.add(Calendar.SECOND, 0);
+        long inicio = 0;
+        if (startDate != null) {
+            startDate.add(Calendar.HOUR, 0);
+            startDate.add(Calendar.MINUTE, 0);
+            startDate.add(Calendar.SECOND, 0);
+            inicio = (startDate.getTime()).getTime();
+        }
+        else
+        {
+            Gasto gasto = arrayGasto.get(arrayGasto.size() - 1);
+            inicio = gasto.getData().getTime();
+        }
 
-        finishDate.add(Calendar.HOUR, 23);
-        finishDate.add(Calendar.MINUTE, 59);
-        finishDate.add(Calendar.SECOND, 59);
+        long fim = 0;
+        if (finishDate != null) {
+            finishDate.add(Calendar.HOUR, 23);
+            finishDate.add(Calendar.MINUTE, 59);
+            finishDate.add(Calendar.SECOND, 59);
+            fim = (finishDate.getTime()).getTime();
+        }
+        else
+        {
+            Gasto gasto = arrayGasto.get(0);
+            fim = gasto.getData().getTime();
+        }
 
-        long inicio = (startDate.getTime()).getTime();
-        long fim = (finishDate.getTime()).getTime();
         long atual;
         int ver = 0;
         for (i = 0; i < arrayGasto.size(); i++)
