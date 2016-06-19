@@ -33,105 +33,118 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="60dp"
-        android:orientation="vertical">
 
-        <!-- nome -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_name_gasto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/input_name_gasto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLength="20"
-                android:singleLine="true"
-                android:hint="@string/hint_name" />
-        </android.support.design.widget.TextInputLayout>
-
-        <!-- valor -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_valor_gasto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-            <EditText
-                android:id="@+id/input_valor_gasto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:maxLength="13"
-                android:hint="@string/hint_valor" />
-        </android.support.design.widget.TextInputLayout>
-
-        <!-- tipo -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginEnd="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="60dp"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:focusable="true">
 
-            <TextView
+            <!-- nome -->
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_name_gasto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <EditText
+                    android:id="@+id/input_name_gasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:hint="@string/hint_name" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- valor -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_valor_gasto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <EditText
+                    android:id="@+id/input_valor_gasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLength="13"
+                    android:hint="@string/hint_valor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- tipo -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Tipo:"
-                android:id="@+id/text_gasto_ins_tipo"
-                android:layout_margin="5dp" />
+                android:layout_margin="5dp">
 
-            <Spinner
-                android:layout_width="262dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner_tipo_gasto"
-                android:layout_margin="5dp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tipo:"
+                    android:id="@+id/text_gasto_ins_tipo"
+                    android:layout_margin="5dp" />
 
-        <!-- descrição -->
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_desc_gasto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+                <Spinner
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_tipo_gasto"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/input_desc_gasto"
+            <!-- descrição -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_desc_gasto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:maxLength="200"
-                android:inputType="textShortMessage|textMultiLine"
-                android:maxLines="10"
-                android:scrollHorizontally="false"
-                android:scrollbars="vertical"
-                android:hint="@string/hint_desc" />
-        </android.support.design.widget.TextInputLayout>
+                android:layout_margin="5dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:layout_gravity="center_horizontal">
+                <EditText
+                    android:id="@+id/input_desc_gasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="200"
+                    android:inputType="textShortMessage|textMultiLine"
+                    android:scrollHorizontally="false"
+                    android:scrollbars="vertical"
+                    android:maxLines="10"
+                    android:hint="@string/hint_desc" />
+            </android.support.design.widget.TextInputLayout>
 
-            <Button android:id="@+id/btn_gasto_insert"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/btn_gasto_ins"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="40dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:baselineAligned="false"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal|top"
+                android:layout_marginTop="10dp">
+
+                <Button android:id="@+id/btn_gasto_insert"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_gasto_ins"
+                    android:layout_gravity="center_vertical|top" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+
+
+    </ScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

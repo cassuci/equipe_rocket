@@ -145,7 +145,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="3dp">
 
             <TextView
@@ -169,7 +169,9 @@
                 android:gravity="center_vertical|top"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="2dp" />
+                android:scrollHorizontally="false"
+                android:scrollbars="vertical"
+                android:maxLines="14"/>
         </LinearLayout>
 
     </LinearLayout>

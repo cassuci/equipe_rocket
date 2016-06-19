@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +75,8 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
         textView_valor = (TextView) findViewById(R.id.textView_valor_receita_id);
         textView_tipo = (TextView) findViewById(R.id.textView_tipo_receita_id);
         textView_desc = (TextView) findViewById(R.id.textView_desc_receita_id);
+        textView_desc.setMovementMethod(new ScrollingMovementMethod());
+
     }
 
     private void fillTextView()

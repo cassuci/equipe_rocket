@@ -66,10 +66,6 @@ public class GastoController extends AppCompatActivity
                 Intent intent = new Intent();
                 intent.setClass(GastoController.this,GastoInsertController.class);
                 startActivity(intent);
-//                Snackbar.make(view, "Gasto adicionado", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-
-
             }
         });
 

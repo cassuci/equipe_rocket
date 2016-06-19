@@ -10,11 +10,6 @@ import android.support.v7.app.AlertDialog;
 import com.draft.rckt.equiperocket.R;
 
 public class CreateGastoDialog extends DialogFragment {
-    /**TODO
-     * Deixar classe reutilizavel para receita
-     * MUDAR: builder.setMessage(R.string.dialog_message_delete_gasto)
-     .setTitle(null);
-     */
 
     public interface NoticeDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);

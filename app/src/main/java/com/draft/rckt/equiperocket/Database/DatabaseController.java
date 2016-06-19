@@ -40,7 +40,6 @@ public class DatabaseController {
             user = Usuario.getInstance();
 
             //TODO temporario
-            //TODO verificar se para quando não tem nenhuma receita/gasto
             if  (loginUser("marininha", "10anos") == false)
                 addUsers("Marina Bolada", "marininha", "10anos");
 

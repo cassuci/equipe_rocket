@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,6 +72,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         textView_valor = (TextView) findViewById(R.id.textView_valor_id);
         textView_tipo = (TextView) findViewById(R.id.textView_tipo_id);
         textView_descr = (TextView) findViewById(R.id.textView_desc_id);
+        textView_descr.setMovementMethod(new ScrollingMovementMethod());
     }
 
 

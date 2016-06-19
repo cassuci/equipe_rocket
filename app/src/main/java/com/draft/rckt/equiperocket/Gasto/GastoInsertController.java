@@ -75,9 +75,6 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
             return;
         }
 
-        // TODO
-        // VERIFICAR TAMANHOS - verificar se precisa do finish
-
         Gasto gasto = new Gasto();
         gasto.setTitulo(inputName.getText().toString());
         gasto.setDescr(inputDesc.getText().toString());
@@ -85,12 +82,13 @@ public class GastoInsertController extends AppCompatActivity implements OnItemSe
         gasto.setValor(Double.parseDouble(inputValor.getText().toString()));
         gasto.setData(new Date());
 
-        if (dbControl.addItemGasto(gasto))
+        if (dbControl.addItemGasto(gasto)) {
             Toast.makeText(getApplicationContext(), "Gasto inserido com sucesso", Toast.LENGTH_SHORT).show();
+            finish();
+        }
         else
-            Toast.makeText(getApplicationContext(), "Falha na inserção do gasto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Falha na inserção do gasto", Toast.LENGTH_LONG).show();
 
-        finish();
     }
 
     private boolean validateName() {

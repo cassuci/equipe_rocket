@@ -75,9 +75,6 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
             return;
         }
 
-        // TODO
-        // VERIFICAR TAMANHOS e verificar se precisa do finish
-
         Receita receita = new Receita();
         receita.setTitulo(inputName.getText().toString());
         receita.setDesc(inputDesc.getText().toString());
@@ -85,12 +82,12 @@ public class ReceitaInsertController extends AppCompatActivity implements OnItem
         receita.setValor(Double.parseDouble(inputValor.getText().toString()));
         receita.setData(new Date());
 
-        if (dbControl.addItemReceita(receita))
+        if (dbControl.addItemReceita(receita)) {
             Toast.makeText(getApplicationContext(), "Receita inserida com sucesso", Toast.LENGTH_SHORT).show();
+            finish();
+        }
         else
             Toast.makeText(getApplicationContext(), "Falha na inserção da receita", Toast.LENGTH_SHORT).show();
-
-        finish();
     }
 
     private boolean validateName() {

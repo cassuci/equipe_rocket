@@ -144,9 +144,6 @@ public class ReceitaController extends AppCompatActivity
         Intent it = new Intent(this, ReceitaDetailController.class);
         Receita receita = array.get(pos);
         it.putExtra("receita", receita);
-
-        //TODO verificar se precisa do finish
-        //finish();
         startActivity(it);
 
     }
@@ -216,15 +213,6 @@ public class ReceitaController extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    /*TODO
-        Recarregar pagina atual apos mudancas ou utilizar onRestart()?
-    **/
-    /*@Override
-    protected void onRestart() {
-        super.onRestart();
-        finish();
-        startActivity(getIntent());
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
