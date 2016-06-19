@@ -35,6 +35,7 @@ import com.draft.rckt.equiperocket.Usuario.Usuario;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class GastoController extends AppCompatActivity
@@ -135,10 +136,8 @@ public class GastoController extends AppCompatActivity
 
 
     private void prepareGastoData() {
-
         gastoList = new ArrayList<Gasto>();
         gastoList = dbControl.getAllGastoOrderByDate();
-
     }
 
     public interface ClickListener {
@@ -198,8 +197,6 @@ public class GastoController extends AppCompatActivity
         it.putExtra("gasto", gasto);
 
         startActivity(it);
-        //finish();
-
     }
     @Override
     public void onBackPressed() {
