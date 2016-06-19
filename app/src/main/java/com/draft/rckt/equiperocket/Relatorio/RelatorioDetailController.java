@@ -7,12 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Gasto.Gasto;
 import com.draft.rckt.equiperocket.R;
+import com.draft.rckt.equiperocket.Receita.Receita;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +23,8 @@ import java.util.Date;
 public class RelatorioDetailController extends AppCompatActivity {
 
     private TextView relatorioText;
+    DatabaseController dbControl;
+    RelatorioController rControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,9 @@ public class RelatorioDetailController extends AppCompatActivity {
         setContentView(R.layout.activity_relatorio_detail_controller);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        dbControl = new DatabaseController(getApplication());
+        rControl = new RelatorioController();
+
 
         /*
         TODO
@@ -78,7 +86,8 @@ public class RelatorioDetailController extends AppCompatActivity {
 
     private void insereData() {
         Date d = new Date();
-        relatorio += "Relatório gerado em " + DateFormat.getDateInstance(DateFormat.SHORT).format(d) + " às " +
+        SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+        relatorio += "Relatório gerado em " + formatoData.format(d) + " às " +
                 DateFormat.getTimeInstance(DateFormat.SHORT).format(d);
     }
 
@@ -94,7 +103,28 @@ public class RelatorioDetailController extends AppCompatActivity {
     private void insereReceitas() {
         // TODO
         // obter receitas
-        relatorio += "\tNomeReceita1 = R$ 1.20\n\tNomeReceita2 = R$1000.00\n";
+
+        ArrayList<Receita> allReceita = dbControl.getAllReceitaOrderByDate();
+
+        // se user nao escolheu data inicial, ela eh a primeira do BD
+        if (rControl.getStartYear() == 0)
+        {
+            Toast.makeText(getApplicationContext(), "start = 0", Toast.LENGTH_SHORT).show();
+            startCal = null;
+        }
+        // se user nao escolheu data final, ela eh a ultima do BD
+        if (rControl.getEndYear() == 0) {
+            Toast.makeText(getApplicationContext(), "end = 0", Toast.LENGTH_SHORT).show();
+            endCal = null;
+        }
+
+        ArrayList<Receita> receita = dbControl.getReceitaByPeriod(allReceita, startCal, endCal);
+        for(int i = 0; i < receita.size(); i++)
+        {
+            relatorio += String.format("\t%-21s", receita.get(i).getTitulo()) + String.format("R$ %f", receita.get(i).getValor());
+            totalReceitas += receita.get(i).getValor();
+        }
+        
         relatorio += "TOTAL RECEITAS = R$" + totalReceitas + "\n\n";
     }
 
@@ -110,9 +140,6 @@ public class RelatorioDetailController extends AppCompatActivity {
             relatorio = "RELATÓRIO DE RECEITAS\n\n";
         }
 
-        relatorio += "Período: " + String.format("%02d", startCal.get(startCal.DAY_OF_MONTH)) + "/" +
-                    String.format("%02d", startCal.get(startCal.MONTH)+1) + "/" + String.format("%02d", startCal.get(startCal.YEAR)) +
-                    " a " + String.format("%02d", endCal.get(endCal.DAY_OF_MONTH)) + "/" +
-                    String.format("%02d", (endCal.get(endCal.MONTH)+1)) + "/" + String.format("%02d", endCal.get(endCal.YEAR)) + "\n\n";
+        relatorio += "Período: " +  rControl.formatDate(startCal) + " a " + rControl.formatDate(endCal) + "\n\n";
     }
 }

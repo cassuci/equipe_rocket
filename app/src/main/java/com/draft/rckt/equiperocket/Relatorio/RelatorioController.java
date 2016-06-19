@@ -34,7 +34,7 @@ import java.util.Calendar;
 public class RelatorioController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, DatePickerDialog.OnDateSetListener, DialogInterface.OnCancelListener {
 
-    private Button buttonStartDate, buttonEndDate, buttonGerarRelatorio;
+    private Button buttonStartDate, buttonEndDate;
     private TextView textStart, textEnd;
     private static int dateSelected = -1, gastosSelected = 0, receitasSelected = 0;
     private final int START_DATE = 0;
@@ -71,7 +71,6 @@ public class RelatorioController extends AppCompatActivity
 
         buttonStartDate = (Button) findViewById(R.id.button_start_date);
         buttonEndDate = (Button) findViewById(R.id.button_end_date);
-        buttonGerarRelatorio = (Button) findViewById(R.id.button_gerar_relatorio);
         textStart = (TextView) findViewById(R.id.startDateDisplay);
         textEnd = (TextView) findViewById(R.id.endDateDisplay);
 
@@ -202,7 +201,7 @@ public class RelatorioController extends AppCompatActivity
             startYear = year;
             startMonth = monthOfYear + 1;
             startDay = dayOfMonth;
-            String d = startCal.get(startCal.DAY_OF_MONTH)+"/"+(startCal.get(startCal.MONTH)+1)+"/"+startCal.get(startCal.YEAR);
+            String d = formatDate(startCal);
             textStart.setText(d);
         }
         if(dateSelected == END_DATE)
@@ -211,16 +210,25 @@ public class RelatorioController extends AppCompatActivity
             endYear = year;
             endMonth = monthOfYear + 1;
             endDay = dayOfMonth;
-            String d = endCal.get(endCal.DAY_OF_MONTH)+"/"+(endCal.get(endCal.MONTH)+1)+"/"+endCal.get(endCal.YEAR);
+            String d = formatDate(endCal);
             textEnd.setText(d);
+        }
+
+        if(startCal.compareTo(endCal) > 0) {
+            Calendar cAux = startCal;
+            startCal = endCal;
+            endCal = cAux;
+
+            textStart.setText(formatDate(startCal));
+            textEnd.setText(formatDate(endCal));
         }
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         startYear = startMonth = startDay = endYear = endMonth = endDay = 0;
-        textStart.setText("");
-        textEnd.setText("");
+        textStart.setText("Não definida");
+        textEnd.setText("Não definida");
         dateSelected = -1;
     }
 
@@ -232,18 +240,19 @@ public class RelatorioController extends AppCompatActivity
             return;
         }
 
-        if(startCal.compareTo(endCal) > 0) {
-            Context context = getApplicationContext();
-            Toast.makeText(context, "Escolha datas válidas.", Toast.LENGTH_LONG).show();
-            return;
-        }
-
         Intent intent = new Intent();
         intent.setClass(this, RelatorioDetailController.class);
         startActivity(intent);
     }
 
+    public String formatDate(Calendar c)
+    {
+        return String.format("%02d", c.get(c.DAY_OF_MONTH)) + "/" + String.format("%02d", c.get(c.MONTH)+1) +
+                "/" + String.format("%02d", c.get(c.YEAR));
+    }
 
+    public static int getStartYear() { return startYear; }
+    public static int getEndYear() { return endYear; }
     public static Calendar getStartCal() { return startCal; }
     public static Calendar getEndCal() { return endCal; }
     public static int getGastosSelected() {return gastosSelected; }
