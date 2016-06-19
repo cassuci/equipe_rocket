@@ -43,7 +43,6 @@ public class RelatorioDetailController extends AppCompatActivity {
         dbControl = new DatabaseController(getApplication());
         rControl = new RelatorioController();
 
-
         /*
         TODO
         - salvar relatorio em txt   https://www.sitepoint.com/store-user-data-using-simple-text-files-and-apis-in-android/
