@@ -24,7 +24,7 @@ import com.draft.rckt.equiperocket.R;
 public class GastoDetailController extends AppCompatActivity implements CreateGastoDialog.NoticeDialogListener{
 
     private Gasto gasto;
-
+    private static boolean isModified = false;
     private TextView textView_titulo;
     private TextView textView_data;
     private TextView textView_valor;
@@ -106,15 +106,15 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
                 return true;
             case R.id.edit:
                 // tratamento botao modificacao
+                isModified = true;
                 Intent intent = new Intent(GastoDetailController.this, GastoModifyController.class);
-                intent.putExtra("gasto",gasto);
+                intent.putExtra("gasto", gasto);
                 startActivity(intent);
                 return true;
             default:
                 finish();
                 return true;
         }
-        //return false;
     }
 
     public void showNoticeDialog() {
@@ -149,10 +149,19 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
         }
     }
 
-
-    private void setGasto(){
-        this.gasto = (Gasto) getIntent().getExtras().getSerializable("gasto");
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 
-
+    private void setGasto(){
+        gasto = (Gasto) getIntent().getExtras().getSerializable("gasto");
+        if (isModified) //arrumando caso de modificação
+        {
+            gasto = dbControl.getGasto(gasto.getGasto_id());
+            isModified = false;
+        }
+    }
 }

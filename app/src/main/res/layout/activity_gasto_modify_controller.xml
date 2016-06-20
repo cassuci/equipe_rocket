@@ -1,12 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:fitsSystemWindows="true"
     tools:context="com.draft.rckt.equiperocket.Gasto.GastoModifyController">
 
-</RelativeLayout>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_gasto_mod"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+            <TextView
+                android:id="@+id/toolbar_gasto_mod_title"
+                style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:text="Modificação de Gasto"
+                android:textAlignment="center"
+                android:textColor="@android:color/white" />
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginEnd="0dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="60dp"
+            android:orientation="vertical"
+            android:paddingBottom="10dp"
+            android:focusable="true">
+
+            <!-- nome -->
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_name_gasto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <EditText
+                    android:id="@+id/input_name_gasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="20"
+                    android:singleLine="true"
+                    android:hint="@string/hint_name" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- valor -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_valor_gasto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <EditText
+                    android:id="@+id/input_valor_gasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLength="13"
+                    android:hint="@string/hint_valor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- tipo -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Tipo:"
+                    android:id="@+id/text_gasto_ins_tipo"
+                    android:layout_margin="5dp" />
+
+                <Spinner
+                    android:layout_width="262dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner_tipo_gasto"
+                    android:layout_margin="5dp" />
+            </LinearLayout>
+
+            <!-- descrição -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_desc_gasto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <EditText
+                    android:id="@+id/input_desc_gasto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="200"
+                    android:inputType="textShortMessage|textMultiLine"
+                    android:scrollHorizontally="false"
+                    android:scrollbars="vertical"
+                    android:maxLines="10"
+                    android:hint="@string/hint_desc" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:baselineAligned="false"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal|top"
+                android:layout_marginTop="10dp">
+
+                <Button android:id="@+id/btn_gasto_mod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_gasto_mod"
+                    android:layout_gravity="center_vertical|top" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

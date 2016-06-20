@@ -65,7 +65,7 @@ public class GastoController extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(GastoController.this,GastoInsertController.class);
+                intent.setClass(GastoController.this, GastoInsertController.class);
                 startActivity(intent);
             }
         });

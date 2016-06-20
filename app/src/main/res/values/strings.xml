@@ -50,6 +50,9 @@
     </string-array>
     <string name="button_cancel">Cancela</string>
 
+    <string name="btn_gasto_mod">Modificar Gasto</string>
+
+
     <string name="title_activity_gasto_insert_controller">GastoInsertController</string>
     <string name="btn_gasto_ins">Inserir Gasto</string>
     <string name="err_msg_name_gasto">Insira o nome do gasto</string>

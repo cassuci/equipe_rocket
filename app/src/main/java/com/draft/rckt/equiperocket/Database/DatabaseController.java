@@ -183,6 +183,56 @@ public class DatabaseController {
         return true;
     }
 
+    public Receita getReceita(int id){
+
+        String query_get = "select * FROM " + ReceitaEntry.TABLE_NAME +
+                " WHERE " + ReceitaEntry.COLUMN_NAME_ENTRY_ID + " = " + id;
+
+        // ganha acesso a database
+        db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query_get, null);
+
+        if (cursor != null && cursor.moveToFirst())
+        {
+            Receita receita = new Receita();
+            receita.setReceita_id(cursor.getInt(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_ENTRY_ID)));
+            receita.setUser_id(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_USER_ID)));
+            receita.setTitulo(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TITLE)));
+            receita.setDesc(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_CONTENT)));
+            receita.setValor(cursor.getDouble(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_VALUE)));
+            receita.setTipo(cursor.getString(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_TYPE)));
+            receita.setData(new Date(cursor.getLong(cursor.getColumnIndex(ReceitaEntry.COLUMN_NAME_DATE))));
+            return receita;
+        }
+        return null;
+    }
+
+    public Gasto getGasto(int id){
+
+        String query_get = "select * FROM " + GastoEntry.TABLE_NAME +
+                " WHERE " + GastoEntry.COLUMN_NAME_ENTRY_ID + " = " + id;
+
+        // ganha acesso a database
+        db = dbHelper.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(query_get, null);
+
+        if (cursor != null && cursor.moveToFirst())
+        {
+            Gasto gasto = new Gasto();
+            gasto.setGasto_id(cursor.getInt(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_ENTRY_ID)));
+            gasto.setUser_id(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_USER_ID)));
+            gasto.setTitulo(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_TITLE)));
+            gasto.setDescr(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_CONTENT)));
+            gasto.setValor(cursor.getDouble(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_VALUE)));
+            gasto.setTipo(cursor.getString(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_TYPE)));
+            gasto.setData(new Date(cursor.getLong(cursor.getColumnIndex(GastoEntry.COLUMN_NAME_DATE))));
+            return gasto;
+        }
+        return null;
+    }
+
     public ArrayList<Receita> getAllReceitaOrderByDate(){
 
         String query_get = "select * FROM " + ReceitaEntry.TABLE_NAME +
@@ -276,6 +326,9 @@ public class DatabaseController {
 
     public ArrayList<Receita> getReceitaByPeriod(ArrayList<Receita> arrayReceita, Calendar startDate, Calendar finishDate)
     {
+        if (arrayReceita == null || arrayReceita.isEmpty())
+            return null;
+        
         ArrayList<Receita> array = new ArrayList<Receita>();
         int i = 0;
         long inicio = 0;
@@ -325,6 +378,9 @@ public class DatabaseController {
 
     public ArrayList<Gasto> getGastoByPeriod(ArrayList<Gasto> arrayGasto, Calendar startDate, Calendar finishDate)
     {
+        if (arrayGasto == null || arrayGasto.isEmpty())
+            return null;
+
         ArrayList<Gasto> array = new ArrayList<Gasto>();
         int i = 0;
         long inicio = 0;
