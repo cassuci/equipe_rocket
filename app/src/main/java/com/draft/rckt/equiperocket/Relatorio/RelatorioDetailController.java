@@ -1,13 +1,9 @@
 package com.draft.rckt.equiperocket.Relatorio;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.draft.rckt.equiperocket.Database.DatabaseController;
 import com.draft.rckt.equiperocket.Gasto.Gasto;
@@ -38,40 +34,29 @@ public class RelatorioDetailController extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relatorio_detail_controller);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_relatorio_detail);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         dbControl = new DatabaseController(getApplication());
         rControl = new RelatorioController();
-
-        /*
-        TODO
-        - salvar relatorio em txt   https://www.sitepoint.com/store-user-data-using-simple-text-files-and-apis-in-android/
-         */
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         relatorioText = (TextView) findViewById(R.id.relatorio_text);
 
         // se user nao escolheu data inicial, ela eh a primeira do BD
         if (rControl.getStartYear() == 0)
         {
-            Toast.makeText(getApplicationContext(), "start = 0", Toast.LENGTH_SHORT).show();
             startCal = null;
         }
         // se user nao escolheu data final, ela eh a ultima do BD
-        if (rControl.getEndYear() == 0) {
-            Toast.makeText(getApplicationContext(), "end = 0", Toast.LENGTH_SHORT).show();
+        if (rControl.getEndYear() == 0)
+        {
             endCal = null;
         }
 
         montaRelatorio();
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 

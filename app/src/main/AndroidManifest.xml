@@ -43,7 +43,8 @@
         <activity
             android:name=".Relatorio.RelatorioDetailController"
             android:label="@string/title_activity_relatorio_detail_controller"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".Relatorio.RelatorioDetailController" />
         <activity
             android:name=".Receita.ReceitaInsertController"
             android:label="@string/title_activity_receita_insert_controller"
