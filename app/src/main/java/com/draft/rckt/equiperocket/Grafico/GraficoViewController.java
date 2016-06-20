@@ -113,6 +113,12 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         Date maxTime_gasto = null;
         Date minTime_gasto = null;
 
+        double minValue_rec = -1.0;
+        double maxValue_rec = -1.0;
+
+        double minValue_gasto = -1.0;
+        double maxValue_gasto = -1.0;
+
         if (include_receitas) {
             receitas = mDbController.getAllReceitaOrderByDate();
 
@@ -159,6 +165,22 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                     }
 
                     double value = receitas.get(i).getValor();
+                    if (minValue_rec == -1.0){
+                        minValue_rec = value;
+                    }
+                    if (maxValue_rec == -1.0){
+                        maxValue_rec = value;
+                    }
+
+
+                    if (minValue_rec > value){
+                        minValue_rec = value;
+                    }
+                    if (maxValue_rec < value){
+                        maxValue_rec = value;
+                    }
+
+
                     pontos_receitas.add(
                             new DataPoint(calendar.getTime(), value
                             ));
@@ -182,6 +204,14 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                 grafico.getViewport().setMinX(minTime_rec.getTime());
                 grafico.getViewport().setMaxX(maxTime_rec.getTime());
                 grafico.getViewport().setXAxisBoundsManual(true);
+            }
+
+            if (minValue_rec != -1.0 && maxValue_rec != -1.0){
+                minValue_rec = 0.9 * minValue_rec;
+                maxValue_rec = 1.1 * maxValue_rec;
+                grafico.getViewport().setMinY(minValue_rec);
+                grafico.getViewport().setMaxY(maxValue_rec);
+                grafico.getViewport().setYAxisBoundsManual(true);
             }
 
             if (pontos_receitas.size() == 1)
@@ -242,6 +272,21 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                     }
 
                     double value = gastos.get(i).getValor();
+
+                    if (minValue_gasto == -1.0){
+                        minValue_gasto = value;
+                    }
+                    if (maxValue_gasto == -1.0){
+                        maxValue_gasto = value;
+                    }
+
+
+                    if (minValue_gasto > value){
+                        minValue_gasto = value;
+                    }
+                    if (maxValue_gasto < value){
+                        maxValue_gasto = value;
+                    }
                     pontos_gastos.add(
                             new DataPoint(calendar.getTime(), value
                             ));
@@ -280,6 +325,27 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
                 }
                 grafico.getViewport().setXAxisBoundsManual(true);
             }
+
+            if (minValue_gasto != -1.0 && maxValue_gasto != -1.0){
+                minValue_gasto = 0.9 * minValue_gasto;
+                maxValue_gasto = 1.1 * maxValue_gasto;
+
+                if (minValue_rec != -1.0 && minValue_gasto < minValue_rec) {
+                    grafico.getViewport().setMinY(minValue_gasto);
+                }else if (minValue_rec == -1.0){
+                    grafico.getViewport().setMinY(minValue_gasto);
+                }
+
+                if (maxValue_rec != -1.0 && maxValue_gasto > maxValue_rec) {
+                    grafico.getViewport().setMaxY(maxValue_gasto);
+                }else if (maxValue_rec == -1.0){
+                    grafico.getViewport().setMaxY(maxValue_gasto);
+                }
+
+                grafico.getViewport().setYAxisBoundsManual(true);
+
+            }
+
 
             if (pontos_gastos.size()== 1)
                 grafico.addSeries(series_gasto_2);

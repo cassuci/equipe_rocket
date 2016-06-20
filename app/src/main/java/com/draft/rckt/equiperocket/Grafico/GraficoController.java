@@ -7,6 +7,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -224,7 +225,14 @@ public class GraficoController extends AppCompatActivity
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.button_grafico_createGraph){
-            startGraphCreateActivity();
+            if (include_gastos || include_receitas) {
+                startGraphCreateActivity();
+            }else{
+                AlertDialog alertDialog = new AlertDialog.Builder(GraficoController.this).create();
+                alertDialog.setTitle("Aviso");
+                alertDialog.setMessage("Por favor, inclua algum tipo de registro");
+                alertDialog.show();
+            }
         }
     }
 
@@ -253,6 +261,14 @@ public class GraficoController extends AppCompatActivity
         }else{
             for (int i = 0; i < this.filtros_gastos.length; i++) {
                 filtro_gastos.put(this.filtros_gastos[i], false);
+            }
+        }
+
+        if (startDateSet && endDateSet){
+            if (startCal.getTime().getTime() > endCal.getTime().getTime()){
+                Calendar aux = startCal;
+                startCal = endCal;
+                endCal = aux;
             }
         }
 
