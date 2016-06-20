@@ -63,7 +63,7 @@ public class GastoModifyController extends AppCompatActivity implements OnItemSe
         inputName.setText(gasto.getTitulo());
         inputDesc.setText(gasto.getDescr());
         int i, index = -1;
-        for (i = 0; index == -1; i++ ) {
+        for (i = 0; index == -1 && i < 5; i++ ) {
             if (spinner.getItemAtPosition(i).toString().equals(gasto.getTipo().toString())) {
                 index = i;
                 tipo = gasto.getTipo().toString();
