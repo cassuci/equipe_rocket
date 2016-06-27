@@ -52,6 +52,8 @@
 
     <string name="btn_gasto_mod">Modificar Gasto</string>
 
+    <string name="btn_rec_mod">Modificar Receita</string>
+
 
     <string name="title_activity_gasto_insert_controller">GastoInsertController</string>
     <string name="btn_gasto_ins">Inserir Gasto</string>
