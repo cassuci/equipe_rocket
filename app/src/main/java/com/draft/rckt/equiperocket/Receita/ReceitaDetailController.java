@@ -38,6 +38,7 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     private TextView textView_desc;
     private TextView textView_tipo;
     private DatabaseController dbControl;
+    private static boolean isModified = false;
 
 
     @Override
@@ -93,6 +94,11 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
 
     private void setReceita(){
         this.receita = (Receita) getIntent().getExtras().getSerializable("receita");
+        if (isModified) //arrumando caso de modificação
+        {
+            receita = dbControl.getReceita(receita.getReceita_id());
+            isModified = false;
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -110,12 +116,20 @@ public class ReceitaDetailController extends AppCompatActivity implements Create
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.delete:
                 showNoticeDialog();
                 return true;
             case R.id.edit:
+                isModified = true;
                 Intent intent = new Intent(ReceitaDetailController.this, ReceitaModifyController.class);
                 intent.putExtra("receita", receita);
                 startActivity(intent);
