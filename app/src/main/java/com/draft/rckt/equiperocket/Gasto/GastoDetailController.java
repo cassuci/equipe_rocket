@@ -137,7 +137,7 @@ public class GastoDetailController extends AppCompatActivity implements CreateGa
      */
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        boolean isDeleteSucessful = dbControl.deleteGasto(gasto);;
+        boolean isDeleteSucessful = dbControl.deleteGasto(gasto);
 
         dialog.dismiss();
         if(isDeleteSucessful) {

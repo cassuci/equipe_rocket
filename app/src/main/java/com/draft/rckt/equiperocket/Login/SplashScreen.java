@@ -12,7 +12,7 @@ import com.draft.rckt.equiperocket.Gasto.GastoController;
 import com.draft.rckt.equiperocket.R;
 
 public class SplashScreen extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 1000;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +32,7 @@ public class SplashScreen extends AppCompatActivity {
                  * Mudar para chamar activity de login
                  *
                  */
-                Intent i = new Intent(SplashScreen.this, GastoController.class);
+                Intent i = new Intent(SplashScreen.this, LoginActivity.class);
                 startActivity(i);
 
                 // Fecha esta activity
