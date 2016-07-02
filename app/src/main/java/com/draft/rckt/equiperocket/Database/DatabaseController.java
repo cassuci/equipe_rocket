@@ -41,7 +41,7 @@ public class DatabaseController {
 
             //TODO temporario
             if  (loginUser("marininha", "10anos") == false)
-                addUsers("Marina Bolada", "marininha", "10anos");
+                addUsers("Marina", "marininha", "10anos");
 
             if (getAllReceitaOrderByDate() == null)
             {
