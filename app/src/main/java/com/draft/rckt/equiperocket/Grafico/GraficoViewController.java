@@ -105,7 +105,10 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         GraphView grafico = (GraphView) findViewById(R.id.graphView_grafico);
 
         ArrayList<Receita> receitas;
+        receitas = mDbController.getAllReceitaOrderByDate();
+
         ArrayList<Gasto> gastos;
+        gastos = mDbController.getAllGastoOrderByDate();
 
         Date maxTime_rec = null;
         Date minTime_rec = null;
@@ -119,8 +122,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
         double minValue_gasto = -1.0;
         double maxValue_gasto = -1.0;
 
-        if (include_receitas) {
-            receitas = mDbController.getAllReceitaOrderByDate();
+        if (include_receitas && receitas != null) {
 
             ArrayList<DataPoint> pontos_receitas = new ArrayList<>();
             for (int i = 0; i < receitas.size(); i++){
@@ -226,8 +228,7 @@ public class GraficoViewController extends AppCompatActivity implements Navigati
             grafico.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
         }
 
-        if (include_gastos) {
-            gastos = mDbController.getAllGastoOrderByDate();
+        if (include_gastos && gastos != null) {
 
             ArrayList<DataPoint> pontos_gastos = new ArrayList<>();
             for (int i = 0; i < gastos.size(); i++) {
