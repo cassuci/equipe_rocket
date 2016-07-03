@@ -8,11 +8,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.draft.rckt.equiperocket.Login.LoginActivity">
+    tools:context="com.draft.rckt.equiperocket.Login.RegisterController">
 
     <!-- Login progress -->
     <ProgressBar
-        android:id="@+id/login_progress"
+        android:id="@+id/register_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,12 +20,12 @@
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/register_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/user_login_form"
+            android:id="@+id/email_register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -35,11 +35,11 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/user"
+                    android:id="@+id/name_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_user"
-                    android:inputType="text"
+                    android:hint="@string/prompt_name"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -50,7 +50,22 @@
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/email_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/password_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
@@ -64,23 +79,13 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/user_sign_in_button"
+                android:id="@+id/email_register_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:textStyle="bold"
-                android:text="@string/action_sign_in" />
-
-            <Button
-                style="?android:textAppearanceSmall"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/registrar_se"
-                android:id="@+id/button_register"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal" />
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>

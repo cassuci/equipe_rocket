@@ -2,11 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.draft.rckt.equiperocket">
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -62,7 +57,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Login.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Login.RegisterController"
+            android:label="@string/title_activity_register_controller"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
