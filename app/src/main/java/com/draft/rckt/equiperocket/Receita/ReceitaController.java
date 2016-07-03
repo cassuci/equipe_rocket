@@ -43,7 +43,7 @@ public class ReceitaController extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RecyclerView recyclerView;
-    private ArrayList<Receita> array;
+    private ArrayList<Receita> receitaList;
     private CustomListAdapterReceita mAdapter;
 
     private DatabaseController dbControl;
@@ -98,12 +98,12 @@ public class ReceitaController extends AppCompatActivity
     }
 
     private void prepareReceitaList() {
-        array = new ArrayList<Receita>();
-        array = dbControl.getAllReceitaOrderByDate();
+        receitaList = new ArrayList<Receita>();
+        receitaList = dbControl.getAllReceitaOrderByDate();
     }
 
     private boolean checkNullList() {
-        return ((array == null) || array.isEmpty());
+        return ((receitaList == null) || receitaList.isEmpty());
     }
 
     /**TODO
@@ -118,7 +118,7 @@ public class ReceitaController extends AppCompatActivity
     private void createRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_receita_id);
 
-        mAdapter = new CustomListAdapterReceita(array);
+        mAdapter = new CustomListAdapterReceita(receitaList);
         //RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -142,7 +142,7 @@ public class ReceitaController extends AppCompatActivity
     public void showReceita(int pos) {
 
         Intent it = new Intent(this, ReceitaDetailController.class);
-        Receita receita = array.get(pos);
+        Receita receita = receitaList.get(pos);
         it.putExtra("receita", receita);
         startActivity(it);
 
