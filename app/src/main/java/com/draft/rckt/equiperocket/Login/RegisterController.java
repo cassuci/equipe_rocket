@@ -103,7 +103,7 @@ public class RegisterController extends AppCompatActivity {
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(name) && !isNameValid(name)) {
+        if (TextUtils.isEmpty(name) || !isNameValid(name)) {
             mNameView.setError(getString(R.string.error_invalid_name));
             focusView = mNameView;
             cancel = true;
@@ -111,7 +111,7 @@ public class RegisterController extends AppCompatActivity {
 
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password) || !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;

@@ -78,7 +78,7 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Username</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_email">Nome de usuário inválido.</string>
     <string name="prompt_name">Nome</string>
     <string name="error_invalid_name">Nome inválido</string>
     <string name="registrar_se">Registrar-se</string>
