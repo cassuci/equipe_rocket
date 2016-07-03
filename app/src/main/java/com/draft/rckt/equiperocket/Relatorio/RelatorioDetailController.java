@@ -20,13 +20,12 @@ public class RelatorioDetailController extends AppCompatActivity {
 
     private TextView relatorioText;
     DatabaseController dbControl;
-    RelatorioController rControl;
     private String relatorio = "";
-    private int gastosSelected = RelatorioController.getGastosSelected(),
-            receitasSelected = RelatorioController.getReceitasSelected();
+    private int gastosSelected;
+    private int receitasSelected;
     private float totalGastos = 0, totalReceitas = 0;
-    private Calendar startCal = RelatorioController.getStartCal(),
-            endCal = RelatorioController.getEndCal();
+    private Calendar startCal;
+    private Calendar endCal;
     private Calendar startCalGasto = Calendar.getInstance(), endCalGasto = Calendar.getInstance(),
             startCalRec = Calendar.getInstance(), endCalRec = Calendar.getInstance();
 
@@ -39,19 +38,25 @@ public class RelatorioDetailController extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        gastosSelected = getIntent().getExtras().getInt("gastosSelected");
+        receitasSelected = getIntent().getExtras().getInt("receitasSelected");
+        startCal = (Calendar) getIntent().getExtras().get("startCal");
+        endCal = (Calendar) getIntent().getExtras().get("endCal");
+        int startYear = getIntent().getExtras().getInt("startYear");
+        int endYear = getIntent().getExtras().getInt("endYear");
 
         dbControl = new DatabaseController(getApplication());
-        rControl = new RelatorioController();
+
 
         relatorioText = (TextView) findViewById(R.id.relatorio_text);
 
         // se user nao escolheu data inicial, ela eh a primeira do BD
-        if (rControl.getStartYear() == 0)
+        if (startYear == 0)
         {
             startCal = null;
         }
         // se user nao escolheu data final, ela eh a ultima do BD
-        if (rControl.getEndYear() == 0)
+        if (endYear == 0)
         {
             endCal = null;
         }
@@ -160,6 +165,12 @@ public class RelatorioDetailController extends AppCompatActivity {
                 endCal = endCalRec;
         }
 
-        relatorio += "Período: " +  rControl.formatDate(startCal) + " a " + rControl.formatDate(endCal) + "\n\n";
+        relatorio += "Período: " +  formatDate(startCal) + " a " + formatDate(endCal) + "\n\n";
+    }
+
+    private String formatDate(Calendar c)
+    {
+        return String.format("%02d", c.get(c.DAY_OF_MONTH)) + "/" + String.format("%02d", c.get(c.MONTH)+1) +
+                "/" + String.format("%02d", c.get(c.YEAR));
     }
 }

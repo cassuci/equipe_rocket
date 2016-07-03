@@ -36,12 +36,12 @@ public class RelatorioController extends AppCompatActivity
 
     private Button buttonStartDate, buttonEndDate;
     private TextView textStart, textEnd;
-    private static int dateSelected = -1, gastosSelected = 0, receitasSelected = 0;
+    private int dateSelected = -1, gastosSelected = 0, receitasSelected = 0;
     private final int START_DATE = 0;
     private final int END_DATE = 1;
     private Switch swReceitas, swGastos;
-    private static Calendar startCal = Calendar.getInstance();
-    private static Calendar endCal = Calendar.getInstance();
+    private Calendar startCal = Calendar.getInstance();
+    private Calendar endCal = Calendar.getInstance();
 
 
     @Override
@@ -148,7 +148,7 @@ public class RelatorioController extends AppCompatActivity
         return true;
     }
 
-    private static int startYear, startMonth, startDay, endYear, endMonth, endDay;
+    private int startYear, startMonth, startDay, endYear, endMonth, endDay;
 
     public void startDate(View view)
     {
@@ -242,20 +242,26 @@ public class RelatorioController extends AppCompatActivity
 
         Intent intent = new Intent();
         intent.setClass(this, RelatorioDetailController.class);
+        intent.putExtra("startYear", startYear);
+        intent.putExtra("endYear", endYear);
+        intent.putExtra("gastosSelected", gastosSelected);
+        intent.putExtra("receitasSelected", receitasSelected);
+        intent.putExtra("endCal", endCal);
+        intent.putExtra("startCal", startCal);
+
         startActivity(intent);
     }
 
-    public String formatDate(Calendar c)
+    private String formatDate(Calendar c)
     {
         return String.format("%02d", c.get(c.DAY_OF_MONTH)) + "/" + String.format("%02d", c.get(c.MONTH)+1) +
                 "/" + String.format("%02d", c.get(c.YEAR));
     }
 
-    public static int getStartYear() { return startYear; }
-    public static int getEndYear() { return endYear; }
-    public static Calendar getStartCal() { return startCal; }
-    public static Calendar getEndCal() { return endCal; }
-    public static int getGastosSelected() {return gastosSelected; }
-    public static int getReceitasSelected() {return receitasSelected; }
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 }
