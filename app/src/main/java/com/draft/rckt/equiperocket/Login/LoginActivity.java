@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                 showProgress(true);
 
                 Intent intent = new Intent(LoginActivity.this, GastoController.class);
+                finish();
                 startActivity(intent);
 
             }else{
