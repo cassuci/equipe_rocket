@@ -281,11 +281,12 @@ public class DatabaseController {
         }
 
         long fim = 0;
+        Calendar finishDateAux =  finishDate;
         if (finishDate != null) {
-            finishDate.add(Calendar.HOUR, 23);
-            finishDate.add(Calendar.MINUTE, 59);
-            finishDate.add(Calendar.SECOND, 59);
-            fim = (finishDate.getTime()).getTime();
+            finishDateAux.add(Calendar.HOUR, 23);
+            finishDateAux.add(Calendar.MINUTE, 59);
+            finishDateAux.add(Calendar.SECOND, 59);
+            fim = (finishDateAux.getTime()).getTime();
         }
         else
         {
